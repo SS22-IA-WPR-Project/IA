@@ -7,13 +7,13 @@ namespace Schlaffner_Andre {
 	{
 		//TODO:
 		//
-		//create Level
+		//create Level -> LevelManager
 		//
-		//create Player Instance
+		//create PlayerManager reference
 		//
 		//create Objects in Room(table etc)
 		//
-		//Interaction between Players
+		//Interaction between Players -> PlayerManager
 		//
 		//proximity reader for Voice-chat
 		//

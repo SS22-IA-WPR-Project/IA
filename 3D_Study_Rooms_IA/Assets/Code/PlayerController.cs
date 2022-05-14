@@ -6,21 +6,20 @@ namespace Schlaffner_Andre {
 	public class PlayerController : MonoBehaviour
 	{
         private GameObject PlayerPosition;
+        private GameObject Player;
         // Start is called before the first frame update
 
         //TODO:
         //
-        //Camera setup and control for players
-        //
-        //GUI
+        //Camera control for players (?)
         //
         //Emoticon Table reference
         //
-        //interaction with other Players reference
+        //interaction with other Players keys
         //
-        //(voice) chat reference
+        //(voice) chat keys
         //
-        //Whiteboard/text projecting reference
+        //Whiteboard/text projecting keys
         //
 
         void Start()
