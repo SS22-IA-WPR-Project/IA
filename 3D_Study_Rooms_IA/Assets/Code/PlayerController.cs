@@ -25,6 +25,7 @@ namespace Schlaffner_Andre {
         void Start()
         {
             PlayerPosition = GameObject.Find("Player");
+            //PlayerPosition = this.gameObject;
         }
 
         // Update is called once per frame
