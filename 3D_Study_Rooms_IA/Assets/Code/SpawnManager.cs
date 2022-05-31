@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Test für new Unity
 namespace Schlaffner_Andre {
 	public class SpawnManager : MonoBehaviour
 	{
