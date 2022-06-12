@@ -6,25 +6,22 @@ public class CharakterSkin : MonoBehaviour
 
 {
     new SkinnedMeshRenderer renderer;
-    int skin = 0;
-    public Material[] skins = new Material[4];
+    int skin = -1;
+    public Material[] skins = new Material[10];
 
     // Start is called before the first frame update
     void Start()
     {
         renderer = gameObject.GetComponent<SkinnedMeshRenderer>();
         Debug.Log(renderer.material.name);
+        skins[skins.Length - 1] = renderer.material;
 
         
     }
 
     public void next() {
-        
-        renderer.material =skins[skin];
-        
-        Debug.Log(renderer.material.name);
-        
-       if(skin == 3)
+
+        if (skin == skins.Length - 1)
         {
             skin = 0;
         }
@@ -32,25 +29,35 @@ public class CharakterSkin : MonoBehaviour
         {
             skin++;
         }
-       
 
+        Debug.Log("next " + skin);
+        renderer.material = skins[skin];
+        
+        Debug.Log(renderer.material.name);
+        
     }
 
     public void back()
-    {   
-        
-        renderer.material = skins[skin];
-       
-        Debug.Log(renderer.material.name);
+    {
 
-        if (skin == 0)
+        if (skin <= 0)
         {
-            skin = 3;
+            skin = skins.Length-1;
         }
         else
         {
             skin--;
+        } 
+        Debug.Log("back " + skin);
+        renderer.material = skins[skin];
+       
+        Debug.Log(renderer.material.name);
+        /*
+        if (skin == 0)
+        {
+            skin = skins.Length;
         }
+        */
 
     }
 

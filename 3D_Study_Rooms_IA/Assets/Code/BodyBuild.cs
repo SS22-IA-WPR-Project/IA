@@ -5,6 +5,7 @@ using UnityEngine;
 public class BodyBuild : MonoBehaviour
 {
     new SkinnedMeshRenderer renderer;
+    public Mesh[] bodybuilds = new Mesh[2];
     // Start is called before the first frame update
     void Start()
     {
@@ -14,8 +15,16 @@ public class BodyBuild : MonoBehaviour
 
     public void Bodybuild(float value)
     {
-        renderer.SetBlendShapeWeight(0, value);
-        renderer.SetBlendShapeWeight(1, 100f-value);
+        if(value == 0)
+        {
+            renderer.sharedMesh = bodybuilds[0];
+        }
+        else
+        {
+            renderer.sharedMesh = bodybuilds[1];
+
+        }
+        //renderer.SetBlendShapeWeight(1, 100f-value);
     }
 
     // Update is called once per frame
