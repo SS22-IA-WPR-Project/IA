@@ -16,6 +16,8 @@ public class AccessoriesCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //load to the right var and deactivate the accessories for the start 
+
         backpack = gameObject.transform.GetChild(2).gameObject;
         helmet = gameObject.transform.GetChild(3).gameObject;
         glasses1 = gameObject.transform.GetChild(4).gameObject;
@@ -45,6 +47,7 @@ public class AccessoriesCharacter : MonoBehaviour
 
     public void glasses(float value)
     {
+        
         Debug.Log(value);
         switch (value)
         {
@@ -68,6 +71,7 @@ public class AccessoriesCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //the switch case for the glasses gets constantly called with this value of the selected collom; so the right glasses are on the character 
         glasses(drop.value);
     }
 }
