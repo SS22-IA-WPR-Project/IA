@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 214579567}
   - component: {fileID: 214579566}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonSkinNext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1269,7 +1269,7 @@ GameObject:
   - component: {fileID: 511458424}
   - component: {fileID: 511458423}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonSkinBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1481,7 +1481,7 @@ GameObject:
   - component: {fileID: 596793483}
   - component: {fileID: 596793482}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: DropdownGlasses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1773,6 +1773,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720219616}
   m_CullTransparentMesh: 1
+--- !u!1 &860148348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 148804, guid: 3fb07e96bb0cae643a28994c86ddc64e, type: 3}
+  m_PrefabInstance: {fileID: 310173702}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &860148349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860148348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c8e17af3f15d7f48958d2f95c8b0567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &861317108
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,6 +2080,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0db0baf41724f4e875ed04bd21b9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1105387801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105387797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 876f32af46677ec47bb646395399bddd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1187748365
 GameObject:
   m_ObjectHideFlags: 0
@@ -2261,7 +2290,7 @@ GameObject:
   - component: {fileID: 1503858763}
   - component: {fileID: 1503858764}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: ToggleHelmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3155,7 +3184,7 @@ GameObject:
   - component: {fileID: 1953303755}
   - component: {fileID: 1953303756}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: SliderBodyBuild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3293,7 +3322,7 @@ GameObject:
   - component: {fileID: 1988346412}
   - component: {fileID: 1988346413}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: ToggleBackpack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
