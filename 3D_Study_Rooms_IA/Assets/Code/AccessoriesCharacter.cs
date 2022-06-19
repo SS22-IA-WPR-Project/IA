@@ -48,7 +48,7 @@ public class AccessoriesCharacter : MonoBehaviour
     public void glasses(float value)
     {
         
-        Debug.Log(value);
+        //Debug.Log(value);
         switch (value)
         {
             case 0:
