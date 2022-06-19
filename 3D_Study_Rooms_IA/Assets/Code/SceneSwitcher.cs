@@ -7,7 +7,9 @@ public class SceneSwitcher : MonoBehaviour
 {
     Scene characterGUI;
     Scene classroom;
-    GameObject player;
+    GameObject thisPlayer;
+    GameObject orgPlayer;
+    CharacterCache cache;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,16 +24,18 @@ public class SceneSwitcher : MonoBehaviour
                 player = tmpPlayer ;
             }
         }*/
-        player = gameObject;
+        cache = new CharacterCache();
+        orgPlayer = gameObject;
         
     }
 
     public void charGUIToClassroom()
     {
+        thisPlayer = cache.cache(orgPlayer);
 
         
         // The Application loads the Scene in the background at the same time as the current Scene.
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Classroom", LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Classroom", LoadSceneMode.Single);
 
         // Wait until the last operation fully loads to return anything
         //needs the extra methode, otherwise the wait won't work properlly
@@ -39,16 +43,18 @@ public class SceneSwitcher : MonoBehaviour
         
 
         // Move the GameObject (you attach this in the Inspector) to the newly loaded Scene
-        SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName("Classroom"));
+        //SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName("Classroom"));
 
         // Unload the previous Scene
         //SceneManager.SetActiveScene(SceneManager.GetSceneByName("Classroom"));
        SceneManager.UnloadSceneAsync(0);
+
+       
+
         
+        GameObject.Instantiate(thisPlayer, new Vector3(-5, 0.1f, 5), thisPlayer.transform.rotation);
+        //player.transform.position = new Vector3(-5, 0.1f, 5);
         
-        Debug.Log(player.transform.position.x + " " + player.transform.position.y + " " + player.transform.position.z);
-        player.transform.position = new Vector3(-5, 0.1f, 5);
-        Debug.Log(player.transform.position.x + " " + player.transform.position.y + " " + player.transform.position.z);
         
     }
 
