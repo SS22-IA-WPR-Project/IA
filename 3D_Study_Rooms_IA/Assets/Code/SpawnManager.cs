@@ -7,17 +7,24 @@ namespace Schlaffner_Andre {
 	{
 		public static SpawnManager Instance;
 
-		SpawnPoint spawnpoint;
+		SpawnPoint[] spawnpoints;
 
+        //gets all  Spawnpoints and saves them in the spawnpoints array
         private void Awake()
         {
 			Instance = this;
-			spawnpoint = GetComponentInChildren<SpawnPoint>();
+			spawnpoints = GetComponentsInChildren<SpawnPoint>();
         }
 
-		public Transform GetSpawnpoint()
+        public void Start()
         {
-			return spawnpoint.transform;
+         
+        }
+
+        //randomly assigns one spawnpoint to the Character
+        public Transform GetSpawnpoint()
+        {
+			return spawnpoints[Random.Range(0,spawnpoints.Length)].transform;
         }
 	}
 }
