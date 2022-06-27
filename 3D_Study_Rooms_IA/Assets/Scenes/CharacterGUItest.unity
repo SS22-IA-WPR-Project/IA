@@ -355,7 +355,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Thick
+  m_Text: Bodybuild
 --- !u!222 &192629476
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1332,7 +1332,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: not so thick
+  m_Text: 
 --- !u!222 &569865122
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1440,7 +1440,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1105387800}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AccessoriesCharacter, Assembly-CSharp
         m_MethodName: glasses
         m_Mode: 4
@@ -2040,17 +2040,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101998795}
   m_CullTransparentMesh: 1
---- !u!114 &1105387800 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5545559453138652909, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
-  m_PrefabInstance: {fileID: 5545559452058480629}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e0db0baf41724f4e875ed04bd21b9ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1151329606 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5545559453058632371, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
@@ -2334,7 +2323,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1105387800}
+      - m_Target: {fileID: 1688255646}
         m_TargetAssemblyTypeName: AccessoriesCharacter, Assembly-CSharp
         m_MethodName: helmetActive
         m_Mode: 0
@@ -2584,6 +2573,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619682376}
   m_CullTransparentMesh: 1
+--- !u!114 &1637979191 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5545559452818786586, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+  m_PrefabInstance: {fileID: 5545559452058480629}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6b977e8a8abf0547aa095580241c1cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1646769406
 GameObject:
   m_ObjectHideFlags: 0
@@ -2659,6 +2659,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646769406}
   m_CullTransparentMesh: 1
+--- !u!114 &1688255646 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5545559453138652909, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+  m_PrefabInstance: {fileID: 5545559452058480629}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e0db0baf41724f4e875ed04bd21b9ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1715600303
 GameObject:
   m_ObjectHideFlags: 0
@@ -3159,7 +3170,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1993582319}
+      - m_Target: {fileID: 1637979191}
         m_TargetAssemblyTypeName: BodyBuild, Assembly-CSharp
         m_MethodName: Bodybuild
         m_Mode: 0
@@ -3292,7 +3303,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1105387800}
+      - m_Target: {fileID: 1688255646}
         m_TargetAssemblyTypeName: AccessoriesCharacter, Assembly-CSharp
         m_MethodName: backpackActive
         m_Mode: 0
@@ -3407,17 +3418,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a246d0dab49da744b31e15070f4716b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1993582319 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5545559452818786586, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
-  m_PrefabInstance: {fileID: 5545559452058480629}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6b977e8a8abf0547aa095580241c1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2097943800
@@ -3590,10 +3590,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
+    - target: {fileID: 5545559453138652898, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 258098749a79ffb4a905c62e96c8df96, type: 3}
     - target: {fileID: 5545559453138652909, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
       propertyPath: drop
       value: 
       objectReference: {fileID: 596793482}
+    - target: {fileID: 5545559453138652909, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+      propertyPath: helmet
+      value: 
+      objectReference: {fileID: 5545559452058480633}
+    - target: {fileID: 5545559453138652909, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+      propertyPath: backpack
+      value: 
+      objectReference: {fileID: 5545559452058480632}
+    - target: {fileID: 5545559453138652909, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+      propertyPath: glasses1
+      value: 
+      objectReference: {fileID: 5545559452058480631}
+    - target: {fileID: 5545559453138652909, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+      propertyPath: glasses2
+      value: 
+      objectReference: {fileID: 5545559452058480630}
     - target: {fileID: 5545559453138652909, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
       propertyPath: helmetToggel
       value: 
@@ -3604,3 +3624,23 @@ PrefabInstance:
       objectReference: {fileID: 1988346413}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+--- !u!1 &5545559452058480630 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4626499881772609181, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+  m_PrefabInstance: {fileID: 5545559452058480629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5545559452058480631 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4626499881702075118, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+  m_PrefabInstance: {fileID: 5545559452058480629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5545559452058480632 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4626499881528072313, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+  m_PrefabInstance: {fileID: 5545559452058480629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5545559452058480633 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4626499881075145028, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+  m_PrefabInstance: {fileID: 5545559452058480629}
+  m_PrefabAsset: {fileID: 0}

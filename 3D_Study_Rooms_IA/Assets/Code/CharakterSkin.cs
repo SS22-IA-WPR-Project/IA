@@ -19,7 +19,7 @@ public class CharakterSkin : MonoBehaviour
     {
         renderer = gameObject.GetComponent<SkinnedMeshRenderer>();
         
-        skins[skins.Length - 1] = renderer.material;
+        //skins[skins.Length - 1] = renderer.material;
         renderer.material = skins[skin];
 
     }

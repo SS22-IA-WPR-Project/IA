@@ -31,9 +31,9 @@ public class SceneSwitcher : MonoBehaviour
 
     public void charGUIToClassroom()
     {
-        thisPlayer = cache.cache(orgPlayer);
 
-        
+       
+       
         // The Application loads the Scene in the background at the same time as the current Scene.
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Classroom", LoadSceneMode.Single);
 
@@ -51,9 +51,9 @@ public class SceneSwitcher : MonoBehaviour
 
        
 
-        
-        GameObject.Instantiate(thisPlayer, new Vector3(-5, 0.1f, 5), thisPlayer.transform.rotation);
-        //player.transform.position = new Vector3(-5, 0.1f, 5);
+        thisPlayer = cache.cache();
+        //GameObject.Instantiate(thisPlayer, new Vector3(-5, 0.1f, 5), thisPlayer.transform.rotation);
+        thisPlayer.transform.position = new Vector3(-5, 0.1f, 5);
         
         
     }

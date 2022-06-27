@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 public class AccessoriesCharacter : MonoBehaviour
 {
-    GameObject backpack;
-    GameObject helmet;
-    GameObject glasses1;
-    GameObject glasses2;
+    public GameObject backpack;
+    public GameObject helmet;
+    public GameObject glasses1;
+    public GameObject glasses2;
 
     public Dropdown drop;
     public Toggle backpackToggle;
@@ -33,15 +33,12 @@ public class AccessoriesCharacter : MonoBehaviour
     void Start()
     {
         //load to the right var and deactivate the accessories for the start 
-        backpack = gameObject.transform.GetChild(3).gameObject;
-        helmet = gameObject.transform.GetChild(2).gameObject;
-        glasses1 = gameObject.transform.GetChild(4).gameObject;
-        glasses2 = gameObject.transform.GetChild(5).gameObject;
+        
+        //helmet = gameObject.transform.GetChild(2).gameObject;
+        //backpack = gameObject.transform.GetChild(3).gameObject;
+        //glasses1 = gameObject.transform.GetChild(4).gameObject;
+        //glasses2 = gameObject.transform.GetChild(5).gameObject;
 
-
-        //backpack.SetActive(false);
-        //helmet.SetActive(false);
-       
         //proper setup for the glasses dropdown. 
         //first line of the might need to be changed latter if more Dropdowns are in project
         //drop = GameObject.FindObjectOfType<Dropdown>();
