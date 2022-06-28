@@ -11,7 +11,7 @@ public class CharakterSkin : MonoBehaviour
 
     private void Awake()
     {
-        skin = PlayerPrefs.GetInt("skin", -1);
+        skin = PlayerPrefs.GetInt("skin", 0);
     }
 
     // Start is called before the first frame update
