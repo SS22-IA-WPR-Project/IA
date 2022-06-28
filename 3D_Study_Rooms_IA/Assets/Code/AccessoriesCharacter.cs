@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,72 +7,106 @@ using UnityEngine.UI;
 
 public class AccessoriesCharacter : MonoBehaviour
 {
-    GameObject backpack;
-    GameObject helmet;
-    GameObject glasses1;
-    GameObject glasses2;
+    public GameObject backpack;
+    public GameObject helmet;
+    public GameObject glasses1;
+    public GameObject glasses2;
 
-    Dropdown drop;
+    public Dropdown drop;
+    public Toggle backpackToggle;
+    public Toggle helmetToggel;
+
+    int backpackOn;
+    int helmetOn;
+    int glassesOn;
+    
+
+    private void Awake()
+    {
+        backpackOn = PlayerPrefs.GetInt("backpack", 0);
+        helmetOn = PlayerPrefs.GetInt("helmet", 0);
+        glassesOn = PlayerPrefs.GetInt("glasses", 0);
+        
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         //load to the right var and deactivate the accessories for the start 
+        
+        //helmet = gameObject.transform.GetChild(2).gameObject;
+        //backpack = gameObject.transform.GetChild(3).gameObject;
+        //glasses1 = gameObject.transform.GetChild(4).gameObject;
+        //glasses2 = gameObject.transform.GetChild(5).gameObject;
 
-        backpack = gameObject.transform.GetChild(2).gameObject;
-        helmet = gameObject.transform.GetChild(3).gameObject;
-        glasses1 = gameObject.transform.GetChild(4).gameObject;
-        glasses2 = gameObject.transform.GetChild(5).gameObject;
+        //proper setup for the glasses dropdown. 
+        //first line of the might need to be changed latter if more Dropdowns are in project
+        //drop = GameObject.FindObjectOfType<Dropdown>();
+        drop.onValueChanged.AddListener(delegate {
+            DropdownValueChanged(drop);
+        });
 
+        //using the Playerprefs to set up the player from last session
+        
+        //glasses
+        glasses(glassesOn);
+        drop.SetValueWithoutNotify(glassesOn);
 
-        backpack.SetActive(false);
-        helmet.SetActive(false);
-        //glasses1.SetActive(false);
-        //glasses2.SetActive(false);
+        //backpack
+        backpackActive(backpackOn == 1 ? true : false);
+        backpackToggle.isOn = backpackOn == 1 ? true : false;
 
-        //drop = Dropdown.fii Find("Dropdown");
-        drop = GameObject.FindObjectOfType<Dropdown>();
+        //helmet
+        helmetActive(helmetOn == 1 ? true : false);
+        helmetToggel.isOn = helmetOn == 1 ? true : false;
+    }
+
+    private void DropdownValueChanged(Dropdown drop)
+    {
         glasses(drop.value);
-
+        
     }
 
     public void backpackActive(bool state)
     {
         backpack.SetActive(state);
+        PlayerPrefs.SetInt("backpack", state ? 1 : 0);
+        
+        Debug.Log("backpack" + PlayerPrefs.GetInt("backpack"));
+        
     }
 
     public void helmetActive(bool state)
     {
         helmet.SetActive(state);
+        PlayerPrefs.SetInt("helmet", state ? 1 : 0);
+       
+        Debug.Log("helmet" + PlayerPrefs.GetInt("helmet"));
     }
 
-    public void glasses(float value)
+    public void glasses(int value)
     {
-        
-        Debug.Log(value);
+
+        //Debug.Log(PlayerPrefs.GetInt("glasses", value));
         switch (value)
         {
             case 0:
                 glasses1.SetActive(false);
                 glasses2.SetActive(false);
+                PlayerPrefs.SetInt("glasses", value);
                 break;
             case 1:
                 glasses1.SetActive(true);
                 glasses2.SetActive(false);
+                PlayerPrefs.SetInt("glasses", value);
                 break;
             case 2:
                 glasses1.SetActive(false);
                 glasses2.SetActive(true);
+                PlayerPrefs.SetInt("glasses", value);
                 break;
             
         }
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        //the switch case for the glasses gets constantly called with this value of the selected collom; so the right glasses are on the character 
-        glasses(drop.value);
-    }
 }
