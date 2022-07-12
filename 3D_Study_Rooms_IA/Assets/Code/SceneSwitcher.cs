@@ -7,7 +7,7 @@ public class SceneSwitcher : MonoBehaviour
 {
     Scene characterGUI;
     Scene classroom;
-    GameObject thisPlayer;
+    public GameObject thisPlayer;
     GameObject orgPlayer;
     CharacterCache cache;
     // Start is called before the first frame update
@@ -16,61 +16,111 @@ public class SceneSwitcher : MonoBehaviour
         characterGUI = SceneManager.GetSceneByName("CharacterGUItest");
         classroom = SceneManager.GetSceneByName("Classroom");
 
-        //GameObject[] findPlayer = characterGUI.GetRootGameObjects();
-        /*foreach(GameObject tmpPlayer in findPlayer )
-        {
-            if(tmpPlayer.name == "player")
-            {
-                player = tmpPlayer ;
-            }
-        }*/
-        cache = new CharacterCache();
-        orgPlayer = gameObject;
-        
     }
 
     public void charGUIToClassroom()
     {
 
-       
-       
-        // The Application loads the Scene in the background at the same time as the current Scene.
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Classroom", LoadSceneMode.Single);
+        StartCoroutine(guiToClassLoad());
 
-        // Wait until the last operation fully loads to return anything
-        //needs the extra methode, otherwise the wait won't work properlly
-        asyncDone(asyncLoad);
-        
+        //thisPlayer = GameObject.Instantiate(thisPlayer, new Vector3(-5, 0.1f, 5), thisPlayer.transform.rotation);
+        thisPlayer.transform.position = new Vector3(5, 0.1f, 5);
+        Debug.Log(thisPlayer.transform.position.x);
 
-        // Move the GameObject (you attach this in the Inspector) to the newly loaded Scene
-        //SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName("Classroom"));
+        StopCoroutine(guiToClassLoad());
 
-        // Unload the previous Scene
-        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("Classroom"));
-       SceneManager.UnloadSceneAsync(0);
-
-       
-
-        thisPlayer = cache.cache();
-        //GameObject.Instantiate(thisPlayer, new Vector3(-5, 0.1f, 5), thisPlayer.transform.rotation);
-        thisPlayer.transform.position = new Vector3(-5, 0.1f, 5);
-        
-        
     }
 
-    //wail for async (un)load of scene
-    IEnumerator asyncDone(AsyncOperation async)
+    public void logInToClassroom()
     {
-        while (async.isDone)
+        StartCoroutine(logInToClassLoad());
+
+
+        StopCoroutine(logInToClassLoad());
+    }
+
+    public void signUpToCharGUI()
+    {
+        StartCoroutine(signUpToCharGUILoad());
+
+
+        StopCoroutine(signUpToCharGUILoad());
+    }
+
+    IEnumerator guiToClassLoad()
+    {
+        // The Application loads the Scene in the background at the same time as the current Scene.
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Classroom", LoadSceneMode.Additive);
+
+        // Wait until the last operation fully loads to return anything
+        while (!asyncLoad.isDone)
         {
             yield return null;
         }
 
+        if (SceneManager.GetSceneByName("Classroom").isLoaded)
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Classroom"));
+        }
+        else
+        {
+            Debug.Log("scene not loaded");
+        }
+
+        // Unload the previous Scene
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CharacterGUItest"));
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator logInToClassLoad()
     {
-        
+
+        // The Application loads the Scene in the background at the same time as the current Scene.
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Classroom", LoadSceneMode.Additive);
+
+        // Wait until the last operation fully loads to return anything
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        if (SceneManager.GetSceneByName("Classroom").isLoaded)
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Classroom"));
+        }
+        else
+        {
+            Debug.Log("scene not loaded");
+        }
+
+        // Unload the previous Scene
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("LogInGUI"));
+
     }
+
+    IEnumerator signUpToCharGUILoad()
+    {
+        // The Application loads the Scene in the background at the same time as the current Scene.
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CharacterGUItest", LoadSceneMode.Additive);
+
+        // Wait until the last operation fully loads to return anything
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        if (SceneManager.GetSceneByName("CharacterGUItest").isLoaded)
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("CharacterGUItest"));
+        }
+        else
+        {
+            Debug.Log("scene not loaded");
+        }
+
+        // Unload the previous Scene
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("LogInGUI"));
+
+
+    }
+
 }

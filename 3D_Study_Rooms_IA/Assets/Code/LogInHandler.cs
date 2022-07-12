@@ -8,7 +8,8 @@ public class LogInHandler : MonoBehaviour
 
     public Button login;
     public Button signup;
-    public Button done;
+    public Button logInDone;
+    public Button signUpDone;
 
     public InputField benutzerName;
     public InputField email;
@@ -18,16 +19,20 @@ public class LogInHandler : MonoBehaviour
 
     string namethis;
     string emailthis;
-    string passwortthis;
+    string passwordthis;
 
+    private void Awake()
+    {
+       
+    }
     // Start is called before the first frame update
     void Start()
     {
         benutzerName.gameObject.SetActive(false);
         email.gameObject.SetActive(false);
         passwort.gameObject.SetActive(false);
-        done.gameObject.SetActive(false);
-
+        logInDone.gameObject.SetActive(false);
+        signUpDone.gameObject.SetActive(false);
     }
 
 
@@ -36,7 +41,7 @@ public class LogInHandler : MonoBehaviour
         benutzerName.gameObject.SetActive(true);
         passwort.gameObject.SetActive(true);
         //email.gameObject.SetActive(true);
-        done.gameObject.SetActive(true);
+        logInDone.gameObject.SetActive(true);
 
         login.gameObject.SetActive(false);
         signup.gameObject.SetActive(false);
@@ -49,7 +54,7 @@ public class LogInHandler : MonoBehaviour
         benutzerName.gameObject.SetActive(true);
         email.gameObject.SetActive(true);
         passwort.gameObject.SetActive(true);
-        done.gameObject.SetActive(true);
+        signUpDone.gameObject.SetActive(true);
 
         login.gameObject.SetActive(false);
         signup.gameObject.SetActive(false);
@@ -63,6 +68,7 @@ public class LogInHandler : MonoBehaviour
         if (mode)
         {
             namethis = namenew;
+            PlayerPrefs.SetString("userName" + namethis, namenew);
         }
         else
         {
@@ -75,7 +81,7 @@ public class LogInHandler : MonoBehaviour
         if (mode)
         {
             emailthis = emailnew;
-
+            
         }
         else
         {
@@ -87,31 +93,39 @@ public class LogInHandler : MonoBehaviour
     {
         if (mode)
         {
-            passwortthis = passwortnew;
-
+            passwordthis = passwortnew;
+            
         }
         else
         {
-            passwortthis = passwortnew;
+            passwordthis = passwortnew;
         }
 
     }
 
-    public void Done()
+    public void doneLogIn()
     {
-        if (mode)
-        {
-            Debug.Log("You Signed up with the Username: " + namethis + "; and the Email: " + emailthis);
-
-        }
+      
+        if ((PlayerPrefs.GetString("userName" + namethis) != "") )
+            Debug.Log("You Logged in with the Username: " + namethis);
         else
-        {
-            Debug.Log("You Logged in with the Username: " + namethis );
-
-        }
+            Debug.Log("User not found");
+ 
         benutzerName.gameObject.SetActive(false);
         email.gameObject.SetActive(false);
         passwort.gameObject.SetActive(false);
-        done.gameObject.SetActive(false);
+        logInDone.gameObject.SetActive(false);
+    }
+
+    public void doneSignUp()
+    {
+        PlayerPrefs.SetString("eMail" + namethis, emailthis);
+        PlayerPrefs.SetString("password" + namethis, passwordthis);
+        Debug.Log("You Signed up with the Username: " + PlayerPrefs.GetString("userName" + namethis) + "; and the Email: " + PlayerPrefs.GetString("eMail" + namethis));
+
+        benutzerName.gameObject.SetActive(false);
+        email.gameObject.SetActive(false);
+        passwort.gameObject.SetActive(false);
+        signUpDone.gameObject.SetActive(false);
     }
 }

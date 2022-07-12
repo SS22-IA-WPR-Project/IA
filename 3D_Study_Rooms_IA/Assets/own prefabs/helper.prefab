@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2032202512813916767}
-  - component: {fileID: 2032202512813916766}
+  - component: {fileID: 3908041253647682811}
   m_Layer: 0
   m_Name: helper
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2032202512813916766
+--- !u!114 &3908041253647682811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,21 +40,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2032202512813916765}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58ad7c65767a7fc4f92b2744249ebbf1, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ba0e17a142def74a8334b4fe87110e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPlayer: {fileID: 5545559453058632369, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
-  bodyBuilds:
-  - {fileID: 2891303107925617483, guid: 258098749a79ffb4a905c62e96c8df96, type: 3}
-  - {fileID: -4946375642883618642, guid: 3e40c26912d783a41a12577f846e8880, type: 3}
-  skins:
-  - {fileID: 2100000, guid: 3c9564e9ad0aee64aa69fe63f89b3e19, type: 2}
-  - {fileID: 2100000, guid: 513c0d02541a1ca469314f9568d38d18, type: 2}
-  - {fileID: 2100000, guid: a51526e9b8891694d9664f4b39f69185, type: 2}
-  - {fileID: 2100000, guid: 25f087ff1a3bf214d98c7c724220248b, type: 2}
-  - {fileID: 2100000, guid: 52ea9c20c95e25348aa0bc38eb20848c, type: 2}
-  - {fileID: 2100000, guid: 86f44dd41bd6a3a4ab5776522ec208d1, type: 2}
-  - {fileID: 2100000, guid: ae46b45eb9619f34aa670f7ab88e8815, type: 2}
-  - {fileID: 2100000, guid: 6428f3f7d46775b41add1873ab3364a8, type: 2}
-  - {fileID: 2100000, guid: 5e853cc972b57dc468306fc55b7d45a6, type: 2}
-  - {fileID: 2100000, guid: bda5ca1034a1528409bbff0e5af8845c, type: 2}
+  thisPlayer: {fileID: 714835311449432362, guid: 4a72a6fee64a0404fa2fae42a27f9cb0, type: 3}
