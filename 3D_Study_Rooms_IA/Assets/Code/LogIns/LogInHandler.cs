@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 
 namespace Studyrooms
@@ -24,6 +26,19 @@ namespace Studyrooms
         string emailthis;
         string passwordthis;
 
+        public struct User
+        {
+            public string username;
+            public string email;
+            public string password;
+        }
+        public struct loginuser
+        {
+            
+            public string email;
+            public string password;
+        }
+
         private void Awake()
         {
 
@@ -41,9 +56,9 @@ namespace Studyrooms
 
         public void LogIn()
         {
-            benutzerName.gameObject.SetActive(true);
+            //benutzerName.gameObject.SetActive(true);
             passwort.gameObject.SetActive(true);
-            //email.gameObject.SetActive(true);
+            email.gameObject.SetActive(true);
             logInDone.gameObject.SetActive(true);
 
             login.gameObject.SetActive(false);
@@ -108,6 +123,7 @@ namespace Studyrooms
 
         public void doneLogIn()
         {
+            /*
 
             if ((PlayerPrefs.GetString("userName" + namethis) != ""))
                 Debug.Log("You Logged in with the Username: " + namethis);
@@ -117,19 +133,109 @@ namespace Studyrooms
             benutzerName.gameObject.SetActive(false);
             email.gameObject.SetActive(false);
             passwort.gameObject.SetActive(false);
-            logInDone.gameObject.SetActive(false);
+            logInDone.gameObject.SetActive(false);*/
+
+            StartCoroutine(SendLogInData());
         }
 
-        public void doneSignUp()
+        private IEnumerator SendLogInData()
         {
+
             PlayerPrefs.SetString("eMail" + namethis, emailthis);
             PlayerPrefs.SetString("password" + namethis, passwordthis);
-            Debug.Log("You Signed up with the Username: " + PlayerPrefs.GetString("userName" + namethis) + "; and the Email: " + PlayerPrefs.GetString("eMail" + namethis));
+
+            var user = new loginuser
+            {
+                email = email.text,
+                password = passwort.text
+            };
+
+            if ((PlayerPrefs.GetString("userName" + namethis) != ""))
+                Debug.Log("You Logged in with the Username: " + namethis);
+            else
+                Debug.Log("User not found");
+
+            var request = LoginClient.Post("auth/login", JsonUtility.ToJson(user));
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.LogError(request.error);
+            }
 
             benutzerName.gameObject.SetActive(false);
             email.gameObject.SetActive(false);
             passwort.gameObject.SetActive(false);
             signUpDone.gameObject.SetActive(false);
+
+
         }
-    }
+
+
+
+        public void doneSignUp()
+        {
+            /*
+            PlayerPrefs.SetString("eMail" + namethis, emailthis);
+            PlayerPrefs.SetString("password" + namethis, passwordthis);
+
+            var user = new User
+            {
+                name = benutzerName.text,
+                eMail = email.text,
+                password = passwort.text
+            };
+
+            Debug.Log("You Signed up with the Username: " + user.name + "; and the Email: " + user.eMail);
+
+            var request = LoginClient.Post("auth/signup", JsonUtility.ToJson(user));
+
+            request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.LogError(request.error);
+            }
+
+            benutzerName.gameObject.SetActive(false);
+            email.gameObject.SetActive(false);
+            passwort.gameObject.SetActive(false);
+            signUpDone.gameObject.SetActive(false);*/
+
+            StartCoroutine(SendSignupData());
+        }
+
+        private IEnumerator SendSignupData()
+        {
+
+            PlayerPrefs.SetString("eMail" + namethis, emailthis);
+            PlayerPrefs.SetString("password" + namethis, passwordthis);
+
+            var user = new User
+            {
+                username = benutzerName.text,
+                email = email.text,
+                password = passwort.text
+            };
+
+            Debug.Log("You Signed up with the Username: " + user.username + "; and the Email: " + user.email);
+
+            var request = LoginClient.Post("auth/signup", JsonUtility.ToJson(user));
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.LogError(request.error);
+            }
+
+            benutzerName.gameObject.SetActive(false);
+            email.gameObject.SetActive(false);
+            passwort.gameObject.SetActive(false);
+            signUpDone.gameObject.SetActive(false);
+
+
+        }
+     }
 }
