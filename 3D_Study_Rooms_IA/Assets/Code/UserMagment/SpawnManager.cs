@@ -6,15 +6,22 @@ namespace Studyrooms
 {
 	public class SpawnManager : MonoBehaviour
 	{
-		public static SpawnManager Instance;
+		//public static SpawnManager Instance;
 
-		SpawnPoint[] spawnpoints;
+		GameObject[] spawnpoints;
+        int i = 0;
 
         //gets all  Spawnpoints and saves them in the spawnpoints array
         private void Awake()
         {
-			Instance = this;
-			spawnpoints = GetComponentsInChildren<SpawnPoint>();
+
+			//Instance = this;
+            foreach(Transform pos in transform.GetComponentInChildren<Transform>())
+            {
+                spawnpoints[i] = pos.gameObject;
+                i++;
+            }
+			
         }
 
         public void Start()

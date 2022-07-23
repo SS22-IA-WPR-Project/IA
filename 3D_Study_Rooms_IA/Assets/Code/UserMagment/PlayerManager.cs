@@ -7,6 +7,7 @@ namespace Studyrooms {
 	{
 
 		[SerializeField] GameObject Player;
+		Vector3[] SpawnPositions = new Vector3[4];
 
 		GameObject controller;
         // Start is called before the first frame update
@@ -25,6 +26,10 @@ namespace Studyrooms {
 
         private void Awake()
         {
+			SpawnPositions[0] = new Vector3(-8f, 0.5f, -16f);
+			SpawnPositions[1] = new Vector3(-29f, 0.5f, -16f);
+			SpawnPositions[2] = new Vector3(-28f, 0.5f, 53f);
+			SpawnPositions[3] = new Vector3(-8f, 0.5f, 53f);
 			//controller = Instantiate(Player,Vector3.zero, Quaternion.identity );
 			//Debug.Log("has spawed");
 			SREvents.sceneLoad.AddListener(CreateController);
@@ -32,9 +37,7 @@ namespace Studyrooms {
 
         void Start()
 		{
-			//controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
-			
-			//controller = CreateController();
+
 		}
 
 		// Update is called once per frame
@@ -49,13 +52,9 @@ namespace Studyrooms {
 			//Transform spawnpoint = SpawnManager.Instance.GetSpawnpoint();
 			Debug.Log("has spawed");
 			//Finds spawnpoint and instantiates the Player there
-			//controller.transform.position = spawnpoint.position;
-			//controller.transform.rotation = spawnpoint.rotation;
 			controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
-			controller.transform.position = new Vector3(-16f, 0f, -8f);
+			controller.transform.position = SpawnPositions[Random.Range(0, SpawnPositions.Length)];
 			controller.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-
-			//return controller;
 		}
 	}
 }

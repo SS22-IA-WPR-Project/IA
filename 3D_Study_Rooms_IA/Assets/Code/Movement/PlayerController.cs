@@ -6,17 +6,15 @@ namespace Studyrooms
 {
 	public class PlayerController : MonoBehaviour
 	{
-        private GameObject PlayerPosition;
-        private GameObject Player;
         [SerializeField] float sensitivity;
-        Camera addCamera;
-        //private string InputKey;
+        public GameObject orientation;
+
+        float xRot;
+        float yRot;
+
         // Start is called before the first frame update
 
         //TODO:
-        //
-        //Camera control for players (?)
-        //
         //Emoticon Table reference
         //
         //interaction with other Players keys
@@ -33,51 +31,27 @@ namespace Studyrooms
 
         void Start()
         {
-            addCamera = gameObject.AddComponent<Camera>();
-            sensitivity = 0.5f;
+            Cursor.lockState = CursorLockMode.Locked;
+            orientation.AddComponent<Camera>();
+            sensitivity = 150f;
         }
 
         // Update is called once per frame
         void Update()
         {
-            //Takes the mouse movement and translates it onto the character, doesnt work quite right yet
-            float rotateHorizontal = Input.GetAxis("Mouse X");
-            float rotateVertical = Input.GetAxis("Mouse Y");
+            float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
 
-            addCamera.transform.Rotate(transform.up * rotateHorizontal * sensitivity);
-            addCamera.transform.Rotate(-transform.right * rotateVertical * sensitivity);
+            yRot += mouseX;
+            xRot -= mouseY;
+            xRot = Mathf.Clamp(xRot, -90f, 90f);
+
+            transform.rotation = Quaternion.Euler(0f,yRot, 0f);
+            orientation.transform.rotation = Quaternion.Euler(xRot, yRot, 0f);
+
 
 
             //Player movement
-            
-            /*
-             * doesnt work since you cant use multiple keys at the same time, also movement feels really weird with the switch keys
-             * 
-            switch (Input.inputString)
-            {
-                case "w":
-                    transform.localPosition += Time.deltaTime * transform.forward * 2f;
-                    break;
-                case "a":
-                    transform.Rotate(-transform.up * 0.5f);
-                    break;
-                case "s":
-                    transform.localPosition += Time.deltaTime * -transform.forward * 2f;
-                    break;
-                case "d":
-                    transform.Rotate(transform.up * 0.5f);
-                    break;
-                case "v":
-                    //voice_chat key;
-                    break;
-                case "e":
-                    //interaction with stuff
-                    break;
-                case "p":
-                    //whiteboard shit
-                    break;
-            }
-            */
             
             //Changed PlayerPosition.transform to transform so the script doesnt rely on a GameObject named "Player". 
             //also tried to limit movement in certain ways, but there are still improvements to do
@@ -90,7 +64,7 @@ namespace Studyrooms
             }
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.Rotate(-transform.up * 0.5f);
+                transform.localPosition += Time.deltaTime * -transform.right * 2f;
                 transform.localPosition = new Vector3(transform.localPosition.x, 0f, transform.localPosition.z);
             }
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
@@ -100,8 +74,12 @@ namespace Studyrooms
             }
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                transform.Rotate(transform.up * 0.5f);
+                transform.localPosition += Time.deltaTime * transform.right * 2f;
                 transform.localPosition = new Vector3(transform.localPosition.x, 0f, transform.localPosition.z);
+            }
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) 
+            { 
+                //run boi run
             }
             if (Input.GetKey(KeyCode.V))
             {

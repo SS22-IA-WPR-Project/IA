@@ -31,7 +31,7 @@ namespace Studyrooms
             });
 
 
-            socCom.Instance.Connect("http://25.59.191.68:16000/test", false);
+            socCom.Instance.Connect("http://localhost:3000", false);
 
         }
 
