@@ -13,6 +13,12 @@ namespace Studyrooms
         public GameObject thisPlayer;
         GameObject orgPlayer;
 
+        private void Awake()
+        {
+            SREvents.sceneLoadSignUpToCharUi.AddListener(signUpToCharGUI);
+            SREvents.sceneLoadLogInToClass.AddListener(logInToClassroom);
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -78,6 +84,9 @@ namespace Studyrooms
 
             // Unload the previous Scene
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CharacterGUItest"));
+
+            Debug.Log("test4");
+            SREvents.sceneLoad.Invoke();
         }
 
         IEnumerator logInToClassLoad()
@@ -137,7 +146,6 @@ namespace Studyrooms
 
             // Unload the previous Scene
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("LogInGUI"));
-
 
         }
 

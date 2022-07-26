@@ -1,6 +1,7 @@
 using Firesplash.UnityAssets.SocketIO;
 using System.Collections;
 using System.Collections.Generic;
+
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -20,6 +21,16 @@ namespace Studyrooms
             return Path.Combine(baseURL, path).Replace(Path.DirectorySeparatorChar, '/');
         }
 
+        public static UnityWebRequest Get(string path)
+        {
+            var request = new UnityWebRequest(BuildUrl(path), "GET");
+            
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+            return request;
+        }
+
+
         public static UnityWebRequest Post(string path, string jsonString)
         {
             Debug.Log("we are here");
@@ -27,7 +38,9 @@ namespace Studyrooms
             var request = new UnityWebRequest(BuildUrl(path), "POST");
             byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(jsonString);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-            //request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            
+            
             request.SetRequestHeader("Content-Type", "application/json");
         
             return request;

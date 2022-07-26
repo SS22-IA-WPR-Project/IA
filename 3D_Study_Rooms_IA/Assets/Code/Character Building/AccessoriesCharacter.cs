@@ -75,7 +75,7 @@ namespace Studyrooms
             backpack.SetActive(state);
             PlayerPrefs.SetInt("backpack", state ? 1 : 0);
 
-            Debug.Log("backpack" + PlayerPrefs.GetInt("backpack"));
+            
 
         }
 
@@ -84,7 +84,7 @@ namespace Studyrooms
             helmet.SetActive(state);
             PlayerPrefs.SetInt("helmet", state ? 1 : 0);
 
-            Debug.Log("helmet" + PlayerPrefs.GetInt("helmet"));
+            
         }
 
         public void glasses(int value)
