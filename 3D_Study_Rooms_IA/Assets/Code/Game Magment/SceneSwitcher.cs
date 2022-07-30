@@ -1,65 +1,93 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 
 namespace Studyrooms
 {
+
+    
     public class SceneSwitcher : MonoBehaviour
     {
-        Scene characterGUI;
-        Scene classroom;
-        public GameObject thisPlayer;
-        GameObject orgPlayer;
+        struct Avatar
+        {
+            public string _id;
+            public int skin;
+            public float bodybuild;
+            public int backpack;
+            public int helmet;
+            public int glasses;
+        }
 
+        public GameObject thisPlayer;
+       
         private void Awake()
         {
             SREvents.sceneLoadSignUpToCharUi.AddListener(signUpToCharGUI);
             SREvents.sceneLoadLogInToClass.AddListener(logInToClassroom);
+            SREvents.sceneLoadClassToGUI.AddListener(classToCharGUI);
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            characterGUI = SceneManager.GetSceneByName("CharacterGUItest");
-            classroom = SceneManager.GetSceneByName("Classroom");
+           
+        }
 
+        public void doneAvatar()
+        {
+            StartCoroutine(sendAvatarData());
+
+            SREvents.startSceneLoad.AddListener(charGUIToClassroom);
+
+        }
+
+        public void classToCharGUI()
+        {
+            StartCoroutine(classToGUILoad());
         }
 
         public void charGUIToClassroom()
         {
-
             StartCoroutine(guiToClassLoad());
-
-            //thisPlayer = GameObject.Instantiate(thisPlayer, new Vector3(-5, 0.1f, 5), thisPlayer.transform.rotation);
-            thisPlayer.transform.position = new Vector3(5, 0.1f, 5);
-            Debug.Log(thisPlayer.transform.position.x);
-
-            StopCoroutine(guiToClassLoad());
-
         }
 
         public void logInToClassroom()
         {
-            var cor = StartCoroutine(logInToClassLoad());
-
-
-            //StopCoroutine(logInToClassLoad());
-
-            if (SceneManager.GetSceneByName("LogInGUI").isLoaded)
-            {
-                Debug.Log("scene is still loaded");
-            }
-            
+            StartCoroutine(logInToClassLoad());
         }
 
         public void signUpToCharGUI()
         {
             StartCoroutine(signUpToCharGUILoad());
+        }
 
+        IEnumerator classToGUILoad()
+        {
 
-            StopCoroutine(signUpToCharGUILoad());
+            // The Application loads the Scene in the background at the same time as the current Scene.
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CharacterGUItest", LoadSceneMode.Additive);
+
+            // Wait until the last operation fully loads to return anything
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+
+            if (SceneManager.GetSceneByName("CharacterGUItest").isLoaded)
+            {
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName("CharacterGUItest"));
+            }
+            else
+            {
+                Debug.Log("scene not loaded");
+            }
+
+            // Unload the previous Scene
+            SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("Classroom"));
         }
 
         IEnumerator guiToClassLoad()
@@ -85,7 +113,6 @@ namespace Studyrooms
             // Unload the previous Scene
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CharacterGUItest"));
 
-            Debug.Log("test4");
             SREvents.sceneLoad.Invoke();
         }
 
@@ -100,7 +127,7 @@ namespace Studyrooms
             {
                 yield return null;
             }
-            Debug.Log("test1");
+            
             if (SceneManager.GetSceneByName("Classroom").isLoaded)
             {
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName("Classroom"));
@@ -109,17 +136,10 @@ namespace Studyrooms
             {
                 Debug.Log("scene not loaded");
             }
-            Debug.Log("test2");
+            
             // Unload the previous Scene
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("LogInGUI"));
-            Debug.Log("test3");
-            /*
-            while (!asyncUnload.isDone)
-            {
-                yield return null;
-            }*/
-            
-            Debug.Log("test4");
+ 
             SREvents.sceneLoad.Invoke();
 
         }
@@ -138,6 +158,7 @@ namespace Studyrooms
             if (SceneManager.GetSceneByName("CharacterGUItest").isLoaded)
             {
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName("CharacterGUItest"));
+                
             }
             else
             {
@@ -147,6 +168,34 @@ namespace Studyrooms
             // Unload the previous Scene
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("LogInGUI"));
 
+        }
+
+        IEnumerator sendAvatarData()
+        {
+            var avatar = new Avatar
+            {
+                _id = PlayerPrefs.GetString("emailID"),
+                skin = PlayerPrefs.GetInt("skin"),
+                bodybuild = PlayerPrefs.GetFloat("bodyValue"),
+                backpack = PlayerPrefs.GetInt("backpack"),
+                helmet = PlayerPrefs.GetInt("helmet"),
+                glasses = PlayerPrefs.GetInt("glasses")
+
+            };
+
+            var request = LoginClient.Post("user/create", JsonUtility.ToJson(avatar));
+
+            yield return request.SendWebRequest();
+
+            Debug.Log("callback-data: " + Encoding.Default.GetString(request.downloadHandler.data));
+
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.LogError(request.error);
+
+            }
+
+            SREvents.startSceneLoad.Invoke();
         }
 
     }

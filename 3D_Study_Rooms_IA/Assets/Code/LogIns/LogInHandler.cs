@@ -44,7 +44,7 @@ namespace Studyrooms
 
         private void Awake()
         {
-
+            
         }
         // Start is called before the first frame update
         void Start()
@@ -188,7 +188,7 @@ namespace Studyrooms
                 passwort.gameObject.SetActive(false);
                 signUpDone.gameObject.SetActive(false);
                 Debug.Log("testlogin");
-                SREvents.sceneLoadSignUpToCharUi.Invoke();
+                SREvents.sceneLoadLogInToClass.Invoke();
 
             }
 
@@ -204,8 +204,8 @@ namespace Studyrooms
         private IEnumerator SendSignupData()
         {
 
-            PlayerPrefs.SetString("eMail" + namethis, emailthis);
-            PlayerPrefs.SetString("password" + namethis, passwordthis);
+            PlayerPrefs.SetString("emailID", email.text);
+
 
             var user = new User
             {

@@ -93,7 +93,24 @@ namespace Studyrooms
             {
                 //whiteboard stuff
             }
+
+            if (Input.GetMouseButtonDown(0))
+            { // if left button pressed...
+                Ray ray = orientation.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 50.0f))
+                {
+                    Debug.Log(hit.transform.name);
+                    if(hit.transform.name == "console (2)")
+                    {
+                        Debug.Log("hit console");
+                        SREvents.sceneLoadClassToGUI.Invoke();
+                    }
+
+                }
+            }
             
+
         }
     }
 }
