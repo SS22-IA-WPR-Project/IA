@@ -100,11 +100,15 @@ namespace Studyrooms
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 50.0f))
                 {
-                    Debug.Log(hit.transform.name);
+                    //Debug.Log(hit.transform.name);
                     if(hit.transform.name == "console (2)")
                     {
                         Debug.Log("hit console");
                         SREvents.sceneLoadClassToGUI.Invoke();
+                    }
+                    if (hit.transform.name.Contains("decorative_table_glass"))
+                    {
+                        Debug.Log("User " + PlayerPrefs.GetString("emailID") + " wants to join Table " + hit.transform.name.Substring(24,1));
                     }
 
                 }

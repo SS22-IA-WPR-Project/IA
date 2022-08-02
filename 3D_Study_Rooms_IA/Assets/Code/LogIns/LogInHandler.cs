@@ -133,8 +133,7 @@ namespace Studyrooms
         private IEnumerator SendLogInData()
         {
 
-            PlayerPrefs.SetString("eMail" + namethis, emailthis);
-            PlayerPrefs.SetString("password" + namethis, passwordthis);
+            PlayerPrefs.SetString("emailID", email.text);
 
             var user = new loginuser
             {
@@ -231,6 +230,7 @@ namespace Studyrooms
             string test = "{\"succes\":true}";
             
             if (Encoding.Default.GetString(request.downloadHandler.data) == test){
+                PlayerPrefs.SetString("playerID", "");
                 benutzerName.gameObject.SetActive(false);
                 email.gameObject.SetActive(false);
                 passwort.gameObject.SetActive(false);
