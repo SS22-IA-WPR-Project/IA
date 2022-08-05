@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
@@ -19,6 +20,8 @@ namespace Studyrooms
         public InputField benutzerName;
         public InputField email;
         public InputField passwort;
+
+        public Text callbackMessage;
 
         bool mode;
 
@@ -41,7 +44,7 @@ namespace Studyrooms
 
         private void Awake()
         {
-
+            
         }
         // Start is called before the first frame update
         void Start()
@@ -51,6 +54,7 @@ namespace Studyrooms
             passwort.gameObject.SetActive(false);
             logInDone.gameObject.SetActive(false);
             signUpDone.gameObject.SetActive(false);
+            callbackMessage.gameObject.SetActive(false);
         }
 
 
@@ -123,26 +127,13 @@ namespace Studyrooms
 
         public void doneLogIn()
         {
-            /*
-
-            if ((PlayerPrefs.GetString("userName" + namethis) != ""))
-                Debug.Log("You Logged in with the Username: " + namethis);
-            else
-                Debug.Log("User not found");
-
-            benutzerName.gameObject.SetActive(false);
-            email.gameObject.SetActive(false);
-            passwort.gameObject.SetActive(false);
-            logInDone.gameObject.SetActive(false);*/
-
             StartCoroutine(SendLogInData());
         }
 
         private IEnumerator SendLogInData()
         {
 
-            PlayerPrefs.SetString("eMail" + namethis, emailthis);
-            PlayerPrefs.SetString("password" + namethis, passwordthis);
+            PlayerPrefs.SetString("emailID", email.text);
 
             var user = new loginuser
             {
@@ -159,16 +150,46 @@ namespace Studyrooms
 
             yield return request.SendWebRequest();
 
+
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.LogError(request.error);
+                
+            }
+            
+            string testWorngAcc = "{\"messages\":[\"Invalid Username/Password\"]}";
+            string testNoAcc = "{\"messages\":[\"Not found user\"]}";
+
+            if (Encoding.Default.GetString(request.downloadHandler.data) == testNoAcc)
+            {
+                callbackMessage.text = "No Account with this E-Mail/Password exists";
+                callbackMessage.color = Color.red;
+                callbackMessage.gameObject.SetActive(true);
+                benutzerName.text = "";
+                email.text = "";
+                passwort.text = "";
+
+            }
+            else if (Encoding.Default.GetString(request.downloadHandler.data) == testWorngAcc)
+            {
+                callbackMessage.text = "Worng E-Mail/Password for this Acc.";
+                callbackMessage.color = Color.red;
+                callbackMessage.gameObject.SetActive(true);
+                benutzerName.text = "";
+                email.text = "";
+                passwort.text = "";
             }
 
-            benutzerName.gameObject.SetActive(false);
-            email.gameObject.SetActive(false);
-            passwort.gameObject.SetActive(false);
-            signUpDone.gameObject.SetActive(false);
+            else
+            {
+                benutzerName.gameObject.SetActive(false);
+                email.gameObject.SetActive(false);
+                passwort.gameObject.SetActive(false);
+                signUpDone.gameObject.SetActive(false);
+                Debug.Log("testlogin");
+                SREvents.sceneLoadLogInToClass.Invoke();
 
+            }
 
         }
 
@@ -176,41 +197,14 @@ namespace Studyrooms
 
         public void doneSignUp()
         {
-            /*
-            PlayerPrefs.SetString("eMail" + namethis, emailthis);
-            PlayerPrefs.SetString("password" + namethis, passwordthis);
-
-            var user = new User
-            {
-                name = benutzerName.text,
-                eMail = email.text,
-                password = passwort.text
-            };
-
-            Debug.Log("You Signed up with the Username: " + user.name + "; and the Email: " + user.eMail);
-
-            var request = LoginClient.Post("auth/signup", JsonUtility.ToJson(user));
-
-            request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.ConnectionError)
-            {
-                Debug.LogError(request.error);
-            }
-
-            benutzerName.gameObject.SetActive(false);
-            email.gameObject.SetActive(false);
-            passwort.gameObject.SetActive(false);
-            signUpDone.gameObject.SetActive(false);*/
-
             StartCoroutine(SendSignupData());
         }
 
         private IEnumerator SendSignupData()
         {
 
-            PlayerPrefs.SetString("eMail" + namethis, emailthis);
-            PlayerPrefs.SetString("password" + namethis, passwordthis);
+            PlayerPrefs.SetString("emailID", email.text);
+
 
             var user = new User
             {
@@ -225,15 +219,35 @@ namespace Studyrooms
 
             yield return request.SendWebRequest();
 
+            Debug.Log("callback-data: " + Encoding.Default.GetString(request.downloadHandler.data));
+
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.LogError(request.error);
+                
             }
 
-            benutzerName.gameObject.SetActive(false);
-            email.gameObject.SetActive(false);
-            passwort.gameObject.SetActive(false);
-            signUpDone.gameObject.SetActive(false);
+            string test = "{\"succes\":true}";
+            
+            if (Encoding.Default.GetString(request.downloadHandler.data) == test){
+                PlayerPrefs.SetString("playerID", "");
+                benutzerName.gameObject.SetActive(false);
+                email.gameObject.SetActive(false);
+                passwort.gameObject.SetActive(false);
+                signUpDone.gameObject.SetActive(false); 
+                Debug.Log("testsignUp");
+                SREvents.sceneLoadSignUpToCharUi.Invoke();
+            }
+            else
+            {
+                callbackMessage.text = "Account with this E-Mail allready exists.";
+                callbackMessage.color = Color.red;
+                callbackMessage.gameObject.SetActive(true);
+                benutzerName.text = "";
+                email.text = "";
+                passwort.text = "";
+            }
+           
 
 
         }
