@@ -6,9 +6,17 @@ namespace Studyrooms
 {
 	public class PlayerController : MonoBehaviour
 	{
+        struct Vec3
+        {
+            public string id;
+            public float x;
+            public float y;
+            public float z;
+        }
+
         [SerializeField] float sensitivity;
         public GameObject orientation;
-
+        public float speed = 2f;
         float xRot;
         float yRot;
 
@@ -23,11 +31,6 @@ namespace Studyrooms
         //
         //Whiteboard/text projecting keys
         //
-
-        private void Awake()
-        {
-            
-        }
 
         void Start()
         {
@@ -52,35 +55,34 @@ namespace Studyrooms
 
 
             //Player movement
-            
-            //Changed PlayerPosition.transform to transform so the script doesnt rely on a GameObject named "Player". 
-            //also tried to limit movement in certain ways, but there are still improvements to do
+             
             // added Inputs for whiteboard, voicechat and interactions but didnt implement those features yet
 
             if (Input.GetKey("up") || Input.GetKey("w"))
             {
-                transform.localPosition += Time.deltaTime * transform.forward * 2f;
+                transform.localPosition += Time.deltaTime * transform.forward * speed;
                 transform.localPosition = new Vector3(transform.localPosition.x, 0f, transform.localPosition.z);
             }
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.localPosition += Time.deltaTime * -transform.right * 2f;
+                transform.localPosition += Time.deltaTime * -transform.right * speed;
                 transform.localPosition = new Vector3(transform.localPosition.x, 0f, transform.localPosition.z);
             }
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                transform.localPosition += Time.deltaTime * -transform.forward * 2f;
+                transform.localPosition += Time.deltaTime * -transform.forward * speed;
                 transform.localPosition = new Vector3(transform.localPosition.x, 0f, transform.localPosition.z);
             }
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                transform.localPosition += Time.deltaTime * transform.right * 2f;
+                transform.localPosition += Time.deltaTime * transform.right * speed;
                 transform.localPosition = new Vector3(transform.localPosition.x, 0f, transform.localPosition.z);
             }
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) 
-            { 
-                //run boi run
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                speed = 5f;
             }
+            else speed = 2f;
             if (Input.GetKey(KeyCode.V))
             {
                 //voice chat stuff
@@ -116,5 +118,26 @@ namespace Studyrooms
             
 
         }
+
+        private IEnumerator sendPos()
+        {
+            var Pos = new Vec3
+            {
+                id = PlayerPrefs.GetString("emailID"),
+                x = transform.position.x,
+                y = transform.position.y,
+                z = transform.position.z
+            };
+
+            var request = LoginClient.Post("", JsonUtility.ToJson(Pos));
+            yield return request.SendWebRequest();
+        }
+
+        /*private IEnumerator getPos()
+        {
+            //var get = LoginClient.Get("", JsonUtility.FromJson(""));
+
+           // yield return get;
+        }*/
     }
 }
