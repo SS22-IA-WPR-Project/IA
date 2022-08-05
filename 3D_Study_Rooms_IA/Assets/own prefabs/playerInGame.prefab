@@ -152,6 +152,17 @@ MonoBehaviour:
   bodybuilds:
   - {fileID: 2891303107925617483, guid: 258098749a79ffb4a905c62e96c8df96, type: 3}
   - {fileID: -4946375642883618642, guid: 3e40c26912d783a41a12577f846e8880, type: 3}
+  skins:
+  - {fileID: 2100000, guid: 3c9564e9ad0aee64aa69fe63f89b3e19, type: 2}
+  - {fileID: 2100000, guid: 513c0d02541a1ca469314f9568d38d18, type: 2}
+  - {fileID: 2100000, guid: a51526e9b8891694d9664f4b39f69185, type: 2}
+  - {fileID: 2100000, guid: 25f087ff1a3bf214d98c7c724220248b, type: 2}
+  - {fileID: 2100000, guid: 52ea9c20c95e25348aa0bc38eb20848c, type: 2}
+  - {fileID: 2100000, guid: 86f44dd41bd6a3a4ab5776522ec208d1, type: 2}
+  - {fileID: 2100000, guid: ae46b45eb9619f34aa670f7ab88e8815, type: 2}
+  - {fileID: 2100000, guid: 6428f3f7d46775b41add1873ab3364a8, type: 2}
+  - {fileID: 2100000, guid: 5e853cc972b57dc468306fc55b7d45a6, type: 2}
+  - {fileID: 2100000, guid: bda5ca1034a1528409bbff0e5af8845c, type: 2}
 --- !u!1001 &6700004136953469520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -235,6 +246,7 @@ PrefabInstance:
     - {fileID: 5545559453138652909, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
     - {fileID: 5545559452818786586, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
     - {fileID: 5545559453138652908, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
+    - {fileID: 5545559452818786587, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e99fd9d2230dbb34e94422b875a98693, type: 3}
 --- !u!4 &1157137802339340512 stripped
 Transform:

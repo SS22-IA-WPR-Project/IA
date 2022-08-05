@@ -159,8 +159,9 @@ namespace Studyrooms
             
             string testWorngAcc = "{\"messages\":[\"Invalid Username/Password\"]}";
             string testNoAcc = "{\"messages\":[\"Not found user\"]}";
+            string callback = Encoding.Default.GetString(request.downloadHandler.data);
 
-            if (Encoding.Default.GetString(request.downloadHandler.data) == testNoAcc)
+            if (callback == testNoAcc)
             {
                 callbackMessage.text = "No Account with this E-Mail/Password exists";
                 callbackMessage.color = Color.red;
@@ -170,7 +171,7 @@ namespace Studyrooms
                 passwort.text = "";
 
             }
-            else if (Encoding.Default.GetString(request.downloadHandler.data) == testWorngAcc)
+            else if (callback == testWorngAcc)
             {
                 callbackMessage.text = "Worng E-Mail/Password for this Acc.";
                 callbackMessage.color = Color.red;
@@ -182,11 +183,14 @@ namespace Studyrooms
 
             else
             {
+                string[] tmp = callback.Split(':');
+                string playerID = tmp[tmp.Length - 1].Substring(1, tmp[tmp.Length - 1].Length-3);
+                PlayerPrefs.SetString("playerID", playerID);
                 benutzerName.gameObject.SetActive(false);
                 email.gameObject.SetActive(false);
                 passwort.gameObject.SetActive(false);
                 signUpDone.gameObject.SetActive(false);
-                Debug.Log("testlogin");
+                Debug.Log("testlogin " + playerID);
                 SREvents.sceneLoadLogInToClass.Invoke();
 
             }
@@ -227,29 +231,52 @@ namespace Studyrooms
                 
             }
 
-            string test = "{\"succes\":true}";
-            
-            if (Encoding.Default.GetString(request.downloadHandler.data) == test){
-                PlayerPrefs.SetString("playerID", "");
+
+
+            string test = "\"succes\":true";
+            string callback = Encoding.Default.GetString(request.downloadHandler.data);
+            callbackMessage.text = "";
+
+            if (callback.Contains(test)){
+                string playerID = callback.Substring(22, callback.Length - 24);
+                PlayerPrefs.SetString("playerID", playerID);
                 benutzerName.gameObject.SetActive(false);
                 email.gameObject.SetActive(false);
                 passwort.gameObject.SetActive(false);
                 signUpDone.gameObject.SetActive(false); 
-                Debug.Log("testsignUp");
+                Debug.Log("testsignUp " + playerID);
                 SREvents.sceneLoadSignUpToCharUi.Invoke();
             }
+            
             else
             {
-                callbackMessage.text = "Account with this E-Mail allready exists.";
+                
+
+                if (callback.Contains("\"msg\":\"Min. 6 Character-Length\""))
+                {
+                    callbackMessage.text += "Please choose a username with at least 6 characters.\n";
+                }
+                if(callback.Contains("\"msg\":\"Invalid value\",\"param\":\"password\""))
+                {
+                    callbackMessage.text += "Please choose a password with at 8-32 characters.\n";
+                }
+                if(callback.Contains(" \"msg\": \"Should be a valid adress[th - koeln.de or fh - koeln.de]\""))
+                {
+                    callbackMessage.text += "Please choose a TH-Email adress.";
+                }
+
+                if (callback.Contains("\"messages\": [ \"user already exits\"]"))
+                {   
+                    callbackMessage.text = "Account with this E-Mail allready exists.";
+                }
+
+                
                 callbackMessage.color = Color.red;
                 callbackMessage.gameObject.SetActive(true);
                 benutzerName.text = "";
                 email.text = "";
                 passwort.text = "";
             }
-           
-
-
         }
      }
 }

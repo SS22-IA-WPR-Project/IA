@@ -63,10 +63,5 @@ namespace Studyrooms
 
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
