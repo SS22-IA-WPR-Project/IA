@@ -12,8 +12,10 @@ namespace Studyrooms
 {
     public class LoginClient 
     {
+
+        //static string baseURL = "http://localhost:3000/api/v1";
         static string baseURL = "http://25.59.191.68:3000/api/v1";
-        // Start is called before the first frame update
+        
         
         public static string BuildUrl(string path)
         {
@@ -33,8 +35,7 @@ namespace Studyrooms
 
         public static UnityWebRequest Post(string path, string jsonString)
         {
-            Debug.Log("we are here");
-        
+            
             var request = new UnityWebRequest(BuildUrl(path), "POST");
             byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(jsonString);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);

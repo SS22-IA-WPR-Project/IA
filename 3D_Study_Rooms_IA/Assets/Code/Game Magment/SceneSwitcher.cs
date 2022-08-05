@@ -16,7 +16,7 @@ namespace Studyrooms
         {
             public string _id;
             public int skin;
-            public float bodybuild;
+            public int bodybuild;
             public int backpack;
             public int helmet;
             public int glasses;
@@ -29,6 +29,7 @@ namespace Studyrooms
             SREvents.sceneLoadSignUpToCharUi.AddListener(signUpToCharGUI);
             SREvents.sceneLoadLogInToClass.AddListener(logInToClassroom);
             SREvents.sceneLoadClassToGUI.AddListener(classToCharGUI);
+            Debug.Log("listeners added");
         }
 
         // Start is called before the first frame update
@@ -40,9 +41,6 @@ namespace Studyrooms
         public void doneAvatar()
         {
             StartCoroutine(sendAvatarData());
-
-            SREvents.startSceneLoad.AddListener(charGUIToClassroom);
-
         }
 
         public void classToCharGUI()
@@ -62,6 +60,7 @@ namespace Studyrooms
 
         public void signUpToCharGUI()
         {
+            Debug.Log("start switch");
             StartCoroutine(signUpToCharGUILoad());
         }
 
@@ -164,19 +163,19 @@ namespace Studyrooms
             {
                 Debug.Log("scene not loaded");
             }
-
+            Debug.Log("switching");
             // Unload the previous Scene
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("LogInGUI"));
 
         }
 
         IEnumerator sendAvatarData()
-        {
+        { 
             var avatar = new Avatar
             {
-                _id = PlayerPrefs.GetString("emailID"),
+                _id = PlayerPrefs.GetString("playerID"),
                 skin = PlayerPrefs.GetInt("skin"),
-                bodybuild = PlayerPrefs.GetFloat("bodyValue"),
+                bodybuild = (int)PlayerPrefs.GetFloat("bodyValue"),
                 backpack = PlayerPrefs.GetInt("backpack"),
                 helmet = PlayerPrefs.GetInt("helmet"),
                 glasses = PlayerPrefs.GetInt("glasses")
@@ -194,9 +193,6 @@ namespace Studyrooms
                 Debug.LogError(request.error);
 
             }
-
-            SREvents.startSceneLoad.Invoke();
         }
-
     }
 }

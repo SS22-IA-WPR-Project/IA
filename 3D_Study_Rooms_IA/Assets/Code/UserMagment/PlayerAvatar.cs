@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Studyrooms
 {
@@ -11,38 +12,88 @@ namespace Studyrooms
         public GameObject glasses1;
         public GameObject glasses2;
         public Mesh[] bodybuilds = new Mesh[2];
+        public Material[] skins = new Material[10];
 
         new SkinnedMeshRenderer renderer;
 
-        int backpackOn;
-        int helmetOn;
-        int glassesOn;
-        float bodyValue;
+        struct Avatar
+        {
+            public string _id;
+            public int skin;
+            public float bodybuild;
+            public int backpack;
+            public int helmet;
+            public int glasses;
+        }
+
+        struct playerIDstruc
+        {
+            public string _id;
+        }
+
+
+        Avatar avatar;
 
         private void Awake()
         {
-            backpackOn = PlayerPrefs.GetInt("backpack", 0);
-            helmetOn = PlayerPrefs.GetInt("helmet", 0);
-            glassesOn = PlayerPrefs.GetInt("glasses", 0);
-            bodyValue = PlayerPrefs.GetFloat("bodyValue", 0);
+            
+            StartCoroutine(getAvatarData());
+            SREvents.loadAvatar.AddListener(setAvatar);
 
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            //glasses
-            glasses(glassesOn);
+            
 
-            //backpack
-            backpackActive(backpackOn == 1 ? true : false);
+        }
 
-            //helmet
-            helmetActive(helmetOn == 1 ? true : false);
+        IEnumerator getAvatarData()
+        {
+
+            Debug.Log(PlayerPrefs.GetString("playerID"));
+
+            playerIDstruc id = new playerIDstruc
+            {
+                _id = PlayerPrefs.GetString("playerID")
+            };
+
+            var request = LoginClient.Post("user/avatar", JsonUtility.ToJson(id));
+
+            yield return request.SendWebRequest();
+
+
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.LogError(request.error);
+
+            }
+
+            avatar = JsonUtility.FromJson<Avatar>(request.downloadHandler.text);
+
+
+            SREvents.loadAvatar.Invoke();
+        }
+
+        public void setAvatar()
+        {
+            renderer = gameObject.GetComponent<SkinnedMeshRenderer>();
+
+            //skin
+            renderer.material = skins[avatar.skin];
 
             //bodybuild
-            renderer = gameObject.GetComponent<SkinnedMeshRenderer>();
-            Bodybuild(bodyValue);
+            Bodybuild(avatar.bodybuild);
+
+            //backpack
+            backpackActive(avatar.backpack == 1 ? true : false);
+
+            //helmet
+            helmetActive(avatar.helmet == 1 ? true : false);
+
+            //glasses
+            glasses(avatar.glasses);
         }
 
         public void backpackActive(bool state)

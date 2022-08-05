@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Studyrooms {
 	public class PlayerManager : MonoBehaviour
 	{
@@ -40,21 +41,19 @@ namespace Studyrooms {
 
 		}
 
-		// Update is called once per frame
-		void Update()
-		{
-			
-		}
-
 		//references the PlayerController script and assigns new Players a controller 
 		void CreateController()
         {
+			
 			//Transform spawnpoint = SpawnManager.Instance.GetSpawnpoint();
-			Debug.Log("has spawed");
+
 			//Finds spawnpoint and instantiates the Player there
 			controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
 			controller.transform.position = SpawnPositions[Random.Range(0, SpawnPositions.Length)];
 			controller.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+			Debug.Log("has spawed");
 		}
+
+		
 	}
 }
