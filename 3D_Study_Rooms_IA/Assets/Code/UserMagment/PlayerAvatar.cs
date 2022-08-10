@@ -20,7 +20,7 @@ namespace Studyrooms
         {
             public string _id;
             public int skin;
-            public float bodybuild;
+            public int bodybuild;
             public int backpack;
             public int helmet;
             public int glasses;
@@ -94,6 +94,8 @@ namespace Studyrooms
 
             //glasses
             glasses(avatar.glasses);
+
+            SREvents.loadAvatar.RemoveListener(setAvatar);
         }
 
         public void backpackActive(bool state)

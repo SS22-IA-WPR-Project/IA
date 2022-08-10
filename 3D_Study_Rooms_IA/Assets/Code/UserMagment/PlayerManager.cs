@@ -33,7 +33,8 @@ namespace Studyrooms {
 			SpawnPositions[3] = new Vector3(-8f, 0.5f, 53f);
 			//controller = Instantiate(Player,Vector3.zero, Quaternion.identity );
 			//Debug.Log("has spawed");
-			SREvents.sceneLoad.AddListener(CreateController);
+			SREvents.sceneLoadClass.AddListener(CreateController);
+			
 		}
 
         void Start()
@@ -44,16 +45,34 @@ namespace Studyrooms {
 		//references the PlayerController script and assigns new Players a controller 
 		void CreateController()
         {
-			
+
 			//Transform spawnpoint = SpawnManager.Instance.GetSpawnpoint();
 
 			//Finds spawnpoint and instantiates the Player there
-			controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
+			GameObject activeplayer = GameObject.Find(PlayerPrefs.GetString("playerID"));
+
+			if (activeplayer != null){
+				controller = activeplayer;
+            }
+            else
+            {
+				controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
+				controller.name = PlayerPrefs.GetString("playerID");
+            }
+			
+			
 			controller.transform.position = SpawnPositions[Random.Range(0, SpawnPositions.Length)];
 			controller.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
 			Debug.Log("has spawed");
+			remove();
+			
 		}
 
-		
-	}
+        void remove()
+        {
+			SREvents.sceneLoadClass.RemoveListener(CreateController);
+		}
+
+
+    }
 }
