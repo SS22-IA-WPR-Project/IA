@@ -10,7 +10,7 @@ namespace Studyrooms {
         bool running;
         private void Awake()
         {
-            //SREvents.sceneLoadClassToGUI.AddListener(classToCharGUI);
+            SREvents.sceneLoadClassToGUI.AddListener(classToCharGUI);
         }
         // Start is called before the first frame update
         void Start()

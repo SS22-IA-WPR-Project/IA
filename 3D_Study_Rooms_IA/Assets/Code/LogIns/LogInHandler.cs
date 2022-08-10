@@ -216,7 +216,7 @@ namespace Studyrooms
                 email = email.text,
                 password = passwort.text
             };
-
+            //SREvents.sceneLoadSignUpToCharUi.Invoke();
             Debug.Log("You Signed up with the Username: " + user.username + "; and the Email: " + user.email);
 
             var request = LoginClient.Post("auth/signup", JsonUtility.ToJson(user));
@@ -236,7 +236,7 @@ namespace Studyrooms
             string test = "\"succes\":true";
             string callback = Encoding.Default.GetString(request.downloadHandler.data);
             callbackMessage.text = "";
-
+            
             if (callback.Contains(test)){
                 string playerID = callback.Substring(22, callback.Length - 24);
                 PlayerPrefs.SetString("playerID", playerID);

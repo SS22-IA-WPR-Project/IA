@@ -31,9 +31,9 @@ namespace Studyrooms
         {
             SREvents.sceneLoadSignUpToCharUi.AddListener(signUpToCharGUI);
             SREvents.sceneLoadLogInToClass.AddListener(logInToClassroom);
-            SREvents.sceneLoadClassToGUI.AddListener(classToCharGUI);
+            //SREvents.sceneLoadClassToGUI.AddListener(classToCharGUI);
             Debug.Log("listeners added");
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
 
         // Start is called before the first frame update
@@ -194,7 +194,7 @@ namespace Studyrooms
             {
                 _id = PlayerPrefs.GetString("playerID"),
                 skin = PlayerPrefs.GetInt("skin"),
-                bodybuild = (int)PlayerPrefs.GetFloat("bodyValue"),
+                bodybuild = PlayerPrefs.GetInt("bodyValue"),
                 backpack = PlayerPrefs.GetInt("backpack"),
                 helmet = PlayerPrefs.GetInt("helmet"),
                 glasses = PlayerPrefs.GetInt("glasses")
