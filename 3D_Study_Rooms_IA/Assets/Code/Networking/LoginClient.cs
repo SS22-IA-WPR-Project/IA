@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 
-
 namespace Studyrooms
 {
     public class LoginClient 
