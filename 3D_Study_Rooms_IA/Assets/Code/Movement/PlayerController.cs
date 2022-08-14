@@ -34,6 +34,7 @@ namespace Studyrooms
 
         void Start()
         {
+            
             Cursor.lockState = CursorLockMode.Locked;
             orientation.AddComponent<Camera>();
             sensitivity = 150f;
@@ -47,7 +48,7 @@ namespace Studyrooms
 
             yRot += mouseX;
             xRot -= mouseY;
-            xRot = Mathf.Clamp(xRot, -90f, 90f);
+            xRot = Mathf.Clamp(xRot, -90f, 52f);
 
             transform.rotation = Quaternion.Euler(0f,yRot, 0f);
             orientation.transform.rotation = Quaternion.Euler(xRot, yRot, 0f);
@@ -114,6 +115,11 @@ namespace Studyrooms
                     }
 
                 }
+            }
+            //kills Player
+            if (Input.GetKey(KeyCode.K))
+            {
+                Destroy(this.gameObject);
             }
             
 

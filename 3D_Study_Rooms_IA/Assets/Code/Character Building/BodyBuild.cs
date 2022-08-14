@@ -10,13 +10,13 @@ namespace Studyrooms
         new SkinnedMeshRenderer renderer;
         public Mesh[] bodybuilds = new Mesh[2];
 
-        float bodyValue;
+        int bodyValue;
 
         public Slider slider;
 
         private void Awake()
         {
-            bodyValue = PlayerPrefs.GetFloat("bodyValue", 0);
+            bodyValue = PlayerPrefs.GetInt("bodyValue", 0);
         }
         // Start is called before the first frame update
         void Start()
@@ -31,21 +31,17 @@ namespace Studyrooms
             if (value == 0)
             {
                 renderer.sharedMesh = bodybuilds[(int)value];
-                PlayerPrefs.SetFloat("bodyValue", value);
+                PlayerPrefs.SetInt("bodyValue", (int)value);
             }
             else
             {
                 renderer.sharedMesh = bodybuilds[(int)value];
-                PlayerPrefs.SetFloat("bodyValue", value);
+                PlayerPrefs.SetInt("bodyValue", (int)value);
 
             }
             //renderer.SetBlendShapeWeight(1, 100f-value);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        
     }
 }

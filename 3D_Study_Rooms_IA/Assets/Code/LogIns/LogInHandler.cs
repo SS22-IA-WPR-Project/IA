@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.EventSystems;
 
 
 namespace Studyrooms
@@ -23,12 +24,13 @@ namespace Studyrooms
 
         public Text callbackMessage;
 
-        bool mode;
+        bool loginMode;
 
         string namethis;
         string emailthis;
         string passwordthis;
 
+        EventSystem system;
         public struct User
         {
             public string username;
@@ -37,14 +39,14 @@ namespace Studyrooms
         }
         public struct loginuser
         {
-            
+
             public string email;
             public string password;
         }
 
         private void Awake()
         {
-            
+
         }
         // Start is called before the first frame update
         void Start()
@@ -55,6 +57,7 @@ namespace Studyrooms
             logInDone.gameObject.SetActive(false);
             signUpDone.gameObject.SetActive(false);
             callbackMessage.gameObject.SetActive(false);
+            system = EventSystem.current;
         }
 
 
@@ -68,7 +71,9 @@ namespace Studyrooms
             login.gameObject.SetActive(false);
             signup.gameObject.SetActive(false);
 
-            mode = false;
+            //email.Select();
+
+            loginMode = true;
         }
 
         public void SignUp()
@@ -81,16 +86,18 @@ namespace Studyrooms
             login.gameObject.SetActive(false);
             signup.gameObject.SetActive(false);
 
-            mode = true;
+            //benutzerName.Select();
+
+            loginMode = false;
 
         }
 
         public void setName(string namenew)
         {
-            if (mode)
+            if (loginMode)
             {
                 namethis = namenew;
-                PlayerPrefs.SetString("userName" + namethis, namenew);
+
             }
             else
             {
@@ -100,7 +107,7 @@ namespace Studyrooms
         }
         public void setEmail(string emailnew)
         {
-            if (mode)
+            if (loginMode)
             {
                 emailthis = emailnew;
 
@@ -113,7 +120,7 @@ namespace Studyrooms
         }
         public void setPasswort(string passwortnew)
         {
-            if (mode)
+            if (loginMode)
             {
                 passwordthis = passwortnew;
 
@@ -154,9 +161,9 @@ namespace Studyrooms
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.LogError(request.error);
-                
+
             }
-            
+
             string testWorngAcc = "{\"messages\":[\"Invalid Username/Password\"]}";
             string testNoAcc = "{\"messages\":[\"Not found user\"]}";
             string callback = Encoding.Default.GetString(request.downloadHandler.data);
@@ -184,7 +191,7 @@ namespace Studyrooms
             else
             {
                 string[] tmp = callback.Split(':');
-                string playerID = tmp[tmp.Length - 1].Substring(1, tmp[tmp.Length - 1].Length-3);
+                string playerID = tmp[tmp.Length - 1].Substring(1, tmp[tmp.Length - 1].Length - 3);
                 PlayerPrefs.SetString("playerID", playerID);
                 benutzerName.gameObject.SetActive(false);
                 email.gameObject.SetActive(false);
@@ -216,7 +223,7 @@ namespace Studyrooms
                 email = email.text,
                 password = passwort.text
             };
-
+            //SREvents.sceneLoadSignUpToCharUi.Invoke();
             Debug.Log("You Signed up with the Username: " + user.username + "; and the Email: " + user.email);
 
             var request = LoginClient.Post("auth/signup", JsonUtility.ToJson(user));
@@ -228,7 +235,7 @@ namespace Studyrooms
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.LogError(request.error);
-                
+
             }
 
 
@@ -237,40 +244,41 @@ namespace Studyrooms
             string callback = Encoding.Default.GetString(request.downloadHandler.data);
             callbackMessage.text = "";
 
-            if (callback.Contains(test)){
+            if (callback.Contains(test))
+            {
                 string playerID = callback.Substring(22, callback.Length - 24);
                 PlayerPrefs.SetString("playerID", playerID);
                 benutzerName.gameObject.SetActive(false);
                 email.gameObject.SetActive(false);
                 passwort.gameObject.SetActive(false);
-                signUpDone.gameObject.SetActive(false); 
+                signUpDone.gameObject.SetActive(false);
                 Debug.Log("testsignUp " + playerID);
                 SREvents.sceneLoadSignUpToCharUi.Invoke();
             }
-            
+
             else
             {
-                
+
 
                 if (callback.Contains("\"msg\":\"Min. 6 Character-Length\""))
                 {
                     callbackMessage.text += "Please choose a username with at least 6 characters.\n";
                 }
-                if(callback.Contains("\"msg\":\"Invalid value\",\"param\":\"password\""))
+                if (callback.Contains("\"msg\":\"Invalid value\",\"param\":\"password\""))
                 {
                     callbackMessage.text += "Please choose a password with at 8-32 characters.\n";
                 }
-                if(callback.Contains(" \"msg\": \"Should be a valid adress[th - koeln.de or fh - koeln.de]\""))
+                if (callback.Contains(" \"msg\": \"Should be a valid adress[th - koeln.de or fh - koeln.de]\""))
                 {
                     callbackMessage.text += "Please choose a TH-Email adress.";
                 }
 
                 if (callback.Contains("\"messages\": [ \"user already exits\"]"))
-                {   
+                {
                     callbackMessage.text = "Account with this E-Mail allready exists.";
                 }
 
-                
+
                 callbackMessage.color = Color.red;
                 callbackMessage.gameObject.SetActive(true);
                 benutzerName.text = "";
@@ -278,5 +286,40 @@ namespace Studyrooms
                 passwort.text = "";
             }
         }
-     }
+
+        public void Update()
+        {
+
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+                Selectable previous = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnUp();
+                
+                if (next != null)
+                {
+                    Debug.Log(next.name);
+                    next.Select();
+                }/*
+                else if(previous != null)
+                {
+                    previous.Select();
+                }*/
+            }
+            else if (Input.GetKey(KeyCode.Return))
+            {
+                if (loginMode)
+                {   
+                    Debug.Log("Done LogIn");
+                    logInDone.onClick.Invoke();
+                    doneLogIn();
+                }
+                else
+                {
+                    Debug.Log("Done SiginUp");
+                    signup.onClick.Invoke();
+                    doneSignUp();
+                }
+            }
+        }
+    }
 }

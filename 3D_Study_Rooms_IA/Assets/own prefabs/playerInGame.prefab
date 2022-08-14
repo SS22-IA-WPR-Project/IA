@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensitivity: 0.5
   orientation: {fileID: 6928344415791144239}
+  speed: 2
 --- !u!114 &4058697479089799302
 MonoBehaviour:
   m_ObjectHideFlags: 0

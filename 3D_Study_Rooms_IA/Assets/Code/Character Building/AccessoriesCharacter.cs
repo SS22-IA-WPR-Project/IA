@@ -18,6 +18,8 @@ namespace Studyrooms
         public Toggle backpackToggle;
         public Toggle helmetToggel;
 
+        public Button classroom;
+
         int backpackOn;
         int helmetOn;
         int glassesOn;
@@ -25,6 +27,7 @@ namespace Studyrooms
 
         private void Awake()
         {
+            classroom.gameObject.SetActive(false);
             backpackOn = PlayerPrefs.GetInt("backpack", 0);
             helmetOn = PlayerPrefs.GetInt("helmet", 0);
             glassesOn = PlayerPrefs.GetInt("glasses", 0);

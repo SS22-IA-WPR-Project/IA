@@ -7,7 +7,7 @@ namespace Studyrooms
 {
     public class DropdownGUIController : MonoBehaviour
     {
-
+        /*
         Dropdown m_Dropdown;
         int m_DropdownValue;
         public AccessoriesCharacter ace;
@@ -18,7 +18,7 @@ namespace Studyrooms
         {
             m_Dropdown = GetComponent<Dropdown>();
             m_DropdownValue = m_Dropdown.value;
-            Debug.Log("Starting Dropdown Value : " + m_Dropdown.value);
+            //Debug.Log("Starting Dropdown Value : " + m_Dropdown.value);
 
 
         }
@@ -27,9 +27,9 @@ namespace Studyrooms
         void Update()
         {
             m_DropdownValue = m_Dropdown.value;
-            Debug.Log("Starting Dropdown Value : " + m_Dropdown.value);
+            //Debug.Log("Starting Dropdown Value : " + m_Dropdown.value);
             ace.glasses(m_DropdownValue);
 
-        }
+        }*/
     }
 }

@@ -12,6 +12,9 @@ namespace Studyrooms
     
     public class SceneSwitcher : MonoBehaviour
     {
+        
+        bool runningClassToGUI;
+        bool runningGUIToClass;
         struct Avatar
         {
             public string _id;
@@ -22,14 +25,15 @@ namespace Studyrooms
             public int glasses;
         }
 
-        public GameObject thisPlayer;
+        //public GameObject thisPlayer;
        
         private void Awake()
         {
             SREvents.sceneLoadSignUpToCharUi.AddListener(signUpToCharGUI);
             SREvents.sceneLoadLogInToClass.AddListener(logInToClassroom);
-            SREvents.sceneLoadClassToGUI.AddListener(classToCharGUI);
+            //SREvents.sceneLoadClassToGUI.AddListener(classToCharGUI);
             Debug.Log("listeners added");
+            //DontDestroyOnLoad(this.gameObject);
         }
 
         // Start is called before the first frame update
@@ -42,14 +46,22 @@ namespace Studyrooms
         {
             StartCoroutine(sendAvatarData());
         }
-
+        
         public void classToCharGUI()
         {
+            
             StartCoroutine(classToGUILoad());
-        }
 
+            if (!runningClassToGUI)
+            {
+                StopCoroutine(classToGUILoad());
+                Debug.Log("stoped");
+            }
+        }
+        
         public void charGUIToClassroom()
         {
+            
             StartCoroutine(guiToClassLoad());
         }
 
@@ -63,10 +75,10 @@ namespace Studyrooms
             Debug.Log("start switch");
             StartCoroutine(signUpToCharGUILoad());
         }
-
+        
         IEnumerator classToGUILoad()
         {
-
+            runningClassToGUI = true;
             // The Application loads the Scene in the background at the same time as the current Scene.
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CharacterGUItest", LoadSceneMode.Additive);
 
@@ -87,10 +99,14 @@ namespace Studyrooms
 
             // Unload the previous Scene
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("Classroom"));
+            Cursor.lockState = CursorLockMode.None; 
+            runningClassToGUI = false;
+            SREvents.sceneLoadClassToGUI.RemoveListener(classToCharGUI);
         }
 
         IEnumerator guiToClassLoad()
         {
+            runningGUIToClass = true;
             // The Application loads the Scene in the background at the same time as the current Scene.
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Classroom", LoadSceneMode.Additive);
 
@@ -111,8 +127,8 @@ namespace Studyrooms
 
             // Unload the previous Scene
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CharacterGUItest"));
-
-            SREvents.sceneLoad.Invoke();
+            runningGUIToClass = false;
+            SREvents.sceneLoadClass.Invoke();
         }
 
         IEnumerator logInToClassLoad()
@@ -138,8 +154,10 @@ namespace Studyrooms
             
             // Unload the previous Scene
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("LogInGUI"));
- 
-            SREvents.sceneLoad.Invoke();
+
+            SREvents.sceneLoadLogInToClass.RemoveListener(logInToClassroom);
+
+            SREvents.sceneLoadClass.Invoke();
 
         }
 
@@ -166,6 +184,7 @@ namespace Studyrooms
             Debug.Log("switching");
             // Unload the previous Scene
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("LogInGUI"));
+            SREvents.sceneLoadSignUpToCharUi.RemoveListener(signUpToCharGUI);
 
         }
 
@@ -175,7 +194,7 @@ namespace Studyrooms
             {
                 _id = PlayerPrefs.GetString("playerID"),
                 skin = PlayerPrefs.GetInt("skin"),
-                bodybuild = (int)PlayerPrefs.GetFloat("bodyValue"),
+                bodybuild = PlayerPrefs.GetInt("bodyValue"),
                 backpack = PlayerPrefs.GetInt("backpack"),
                 helmet = PlayerPrefs.GetInt("helmet"),
                 glasses = PlayerPrefs.GetInt("glasses")
@@ -193,6 +212,11 @@ namespace Studyrooms
                 Debug.LogError(request.error);
 
             }
+        }
+
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
         }
     }
 }
