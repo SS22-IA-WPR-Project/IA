@@ -40,7 +40,7 @@ namespace Studyrooms
             {
                 Debug.Log("Connection made!");
 
-                socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(tmp), true);
+                socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(tmp), false);
             });
 
             socCom.Instance.On("disconnect", (string payload) =>
@@ -55,7 +55,7 @@ namespace Studyrooms
                // socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(), true);
             });*/
            
-            socCom.Instance.Connect("http://localhost:3000", false);
+            socCom.Instance.Connect("http://localhost:8080", false);
 
         }
 
