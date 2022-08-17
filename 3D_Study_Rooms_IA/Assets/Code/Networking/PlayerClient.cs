@@ -28,15 +28,21 @@ namespace Studyrooms {
 	{
 
         private Vec3 tmp;
-        private Vec3 returnedPositions;
         private Avatar tmpAvatar;
+        private combinedPlayer cPlayer;
         private Vector3 oldPos;
         private Vector3 VecLength;
+        private GameObject gaOb;
         public SocketIOCommunicator socCom;
+        private List<GameObject> goList;
         // Start is called before the first frame update
         void Start()
         {
+            
+
             oldPos = transform.position;
+
+            gaOb = (GameObject)Resources.Load("Assets/own_prefabs/otherPlayers.prefab", typeof(GameObject));
 
             tmp = new Vec3
             {
@@ -55,6 +61,7 @@ namespace Studyrooms {
                 helmet = PlayerPrefs.GetInt("helmet"),
                 glasses = PlayerPrefs.GetInt("glasses")
             };
+
 
             socCom.Instance.On("connection", (string data) =>
             {
@@ -87,6 +94,12 @@ namespace Studyrooms {
                 sendPosition();
             }
 
+            if (false)
+            {
+                GameObject newGo = Instantiate(gaOb, Vector3.zero, Quaternion.identity);
+                newGo.name = getAvatar()._id;
+            }
+
         }
 
       /*  IEnumerator UpdatePosition()
@@ -112,9 +125,9 @@ namespace Studyrooms {
             socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(tmp), false);
         }
 
-        private void getPositions()
+        private Vec3 getPositions()
         {
-            returnedPositions = new Vec3
+           Vec3 returnedPositions = new Vec3
             {
                 _id = "",
                 x = 0f,
@@ -128,6 +141,36 @@ namespace Studyrooms {
                 returnedPositions = JsonUtility.FromJson<Vec3>(data);
                 Debug.Log(data);
             });
+
+            return returnedPositions;
+        }
+
+        private Avatar getAvatar()
+        {
+           Avatar returnedAvatar = new Avatar
+            {
+                _id = "",
+                skin = 0,
+                bodybuild = 0,
+                backpack = 0,
+                helmet = 0,
+                glasses = 0
+            };
+
+            socCom.Instance.On("user:receiveAvatar", (string data) =>
+            {
+                returnedAvatar = JsonUtility.FromJson<Avatar>(data);
+            });
+
+            PlayerPrefs.SetInt("skin" + returnedAvatar._id, returnedAvatar.skin);
+            PlayerPrefs.SetInt("bodybuild" + returnedAvatar._id, returnedAvatar.bodybuild);
+            PlayerPrefs.SetInt("backpack" + returnedAvatar._id, returnedAvatar.backpack);
+            PlayerPrefs.SetInt("helmet" + returnedAvatar._id, returnedAvatar.helmet);
+            PlayerPrefs.SetInt("glasses" + returnedAvatar._id, returnedAvatar.glasses);
+
+            SREvents.getOtherAvatars.Invoke();
+
+            return returnedAvatar;
         }
 	}
 }

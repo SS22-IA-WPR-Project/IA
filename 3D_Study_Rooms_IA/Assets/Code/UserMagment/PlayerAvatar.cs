@@ -39,6 +39,7 @@ namespace Studyrooms
             
             SREvents.getUserAvatar.AddListener(userAvatar);
             SREvents.loadAvatar.AddListener(setAvatar);
+            SREvents.getOtherAvatars.AddListener(getOtherAvatars);
 
         }
 
@@ -77,6 +78,20 @@ namespace Studyrooms
             avatar = JsonUtility.FromJson<Avatar>(request.downloadHandler.text);
 
 
+            SREvents.loadAvatar.Invoke();
+        }
+
+        public void getOtherAvatars()
+        {
+            string name = gameObject.name;
+            avatar = new Avatar
+            {
+                skin = PlayerPrefs.GetInt("skin" + name),
+                bodybuild = PlayerPrefs.GetInt("bodybuild" + name),
+                backpack = PlayerPrefs.GetInt("backpack" + name),
+                helmet = PlayerPrefs.GetInt("helmet" + name),
+                glasses = PlayerPrefs.GetInt("glasses" + name)
+            };
             SREvents.loadAvatar.Invoke();
         }
 

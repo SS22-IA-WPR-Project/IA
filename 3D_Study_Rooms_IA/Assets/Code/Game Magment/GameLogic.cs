@@ -7,19 +7,9 @@ namespace Studyrooms
 	public class GameLogic : MonoBehaviour
 	{
 		//TODO:
-		//
-		//create Level -> LevelManager
-		//
-		//create PlayerManager reference
-		//
-		//create Objects in Room(table etc)
-		//
 		//Interaction between Players -> PlayerManager
 		//
 		//proximity reader for Voice-chat
-		//
-		//physics(?)
-		//
 		
 
 
