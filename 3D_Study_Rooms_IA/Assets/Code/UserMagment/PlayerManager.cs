@@ -60,8 +60,8 @@ namespace Studyrooms {
 				controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
 				controller.name = PlayerPrefs.GetString("playerID");
             }
-			
-			
+			SREvents.getUserAvatar.Invoke();
+
 			controller.transform.position = SpawnPositions[Random.Range(0, SpawnPositions.Length)];
 			controller.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
 			Debug.Log("has spawed");

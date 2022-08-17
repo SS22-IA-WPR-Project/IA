@@ -37,7 +37,7 @@ namespace Studyrooms
         private void Awake()
         {
             
-            StartCoroutine(getAvatarData());
+            SREvents.getUserAvatar.AddListener(userAvatar);
             SREvents.loadAvatar.AddListener(setAvatar);
 
         }
@@ -47,6 +47,10 @@ namespace Studyrooms
         {
             
 
+        }
+        private void userAvatar()
+        {
+            StartCoroutine(getAvatarData());
         }
 
         IEnumerator getAvatarData()

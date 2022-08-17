@@ -12,6 +12,7 @@ namespace Studyrooms
         public static readonly Event sceneLoadClassToGUI = new Event();
         //public static readonly Event startSceneLoad = new Event();
         public static readonly Event loadAvatar = new Event();
+        public static readonly Event getUserAvatar = new Event();
 
     }
 }
