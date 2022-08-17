@@ -8,6 +8,7 @@ namespace Studyrooms {
 	{
 
 		[SerializeField] GameObject Player;
+		combinedPlayer cPlayer;
 		Vector3[] SpawnPositions = new Vector3[4];
 
 		GameObject controller;

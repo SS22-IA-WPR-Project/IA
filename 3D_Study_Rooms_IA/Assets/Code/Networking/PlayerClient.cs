@@ -8,17 +8,28 @@ using Newtonsoft.Json;
 #endif
 
 namespace Studyrooms {
-	public class PlayerClient : MonoBehaviour
+
+    struct Vec3
+    {
+        public string _id;
+        public float x;
+        public float y;
+        public float z;
+    }
+
+    struct combinedPlayer
+    {
+        public Vec3 position;
+        public Avatar avatar;
+        public GameObject go;
+    }
+
+    public class PlayerClient : MonoBehaviour
 	{
-        struct Vec3
-        {
-            public string _id;
-            public float x;
-            public float y;
-            public float z;
-        }
 
         private Vec3 tmp;
+        private Vec3 returnedPositions;
+        private Avatar tmpAvatar;
         private Vector3 oldPos;
         private Vector3 VecLength;
         public SocketIOCommunicator socCom;
@@ -35,14 +46,25 @@ namespace Studyrooms {
                 z = transform.position.z
             };
 
+            tmpAvatar = new Avatar
+            {
+                _id = PlayerPrefs.GetString("playerID"),
+                skin = PlayerPrefs.GetInt("skin"),
+                bodybuild = PlayerPrefs.GetInt("bodyValue"),
+                backpack = PlayerPrefs.GetInt("backpack"),
+                helmet = PlayerPrefs.GetInt("helmet"),
+                glasses = PlayerPrefs.GetInt("glasses")
+            };
+
             socCom.Instance.On("connection", (string data) =>
             {
                 Debug.Log("Connection made!");
 
                 socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(tmp), false);
-            });
 
-            sendPosition();
+                socCom.Instance.Emit("user:sendAvatar", JsonUtility.ToJson(tmpAvatar), false);
+
+            });
 
             socCom.Instance.On("disconnect", (string payload) =>
             {
@@ -60,9 +82,6 @@ namespace Studyrooms {
             VecLength = (transform.position - oldPos);
             if (VecLength.magnitude > 0.1f)
             {
-                tmp.x = transform.position.x;
-                tmp.y = transform.position.y;
-                tmp.z = transform.position.z;
                 Debug.Log("Geht in die IF rein");
                 oldPos = transform.position;
                 sendPosition();
@@ -86,16 +105,29 @@ namespace Studyrooms {
 
         private void sendPosition()
         {
+            tmp.x = (int)(transform.position.x * 1000f);
+            tmp.y = (int)(transform.position.y * 1000f);
+            tmp.z = (int)(transform.position.z * 1000f);
             Debug.Log("sendPosition du huan");
             socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(tmp), false);
-
         }
 
-    
-        // Start is called before the first frame update
-        Vector3 GetPosition()
+        private void getPositions()
         {
-			return transform.position;
+            returnedPositions = new Vec3
+            {
+                _id = "",
+                x = 0f,
+                y = 0f,
+                z = 0f
+            };
+
+            socCom.Instance.On("user:coordinate", (string data) =>
+            {
+                Debug.Log("Listening on user:coordinate!");
+                returnedPositions = JsonUtility.FromJson<Vec3>(data);
+                Debug.Log(data);
+            });
         }
 	}
 }

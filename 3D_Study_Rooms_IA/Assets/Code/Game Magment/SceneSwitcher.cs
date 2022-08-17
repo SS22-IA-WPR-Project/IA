@@ -9,21 +9,21 @@ using UnityEngine.Networking;
 namespace Studyrooms
 {
 
-    
+    struct Avatar
+    {
+        public string _id;
+        public int skin;
+        public int bodybuild;
+        public int backpack;
+        public int helmet;
+        public int glasses;
+    }
+
     public class SceneSwitcher : MonoBehaviour
     {
         
         bool runningClassToGUI;
         bool runningGUIToClass;
-        struct Avatar
-        {
-            public string _id;
-            public int skin;
-            public int bodybuild;
-            public int backpack;
-            public int helmet;
-            public int glasses;
-        }
 
         //public GameObject thisPlayer;
        

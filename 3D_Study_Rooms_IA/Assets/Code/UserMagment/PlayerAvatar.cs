@@ -16,7 +16,7 @@ namespace Studyrooms
 
         new SkinnedMeshRenderer renderer;
 
-        struct Avatar
+        /*struct Avatar
         {
             public string _id;
             public int skin;
@@ -24,7 +24,7 @@ namespace Studyrooms
             public int backpack;
             public int helmet;
             public int glasses;
-        }
+        }*/
 
         struct playerIDstruc
         {
