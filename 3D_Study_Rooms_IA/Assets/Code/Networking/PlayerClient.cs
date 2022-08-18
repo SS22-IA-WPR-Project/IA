@@ -224,7 +224,7 @@ namespace Studyrooms {
             }
 
             Debug.Log("geht vors Event");
-            SREvents.getOtherAvatars.Invoke();
+            SREvents.getOtherAvatars.Invoke(returnedAvatar._id);
 
         }
 	}

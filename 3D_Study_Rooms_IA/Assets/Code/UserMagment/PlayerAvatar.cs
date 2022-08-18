@@ -13,6 +13,7 @@ namespace Studyrooms
         public GameObject glasses2;
         public Mesh[] bodybuilds = new Mesh[2];
         public Material[] skins = new Material[10];
+        public string nameId;
 
         new SkinnedMeshRenderer renderer;
 
@@ -40,6 +41,7 @@ namespace Studyrooms
             SREvents.getUserAvatar.AddListener(userAvatar);
             SREvents.loadAvatar.AddListener(setAvatar);
             SREvents.getOtherAvatars.AddListener(getOtherAvatars);
+            nameId = SREvents.getOtherAvatars.GetId();
 
         }
 
@@ -83,14 +85,14 @@ namespace Studyrooms
 
         public void getOtherAvatars()
         {
-            string name = gameObject.name;
+            Debug.Log(nameId);
             avatar = new Avatar
             {
-                skin = PlayerPrefs.GetInt("skin" + name),
-                bodybuild = PlayerPrefs.GetInt("bodybuild" + name),
-                backpack = PlayerPrefs.GetInt("backpack" + name),
-                helmet = PlayerPrefs.GetInt("helmet" + name),
-                glasses = PlayerPrefs.GetInt("glasses" + name)
+                skin = PlayerPrefs.GetInt("skin" + nameId),
+                bodybuild = PlayerPrefs.GetInt("bodybuild" + nameId),
+                backpack = PlayerPrefs.GetInt("backpack" + nameId),
+                helmet = PlayerPrefs.GetInt("helmet" + nameId),
+                glasses = PlayerPrefs.GetInt("glasses" + nameId)
             };
             SREvents.loadAvatar.Invoke();
         }

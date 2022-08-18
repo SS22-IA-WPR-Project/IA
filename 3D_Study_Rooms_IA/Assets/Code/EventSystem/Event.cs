@@ -5,20 +5,25 @@ namespace Studyrooms
     public class Event
     {
         private event Action actionHere = delegate { };
-        private String i = "";
+        private string i = "";
 
         public void Invoke()
         {
             actionHere?.Invoke();
         }
 
-        public void Invoke(String i)
+        public void Invoke(string i)
         {
             this.i = i;
             actionHere?.Invoke();
         }
 
-        public String AddListener(Action data)
+        public string GetId()
+        {
+            return i;
+        }
+
+        public string AddListener(Action data)
         {
             actionHere += data;
             return i;
