@@ -19,6 +19,7 @@ namespace Studyrooms {
 
     struct combinedPlayer
     {
+        public string _id;
         public Vec3 position;
         public Avatar avatar;
         public GameObject go;
@@ -27,14 +28,14 @@ namespace Studyrooms {
     public class PlayerClient : MonoBehaviour
 	{
 
-        private Vec3 tmp;
-        private Avatar tmpAvatar;
-        private combinedPlayer cPlayer;
+        private Vec3 userPosition;
+        private Vec3 returnedPositions;
+        private Avatar returnedAvatar;
         private Vector3 oldPos;
         private Vector3 VecLength;
         private GameObject gaOb;
         public SocketIOCommunicator socCom;
-        private List<GameObject> goList;
+        private List<combinedPlayer> goList;
         // Start is called before the first frame update
         void Start()
         {
@@ -44,7 +45,7 @@ namespace Studyrooms {
 
             gaOb = (GameObject)Resources.Load("Assets/own_prefabs/otherPlayers.prefab", typeof(GameObject));
 
-            tmp = new Vec3
+            userPosition = new Vec3
             {
                 _id = PlayerPrefs.GetString("playerID"),
                 x = transform.position.x,
@@ -52,7 +53,7 @@ namespace Studyrooms {
                 z = transform.position.z
             };
 
-            tmpAvatar = new Avatar
+            Avatar tmpAvatar = new Avatar
             {
                 _id = PlayerPrefs.GetString("playerID"),
                 skin = PlayerPrefs.GetInt("skin"),
@@ -62,12 +63,30 @@ namespace Studyrooms {
                 glasses = PlayerPrefs.GetInt("glasses")
             };
 
+            returnedAvatar = new Avatar
+            {
+                _id = "",
+                skin = 0,
+                bodybuild = 0,
+                backpack = 0,
+                helmet = 0,
+                glasses = 0
+            };
+
+            returnedPositions = new Vec3
+            {
+                _id = "",
+                x = 0f,
+                y = 0f,
+                z = 0f
+            };
+
 
             socCom.Instance.On("connection", (string data) =>
             {
                 Debug.Log("Connection made!");
 
-                socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(tmp), false);
+                socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(userPosition), false);
 
                 socCom.Instance.Emit("user:sendAvatar", JsonUtility.ToJson(tmpAvatar), false);
 
@@ -75,13 +94,11 @@ namespace Studyrooms {
 
             socCom.Instance.On("disconnect", (string payload) =>
             {
-
+                Destroy(this.gameObject);
             });
 
 
             socCom.Instance.Connect("http://localhost:8080", false);
-
-           // StartCoroutine(UpdatePosition());
 
         }
         private void Update()
@@ -93,91 +110,81 @@ namespace Studyrooms {
                 oldPos = transform.position;
                 sendPosition();
             }
-            Avatar returnedAvatar = new Avatar
-            {
-                _id = "",
-                skin = 0,
-                bodybuild = 0,
-                backpack = 0,
-                helmet = 0,
-                glasses = 0
-            };
-
-            socCom.Instance.On("user:receiveAvatar", (string data) =>
-            {
-                returnedAvatar = JsonUtility.FromJson<Avatar>(data);
-            });
-
-            
-            if (returnedAvatar._id != "")
-            {
-                getAvatar(returnedAvatar);
-                GameObject newGo = Instantiate(gaOb, Vector3.zero, Quaternion.identity);
-                newGo.name = returnedAvatar._id;
-            }
-
-        }
-
-      /*  IEnumerator UpdatePosition()
-        {
-            Debug.Log("geht in UpdatePosition rein");
-            yield return new WaitUntil(() => socCom.Instance.IsConnected());
-
-            if(oldPos != transform.position)
-            {
-                Debug.Log("Geht in die IF rein");
-                oldPos = transform.position;
-                sendPosition();
-            }
-
-        }*/
-
-        private void sendPosition()
-        {
-            tmp.x = (int)(transform.position.x * 1000f);
-            tmp.y = (int)(transform.position.y * 1000f);
-            tmp.z = (int)(transform.position.z * 1000f);
-            Debug.Log("sendPosition du huan");
-            socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(tmp), false);
-        }
-
-        private Vec3 getPositions()
-        {
-           Vec3 returnedPositions = new Vec3
-            {
-                _id = "",
-                x = 0f,
-                y = 0f,
-                z = 0f
-            };
 
             socCom.Instance.On("user:coordinate", (string data) =>
             {
                 Debug.Log("Listening on user:coordinate!");
                 returnedPositions = JsonUtility.FromJson<Vec3>(data);
-                Debug.Log(data);
+               // Debug.Log(data);
             });
 
-            return returnedPositions;
-        }
-
-        private void getAvatar(Avatar returnedAvatar)
-        {
-           returnedAvatar = new Avatar
+            if(returnedPositions._id != "")
             {
-                _id = "",
-                skin = 0,
-                bodybuild = 0,
-                backpack = 0,
-                helmet = 0,
-                glasses = 0
-            };
+                getPositions();
+            }
 
-            /*
             socCom.Instance.On("user:receiveAvatar", (string data) =>
             {
                 returnedAvatar = JsonUtility.FromJson<Avatar>(data);
-            });*/
+            });
+
+
+            if (returnedAvatar._id != "")
+            {
+                GameObject newGo = Instantiate(gaOb, Vector3.zero, Quaternion.identity);
+                getAvatar();
+                newGo.name = returnedAvatar._id;
+            }
+
+        }
+
+        private void sendPosition()
+        {
+            userPosition.x = (int)(transform.position.x * 1000f);
+            userPosition.y = (int)(transform.position.y * 1000f);
+            userPosition.z = (int)(transform.position.z * 1000f);
+            socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(userPosition), false);
+        }
+
+        private void getPositions()
+        {
+            combinedPlayer tmp2 = new combinedPlayer
+            {
+                _id = "",
+                position = returnedPositions,
+                avatar = returnedAvatar,
+                go = new GameObject()
+            };
+
+            Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
+
+            for(int i = 0; i<= goList.Count; i++)
+            {
+                if(goList[i]._id == returnedPositions._id)
+                {
+
+                    tmp2 = goList[i];
+                    goList.RemoveAt(i);
+                    tmp2.position = returnedPositions;
+                    overwritePosition.x = returnedPositions.x;
+                    overwritePosition.y = returnedPositions.y;
+                    overwritePosition.z = returnedPositions.z;
+                    tmp2.go.transform.position = overwritePosition;
+                    goList.Add(tmp2);
+                    break;
+                }
+            }
+        }
+
+        private void getAvatar()
+        {
+            combinedPlayer tmpPlayer = new combinedPlayer
+            {
+                _id = "",
+                position = returnedPositions,
+                avatar = returnedAvatar,
+                go = new GameObject()
+            };
 
             PlayerPrefs.SetInt("skin" + returnedAvatar._id, returnedAvatar.skin);
             PlayerPrefs.SetInt("bodybuild" + returnedAvatar._id, returnedAvatar.bodybuild);
@@ -185,9 +192,20 @@ namespace Studyrooms {
             PlayerPrefs.SetInt("helmet" + returnedAvatar._id, returnedAvatar.helmet);
             PlayerPrefs.SetInt("glasses" + returnedAvatar._id, returnedAvatar.glasses);
 
+            for(int i = 0; i <= goList.Count; i++)
+            {
+                if(goList[i]._id == returnedAvatar._id)
+                {
+                    tmpPlayer = goList[i];
+                    goList.RemoveAt(i);
+                    tmpPlayer.avatar = returnedAvatar;
+                    goList.Add(tmpPlayer);
+                    break;
+                }
+            }
+
             SREvents.getOtherAvatars.Invoke();
 
-            //return returnedAvatar;
         }
 	}
 }
