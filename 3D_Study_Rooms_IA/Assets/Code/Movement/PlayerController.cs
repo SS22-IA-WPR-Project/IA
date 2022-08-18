@@ -16,6 +16,7 @@ namespace Studyrooms
 
         [SerializeField] float sensitivity;
         public GameObject orientation;
+        private Camera camera;
         private CharacterController controller;
 
         public float speed = 2f;
@@ -42,6 +43,8 @@ namespace Studyrooms
             controller.center = new Vector3(0f, 1f, 0f);
             Cursor.lockState = CursorLockMode.Locked;
             orientation.AddComponent<Camera>();
+            camera = orientation.GetComponent<Camera>();
+            camera.enabled = true;
             sensitivity = 150f;
 
         }

@@ -98,7 +98,7 @@ namespace Studyrooms {
             });
 
 
-            socCom.Instance.Connect("http://localhost:8080", false);
+            socCom.Instance.Connect("http://25.59.191.68:8080", false);
 
         }
         private void Update()
@@ -148,6 +148,7 @@ namespace Studyrooms {
 
         private void getPositions()
         {
+            Debug.Log("geht in getPositions");
             combinedPlayer tmp2 = new combinedPlayer
             {
                 _id = "",
@@ -178,6 +179,7 @@ namespace Studyrooms {
 
         private void getAvatar()
         {
+            Debug.Log("geht in getAvatar");
             combinedPlayer tmpPlayer = new combinedPlayer
             {
                 _id = "",

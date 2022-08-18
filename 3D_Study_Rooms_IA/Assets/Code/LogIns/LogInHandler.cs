@@ -305,7 +305,7 @@ namespace Studyrooms
                     previous.Select();
                 }*/
             }
-            else if (Input.GetKey(KeyCode.Return))
+           /* else if (Input.GetKey(KeyCode.Return))
             {
                 if (loginMode)
                 {   
@@ -319,7 +319,7 @@ namespace Studyrooms
                     signup.onClick.Invoke();
                     doneSignUp();
                 }
-            }
+            }*/
         }
     }
 }
