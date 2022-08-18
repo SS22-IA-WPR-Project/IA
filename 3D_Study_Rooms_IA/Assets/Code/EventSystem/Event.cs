@@ -12,9 +12,9 @@ namespace Studyrooms
             actionHere?.Invoke();
         }
 
-        public void Invoke(int i)
+        public void Invoke(String i)
         {
-
+            this.i = i;
             actionHere?.Invoke();
         }
 
