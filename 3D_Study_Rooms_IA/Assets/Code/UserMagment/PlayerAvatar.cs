@@ -41,8 +41,6 @@ namespace Studyrooms
             SREvents.getUserAvatar.AddListener(userAvatar);
             SREvents.loadAvatar.AddListener(setAvatar);
             SREvents.getOtherAvatars.AddListener(getOtherAvatars);
-            nameId = SREvents.getOtherAvatars.GetId();
-
         }
 
         // Start is called before the first frame update
@@ -85,6 +83,7 @@ namespace Studyrooms
 
         public void getOtherAvatars()
         {
+            nameId = SREvents.getOtherAvatars.GetId();
             Debug.Log(nameId);
             avatar = new Avatar
             {
@@ -94,6 +93,11 @@ namespace Studyrooms
                 helmet = PlayerPrefs.GetInt("helmet" + nameId),
                 glasses = PlayerPrefs.GetInt("glasses" + nameId)
             };
+            Debug.Log("avatar skin:" + avatar.skin);
+            Debug.Log("avatar bodybuild:" + avatar.bodybuild);
+            Debug.Log("avatar backpack:" + avatar.backpack);
+            Debug.Log("avatar helmet:" + avatar.helmet);
+            Debug.Log("avatar glasses:" + avatar.glasses);
             SREvents.loadAvatar.Invoke();
         }
 
@@ -103,19 +107,19 @@ namespace Studyrooms
 
             //skin
             renderer.material = skins[avatar.skin];
-
+            Debug.Log("avatar skin:" + avatar.skin);
             //bodybuild
             Bodybuild(avatar.bodybuild);
-
+            Debug.Log("setAvatar bodybuild:" + avatar.bodybuild);
             //backpack
             backpackActive(avatar.backpack == 1 ? true : false);
-
+            Debug.Log("setAvatar backpack:" + avatar.backpack);
             //helmet
             helmetActive(avatar.helmet == 1 ? true : false);
-
+            Debug.Log("setAvatar helmet:" + avatar.helmet);
             //glasses
             glasses(avatar.glasses);
-
+            Debug.Log("setAvatar glasses:" + avatar.glasses);
             SREvents.loadAvatar.RemoveListener(setAvatar);
         }
 

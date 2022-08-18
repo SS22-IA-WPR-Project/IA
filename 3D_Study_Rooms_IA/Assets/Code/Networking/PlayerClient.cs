@@ -99,7 +99,7 @@ namespace Studyrooms {
             });
 
 
-            socCom.Instance.Connect("http://25.59.191.68:8080", false);
+            socCom.Instance.Connect("http://localhost:8080", false);
 
         }
         private void Update()
@@ -145,7 +145,7 @@ namespace Studyrooms {
         {
             combinedPlayer tmp2 = new combinedPlayer
             {
-                _id = "",
+                _id = returnedPositions._id,
                 position = returnedPositions,
                 avatar = returnedAvatar,
                 go = gaOb
@@ -153,22 +153,29 @@ namespace Studyrooms {
 
             Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
 
-            for(int i = 0; i<= goList.Count; i++)
+            if(goList.Count == 0)
             {
-                if(goList[i]._id == returnedPositions._id)
-                {
-
-                    tmp2 = goList[i];
-                    goList.RemoveAt(i);
-                    tmp2.position = returnedPositions;
-                    overwritePosition.x = returnedPositions.x;
-                    overwritePosition.y = returnedPositions.y;
-                    overwritePosition.z = returnedPositions.z;
-                    tmp2.go.transform.position = overwritePosition;
-                    goList.Add(tmp2);
-                    break;
-                }
+                goList.Add(tmp2);
             }
+            else
+            {
+                for (int i = 0; i <= goList.Count; i++)
+                {
+                    if (goList[i]._id == returnedPositions._id)
+                    {
+
+                        tmp2 = goList[i];
+                        goList.RemoveAt(i);
+                        tmp2.position = returnedPositions;
+                        overwritePosition.x = returnedPositions.x;
+                        overwritePosition.y = returnedPositions.y;
+                        overwritePosition.z = returnedPositions.z;
+                        tmp2.go.transform.position = overwritePosition;
+                        goList.Add(tmp2);
+                        break;
+                    }
+                }
+            }  
         }
 
         private void getAvatar()
