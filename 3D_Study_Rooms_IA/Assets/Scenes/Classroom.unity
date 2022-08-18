@@ -1268,7 +1268,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2046591215}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4164,6 +4164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 189021881}
   - component: {fileID: 189021880}
+  - component: {fileID: 189021882}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4202,6 +4203,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &189021882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189021879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb211a6ccea0c44fac912088c2d7bd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam1: {fileID: 2075552845}
+  cam2: {fileID: 1006256027}
+  cam3: {fileID: 1617960605}
+  cam4: {fileID: 740387382}
+  cam5: {fileID: 2062120644}
+  cam6: {fileID: 789429761}
 --- !u!1 &190586970
 GameObject:
   m_ObjectHideFlags: 0
@@ -13948,7 +13967,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1540456488}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18982,9 +19001,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1617960603}
   - {fileID: 2075552843}
   - {fileID: 1006256025}
+  - {fileID: 1617960603}
   - {fileID: 740387380}
   - {fileID: 2062120642}
   - {fileID: 789429759}
@@ -20026,8 +20045,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 918907108}
   m_HandleRect: {fileID: 918907107}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -20507,7 +20526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.00013780594, y: 582.99994}
+  m_AnchoredPosition: {x: 0.00013780594, y: 582.9999}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &928572951
@@ -22472,7 +22491,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 883728208}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!81 &1006256026
 AudioListener:
@@ -23938,8 +23957,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1742473182}
   m_HandleRect: {fileID: 1742473181}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -24976,7 +24995,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.00013780594, y: 582.99945}
+  m_AnchoredPosition: {x: 0.00013780594, y: 582.9999}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1127302431
@@ -27194,8 +27213,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 273023363}
   m_HandleRect: {fileID: 273023362}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -27610,7 +27629,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.00013780594, y: 280.04175}
+  m_AnchoredPosition: {x: 0.00013780594, y: 583}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1245429200
@@ -30205,7 +30224,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 47539073}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -31151,7 +31170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.00013780594, y: 280.04178}
+  m_AnchoredPosition: {x: 0.00013780594, y: 583.00024}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1418731466
@@ -31740,7 +31759,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.00013780594, y: 280.04178}
+  m_AnchoredPosition: {x: 0.00013780594, y: 583}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1453990363
@@ -32478,7 +32497,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 938747579}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -33821,7 +33840,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 129631669}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -34452,8 +34471,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1116798785}
   m_HandleRect: {fileID: 1116798784}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -34955,7 +34974,7 @@ GameObject:
   - component: {fileID: 1617960605}
   - component: {fileID: 1617960604}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: Camera (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34973,7 +34992,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 883728208}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!81 &1617960604
 AudioListener:
@@ -37193,7 +37212,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.00013780594, y: 583.00024}
+  m_AnchoredPosition: {x: 0.00013780594, y: 583}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1740635692
@@ -43172,7 +43191,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 883728208}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!81 &2075552844
 AudioListener:
