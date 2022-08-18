@@ -39,7 +39,8 @@ namespace Studyrooms {
         // Start is called before the first frame update
         void Start()
         {
-            
+
+            goList = new List<combinedPlayer>();
 
             oldPos = transform.position;
 
@@ -106,14 +107,12 @@ namespace Studyrooms {
             VecLength = (transform.position - oldPos);
             if (VecLength.magnitude > 0.1f)
             {
-                Debug.Log("Geht in die IF rein");
                 oldPos = transform.position;
                 sendPosition();
             }
 
             socCom.Instance.On("user:receiveCoordinate", (string data) =>
             {
-                Debug.Log("Listening on user:receiveCoordinate!");
                 returnedPositions = JsonUtility.FromJson<Vec3>(data);
                // Debug.Log(data);
             });
@@ -125,7 +124,6 @@ namespace Studyrooms {
 
             socCom.Instance.On("user:receiveAvatar", (string data) =>
             {
-                Debug.Log("geht in emit für receive avatar");
                 returnedAvatar = JsonUtility.FromJson<Avatar>(data);
 
                 if (returnedAvatar._id != "")
@@ -145,7 +143,6 @@ namespace Studyrooms {
 
         private void getPositions()
         {
-            Debug.Log("geht in getPositions");
             combinedPlayer tmp2 = new combinedPlayer
             {
                 _id = "",
@@ -176,9 +173,15 @@ namespace Studyrooms {
 
         private void getAvatar()
         {
-            Debug.Log("geht in getAvatar");
-            GameObject newGo = Instantiate(gaOb, Vector3.zero, Quaternion.identity);
-            newGo.name = returnedAvatar._id;
+
+            Vector3 overwriteOtherPosition = new Vector3(0f, 0f, 0f);
+            overwriteOtherPosition.x = returnedPositions.x;
+            overwriteOtherPosition.y = returnedPositions.y;
+            overwriteOtherPosition.z = returnedPositions.z;
+
+            GameObject newGo = gaOb;
+
+            Debug.Log("vor dem struct");
 
             combinedPlayer tmpPlayer = new combinedPlayer
             {
@@ -194,18 +197,33 @@ namespace Studyrooms {
             PlayerPrefs.SetInt("helmet" + returnedAvatar._id, returnedAvatar.helmet);
             PlayerPrefs.SetInt("glasses" + returnedAvatar._id, returnedAvatar.glasses);
 
-            for(int i = 0; i <= goList.Count; i++)
+            Debug.Log("vor der for" + goList.Count);
+
+            if(goList.Count == 0)
             {
-                if(goList[i]._id == returnedAvatar._id)
+                goList.Add(tmpPlayer);
+                newGo = Instantiate(gaOb, overwriteOtherPosition, Quaternion.identity);
+                newGo.name = returnedAvatar._id;
+            }
+            else
+            {
+                for(int i = 0; i <= goList.Count; i++)
                 {
-                    tmpPlayer = goList[i];
-                    goList.RemoveAt(i);
-                    tmpPlayer.avatar = returnedAvatar;
-                    goList.Add(tmpPlayer);
-                    break;
+                    if(goList[i]._id == returnedAvatar._id)
+                    {
+                        tmpPlayer = goList[i];
+                        goList.RemoveAt(i);
+                        tmpPlayer.avatar = returnedAvatar;
+                        goList.Add(tmpPlayer);
+                        Debug.Log("vorm break");
+                        newGo = Instantiate(gaOb, overwriteOtherPosition, Quaternion.identity);
+                        newGo.name = returnedAvatar._id;
+                        break;
+                    }
                 }
             }
 
+            Debug.Log("geht vors Event");
             SREvents.getOtherAvatars.Invoke();
 
         }
