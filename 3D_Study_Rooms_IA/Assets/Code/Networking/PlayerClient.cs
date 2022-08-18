@@ -86,7 +86,7 @@ namespace Studyrooms {
             {
                 Debug.Log("Connection made!");
 
-                socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(userPosition), false);
+                socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
 
                 socCom.Instance.Emit("user:sendAvatar", JsonUtility.ToJson(tmpAvatar), false);
 
@@ -111,9 +111,9 @@ namespace Studyrooms {
                 sendPosition();
             }
 
-            socCom.Instance.On("user:coordinate", (string data) =>
+            socCom.Instance.On("user:receiveCoordinate", (string data) =>
             {
-                Debug.Log("Listening on user:coordinate!");
+                Debug.Log("Listening on user:receiveCoordinate!");
                 returnedPositions = JsonUtility.FromJson<Vec3>(data);
                // Debug.Log(data);
             });
@@ -143,7 +143,7 @@ namespace Studyrooms {
             userPosition.x = (int)(transform.position.x * 1000f);
             userPosition.y = (int)(transform.position.y * 1000f);
             userPosition.z = (int)(transform.position.z * 1000f);
-            socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(userPosition), false);
+            socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
         }
 
         private void getPositions()
