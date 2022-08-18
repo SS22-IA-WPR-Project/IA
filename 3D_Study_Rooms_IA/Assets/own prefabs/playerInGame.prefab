@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239f3b256cf272049a6330c09aa45a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gaOb: {fileID: 714835311449432362, guid: 424af4aa1046316489c8f21a203025f2, type: 3}
   socCom: {fileID: 1503591700}
 --- !u!114 &4058697479089799302
 MonoBehaviour:

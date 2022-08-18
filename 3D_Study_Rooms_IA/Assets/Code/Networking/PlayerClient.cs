@@ -33,7 +33,7 @@ namespace Studyrooms {
         private Avatar returnedAvatar;
         private Vector3 oldPos;
         private Vector3 VecLength;
-        private GameObject gaOb;
+        public GameObject gaOb;
         public SocketIOCommunicator socCom;
         private List<combinedPlayer> goList;
         // Start is called before the first frame update
@@ -43,7 +43,7 @@ namespace Studyrooms {
 
             oldPos = transform.position;
 
-            gaOb = (GameObject)Resources.Load("Assets/own_prefabs/otherPlayers.prefab", typeof(GameObject));
+            //gaOb = (GameObject)Resources.Load("Assets/own_prefabs/otherPlayers.prefab", typeof(GameObject));
 
             userPosition = new Vec3
             {
@@ -125,17 +125,14 @@ namespace Studyrooms {
 
             socCom.Instance.On("user:receiveAvatar", (string data) =>
             {
+                Debug.Log("geht in emit für receive avatar");
                 returnedAvatar = JsonUtility.FromJson<Avatar>(data);
+
+                if (returnedAvatar._id != "")
+                {
+                    getAvatar();
+                }
             });
-
-
-            if (returnedAvatar._id != "")
-            {
-                GameObject newGo = Instantiate(gaOb, Vector3.zero, Quaternion.identity);
-                getAvatar();
-                newGo.name = returnedAvatar._id;
-            }
-
         }
 
         private void sendPosition()
@@ -154,7 +151,7 @@ namespace Studyrooms {
                 _id = "",
                 position = returnedPositions,
                 avatar = returnedAvatar,
-                go = new GameObject()
+                go = gaOb
             };
 
             Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
@@ -180,12 +177,15 @@ namespace Studyrooms {
         private void getAvatar()
         {
             Debug.Log("geht in getAvatar");
+            GameObject newGo = Instantiate(gaOb, Vector3.zero, Quaternion.identity);
+            newGo.name = returnedAvatar._id;
+
             combinedPlayer tmpPlayer = new combinedPlayer
             {
                 _id = "",
                 position = returnedPositions,
                 avatar = returnedAvatar,
-                go = new GameObject()
+                go = gaOb
             };
 
             PlayerPrefs.SetInt("skin" + returnedAvatar._id, returnedAvatar.skin);
