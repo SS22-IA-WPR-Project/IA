@@ -93,11 +93,27 @@ namespace Studyrooms {
                 oldPos = transform.position;
                 sendPosition();
             }
-
-            if (false)
+            Avatar returnedAvatar = new Avatar
             {
+                _id = "",
+                skin = 0,
+                bodybuild = 0,
+                backpack = 0,
+                helmet = 0,
+                glasses = 0
+            };
+
+            socCom.Instance.On("user:receiveAvatar", (string data) =>
+            {
+                returnedAvatar = JsonUtility.FromJson<Avatar>(data);
+            });
+
+            
+            if (returnedAvatar._id != "")
+            {
+                getAvatar(returnedAvatar);
                 GameObject newGo = Instantiate(gaOb, Vector3.zero, Quaternion.identity);
-                newGo.name = getAvatar()._id;
+                newGo.name = returnedAvatar._id;
             }
 
         }
@@ -145,9 +161,9 @@ namespace Studyrooms {
             return returnedPositions;
         }
 
-        private Avatar getAvatar()
+        private void getAvatar(Avatar returnedAvatar)
         {
-           Avatar returnedAvatar = new Avatar
+           returnedAvatar = new Avatar
             {
                 _id = "",
                 skin = 0,
@@ -157,10 +173,11 @@ namespace Studyrooms {
                 glasses = 0
             };
 
+            /*
             socCom.Instance.On("user:receiveAvatar", (string data) =>
             {
                 returnedAvatar = JsonUtility.FromJson<Avatar>(data);
-            });
+            });*/
 
             PlayerPrefs.SetInt("skin" + returnedAvatar._id, returnedAvatar.skin);
             PlayerPrefs.SetInt("bodybuild" + returnedAvatar._id, returnedAvatar.bodybuild);
@@ -170,7 +187,7 @@ namespace Studyrooms {
 
             SREvents.getOtherAvatars.Invoke();
 
-            return returnedAvatar;
+            //return returnedAvatar;
         }
 	}
 }
