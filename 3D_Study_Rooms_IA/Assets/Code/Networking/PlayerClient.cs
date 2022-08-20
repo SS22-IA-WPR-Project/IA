@@ -98,23 +98,9 @@ namespace Studyrooms {
                 Destroy(this.gameObject);
             });
 
-
-            socCom.Instance.Connect("http://25.59.191.68:8080", false);
-
-        }
-        private void Update()
-        {
-            VecLength = (transform.position - oldPos);
-            if (VecLength.magnitude > 0.1f)
-            {
-                oldPos = transform.position;
-                sendPosition();
-            }
-
             socCom.Instance.On("user:receiveCoordinate", (string data) =>
             {
                 returnedPositions = JsonUtility.FromJson<Vec3>(data);
-                // Debug.Log(data);
 
                 if (returnedPositions._id != "")
                 {
@@ -131,6 +117,18 @@ namespace Studyrooms {
                     getAvatar();
                 }
             });
+
+            socCom.Instance.Connect("http://25.59.191.68:8080", false);
+
+        }
+        private void Update()
+        {
+            VecLength = (transform.position - oldPos);
+            if (VecLength.magnitude > 0.1f)
+            {
+                oldPos = transform.position;
+                sendPosition();
+            }
         }
 
         private void sendPosition()
