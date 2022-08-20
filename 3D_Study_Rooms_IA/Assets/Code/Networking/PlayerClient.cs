@@ -99,7 +99,7 @@ namespace Studyrooms {
             });
 
 
-            socCom.Instance.Connect("http://localhost:8080", false);
+            socCom.Instance.Connect("http://25.59.191.68:8080", false);
 
         }
         private void Update()
@@ -114,13 +114,13 @@ namespace Studyrooms {
             socCom.Instance.On("user:receiveCoordinate", (string data) =>
             {
                 returnedPositions = JsonUtility.FromJson<Vec3>(data);
-               // Debug.Log(data);
-            });
+                // Debug.Log(data);
 
-            if(returnedPositions._id != "")
-            {
-                getPositions();
-            }
+                if (returnedPositions._id != "")
+                {
+                    getPositions();
+                }
+            });
 
             socCom.Instance.On("user:receiveAvatar", (string data) =>
             {
@@ -151,6 +151,14 @@ namespace Studyrooms {
                 go = gaOb
             };
 
+            Debug.Log("vor der umrechnung: " + returnedPositions.x);
+
+            returnedPositions.x = (returnedPositions.x / 1000f);
+            returnedPositions.y = (returnedPositions.y / 1000f);
+            returnedPositions.z = (returnedPositions.z / 1000f);
+
+            Debug.Log("nach der umrechnung: " + returnedPositions.x);
+
             Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
 
             if(goList.Count == 0)
@@ -168,6 +176,7 @@ namespace Studyrooms {
                         goList.RemoveAt(i);
                         tmp2.position = returnedPositions;
                         overwritePosition.x = returnedPositions.x;
+                        Debug.Log("zwischen Overwrite positions + x : " + overwritePosition.x);
                         overwritePosition.y = returnedPositions.y;
                         overwritePosition.z = returnedPositions.z;
                         tmp2.go.transform.position = overwritePosition;
@@ -192,7 +201,7 @@ namespace Studyrooms {
 
             combinedPlayer tmpPlayer = new combinedPlayer
             {
-                _id = "",
+                _id = returnedAvatar._id,
                 position = returnedPositions,
                 avatar = returnedAvatar,
                 go = gaOb
@@ -209,7 +218,7 @@ namespace Studyrooms {
             if(goList.Count == 0)
             {
                 goList.Add(tmpPlayer);
-                newGo = Instantiate(gaOb, overwriteOtherPosition, Quaternion.identity);
+                newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, Quaternion.identity);
                 newGo.name = returnedAvatar._id;
             }
             else
@@ -223,8 +232,11 @@ namespace Studyrooms {
                         tmpPlayer.avatar = returnedAvatar;
                         goList.Add(tmpPlayer);
                         Debug.Log("vorm break");
-                        newGo = Instantiate(gaOb, overwriteOtherPosition, Quaternion.identity);
-                        newGo.name = returnedAvatar._id;
+                        if (GameObject.Find(returnedAvatar._id) == null)
+                        {
+                            newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, Quaternion.identity);
+                            newGo.name = returnedAvatar._id;
+                        }
                         break;
                     }
                 }
