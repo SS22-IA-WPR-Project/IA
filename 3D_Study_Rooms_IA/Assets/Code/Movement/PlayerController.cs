@@ -40,7 +40,7 @@ namespace Studyrooms
         {
             controller = gameObject.AddComponent<CharacterController>();
             controller.center = new Vector3(0f, 1f, 0f);
-            Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.lockState = CursorLockMode.Locked;
             orientation.AddComponent<Camera>();
             sensitivity = 150f;
 

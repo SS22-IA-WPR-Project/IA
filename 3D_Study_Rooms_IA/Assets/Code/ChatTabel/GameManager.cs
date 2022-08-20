@@ -33,15 +33,15 @@ public class GameManager : MonoBehaviour
 
             }
         }
-        else
-        {
-            if(!chatBox.isFocused && Input.GetKeyDown(KeyCode.Return))
-            {
-                chatBox.ActivateInputField();
+        //else
+        //{
+        //    if(!chatBox.isFocused && Input.GetKeyDown(KeyCode.Return))
+        //    {
+        //        chatBox.ActivateInputField();
                 
-            }
+        //    }
 
-        }
+        //}
 
 
 
