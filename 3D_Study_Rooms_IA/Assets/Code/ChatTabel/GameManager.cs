@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-    public int maxMassnages = 30;
+    private int maxMassnages = 30;
 
     public GameObject chatPanal;
     public GameObject textObject;
