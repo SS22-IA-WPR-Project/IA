@@ -165,6 +165,7 @@ namespace Studyrooms {
             }
             else
             {
+                bool newUser = true;
                 for (int i = 0; i <= goList.Count; i++)
                 {
                     if (goList[i]._id == returnedPositions._id)
@@ -179,8 +180,13 @@ namespace Studyrooms {
                         overwritePosition.z = returnedPositions.z;
                         tmp2.go.transform.position = overwritePosition;
                         goList.Add(tmp2);
+                        newUser = false;
                         break;
                     }
+                }
+                if (newUser)
+                {
+                    goList.Add(tmp2);
                 }
             }  
         }
