@@ -136,10 +136,10 @@ namespace Studyrooms {
 
                 if (tester != goList[i].go.transform.position)
                 {
-                    Debug.Log("new x tester Pos: " + tester.x);
+                   /* Debug.Log("new x tester Pos: " + tester.x);
                     goList[i].go.transform.position = tester;
-                    Debug.Log("new x Pos: " + goList[i].go.transform.position.x);
-                    SREvents.otherPlayerPos.Invoke
+                    Debug.Log("new x Pos: " + goList[i].go.transform.position.x);*/
+                    SREvents.otherPlayerPos.Invoke(returnedPositions);
 
                 }
             }
@@ -192,13 +192,8 @@ namespace Studyrooms {
                         Debug.Log("zwischen Overwrite positions + x : " + overwritePosition.x);
                         overwritePosition.y = returnedPositions.y;
                         overwritePosition.z = returnedPositions.z;
-                        GameObject newGOPos = tmp2.go;
-                        newGOPos.transform.position = overwritePosition;
-                        tmp2.go = newGOPos;
-                        //newGOPos.transform.position.x = overwritePosition.x;
-                        Debug.Log("new x-Position: " + tmp2.go.transform.position.x);*/
-                        goList[i] = (tmp2);
-                        SREvents.otherPlayerPos.Invoke(returnedPositions);
+                        tmp2.go.transform.position = overwritePosition;*/
+                        goList.Add(tmp2);
                         newUser = false;
                         break;
                     }
