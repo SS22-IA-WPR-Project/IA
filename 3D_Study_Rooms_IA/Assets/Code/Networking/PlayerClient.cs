@@ -221,6 +221,7 @@ namespace Studyrooms {
             }
             else
             {
+                bool newUser = true;
                 for(int i = 0; i <= goList.Count; i++)
                 {
                     if(goList[i]._id == returnedAvatar._id)
@@ -235,8 +236,15 @@ namespace Studyrooms {
                             newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, Quaternion.identity);
                             newGo.name = returnedAvatar._id;
                         }
+                        newUser = false;
                         break;
                     }
+                }
+                if (newUser)
+                {
+                    newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, Quaternion.identity);
+                    newGo.name = returnedAvatar._id;
+                    goList.Add(tmpPlayer);
                 }
             }
 
