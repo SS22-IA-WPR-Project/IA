@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Studyrooms
 {
@@ -6,6 +7,8 @@ namespace Studyrooms
     {
         private event Action actionHere = delegate { };
         private string i = "";
+        private Vec3 v = new Vec3 { };
+        
 
         public void Invoke()
         {
@@ -16,6 +19,17 @@ namespace Studyrooms
         {
             this.i = i;
             actionHere?.Invoke();
+        }
+
+        internal void Invoke(Vec3 v)
+        {
+            this.v = v;
+            actionHere?.Invoke();
+        }
+
+        internal Vec3 getVec3()
+        {
+            return v;
         }
 
         public string GetId()

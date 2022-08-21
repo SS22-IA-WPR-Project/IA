@@ -129,6 +129,20 @@ namespace Studyrooms {
                 oldPos = transform.position;
                 sendPosition();
             }
+
+            for (int i = 0; i <= goList.Count; i++)
+            {
+                Vector3 tester = new Vector3(goList[i].position.x, goList[i].position.y, goList[i].position.z);
+
+                if (tester != goList[i].go.transform.position)
+                {
+                    Debug.Log("new x tester Pos: " + tester.x);
+                    goList[i].go.transform.position = tester;
+                    Debug.Log("new x Pos: " + goList[i].go.transform.position.x);
+                    SREvents.otherPlayerPos.Invoke
+
+                }
+            }
         }
 
         private void sendPosition()
@@ -157,7 +171,7 @@ namespace Studyrooms {
 
             Debug.Log("nach der umrechnung: " + returnedPositions.x);
 
-            Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
+            //Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
 
             if(goList.Count == 0)
             {
@@ -172,14 +186,19 @@ namespace Studyrooms {
                     {
 
                         tmp2 = goList[i];
-                        goList.RemoveAt(i);
+                        //goList.RemoveAt(i);
                         tmp2.position = returnedPositions;
-                        overwritePosition.x = returnedPositions.x;
+                        /*overwritePosition.x = returnedPositions.x;
                         Debug.Log("zwischen Overwrite positions + x : " + overwritePosition.x);
                         overwritePosition.y = returnedPositions.y;
                         overwritePosition.z = returnedPositions.z;
-                        tmp2.go.transform.position = overwritePosition;
-                        goList.Add(tmp2);
+                        GameObject newGOPos = tmp2.go;
+                        newGOPos.transform.position = overwritePosition;
+                        tmp2.go = newGOPos;
+                        //newGOPos.transform.position.x = overwritePosition.x;
+                        Debug.Log("new x-Position: " + tmp2.go.transform.position.x);*/
+                        goList[i] = (tmp2);
+                        SREvents.otherPlayerPos.Invoke(returnedPositions);
                         newUser = false;
                         break;
                     }
