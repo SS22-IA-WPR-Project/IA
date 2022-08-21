@@ -118,7 +118,7 @@ namespace Studyrooms {
                 }
             });
 
-            socCom.Instance.Connect("http://25.59.191.68:8080", false);
+            socCom.Instance.Connect("http://35.228.121.222", false);
 
         }
         private void Update()
