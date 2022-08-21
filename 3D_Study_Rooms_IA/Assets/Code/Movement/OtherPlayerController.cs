@@ -21,8 +21,8 @@ namespace Studyrooms {
 
         void Start()
 		{
-			//controller = gameObject.AddComponent<CharacterController>();
-			//controller.center = new Vector3(0f, 1f, 0f);
+			controller = gameObject.AddComponent<CharacterController>();
+			controller.center = new Vector3(0f, 1f, 0f);
 			oldPosition = new Vec3
 			{
 				_id = gameObject.name,
