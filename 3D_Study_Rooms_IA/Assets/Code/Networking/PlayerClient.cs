@@ -44,7 +44,7 @@ namespace Studyrooms {
         private Vector3 oldPos;
         private float oldRot;
         private Vector3 VecLength;
-        private GameObject gaOb;
+        public GameObject gaOb;
         //private Animator animator;
         private Anim currentAnim;
         private Anim oldAnim;
@@ -172,7 +172,8 @@ namespace Studyrooms {
                 }
             });
 
-            socCom.Instance.Connect("http://35.228.121.222", false);
+            //socCom.Instance.Connect("http://35.228.121.222", false);
+            socCom.Instance.Connect("http://localhost:8080", false);
 
         }
         private void Update()
@@ -246,13 +247,9 @@ namespace Studyrooms {
                 go = gaOb
             };
 
-            Debug.Log("vor der umrechnung: " + returnedPositions.x);
-
             returnedPositions.x = (returnedPositions.x / 1000f);
             returnedPositions.y = (returnedPositions.y / 1000f);
             returnedPositions.z = (returnedPositions.z / 1000f);
-
-            Debug.Log("nach der umrechnung: " + returnedPositions.x);
 
             //Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
 

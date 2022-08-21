@@ -48,7 +48,7 @@ namespace Studyrooms
         void Start()
         {
 
-            thisID = GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().name;
+            thisID = GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.name;
         }
         private void userAvatar()
         {
@@ -85,24 +85,32 @@ namespace Studyrooms
         public void getOtherAvatars()
         {
             nameId = SREvents.getOtherAvatars.GetId();
+            Debug.Log("nameID" + nameId);
+            //Debug.Log("thisID" + thisID);
             if(nameId == thisID)
             {
-                Debug.Log(nameId);
-                avatar = new Avatar
-                {
-                    skin = PlayerPrefs.GetInt("skin" + nameId),
-                    bodybuild = PlayerPrefs.GetInt("bodybuild" + nameId),
-                    backpack = PlayerPrefs.GetInt("backpack" + nameId),
-                    helmet = PlayerPrefs.GetInt("helmet" + nameId),
-                    glasses = PlayerPrefs.GetInt("glasses" + nameId)
-                };
-                Debug.Log("avatar skin:" + avatar.skin);
-                Debug.Log("avatar bodybuild:" + avatar.bodybuild);
-                Debug.Log("avatar backpack:" + avatar.backpack);
-                Debug.Log("avatar helmet:" + avatar.helmet);
-                Debug.Log("avatar glasses:" + avatar.glasses);
-                SREvents.loadAvatar.Invoke();
+                
             }
+            Debug.Log(nameId);
+            avatar = new Avatar
+            {
+                skin = PlayerPrefs.GetInt("skin" + nameId),
+                bodybuild = PlayerPrefs.GetInt("bodybuild" + nameId),
+                backpack = PlayerPrefs.GetInt("backpack" + nameId),
+                helmet = PlayerPrefs.GetInt("helmet" + nameId),
+                glasses = PlayerPrefs.GetInt("glasses" + nameId)
+            };
+            renderer.material = skins[avatar.skin];
+            Debug.Log("avatar skin:" + avatar.skin);
+            Bodybuild(avatar.bodybuild);
+            Debug.Log("avatar bodybuild:" + avatar.bodybuild);
+            backpackActive(avatar.backpack == 1 ? true : false);
+            Debug.Log("avatar backpack:" + avatar.backpack);
+            helmetActive(avatar.helmet == 1 ? true : false);
+            Debug.Log("avatar helmet:" + avatar.helmet);
+            glasses(avatar.glasses);
+            Debug.Log("avatar glasses:" + avatar.glasses);
+            SREvents.loadAvatar.Invoke();
             
         }
 

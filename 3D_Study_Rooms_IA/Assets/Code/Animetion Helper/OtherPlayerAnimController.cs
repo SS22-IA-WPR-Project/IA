@@ -31,7 +31,7 @@ namespace Studyrooms
             isWalkingLeftHash = Animator.StringToHash("isWalkingLeft");
             isIdelHash = Animator.StringToHash("isIdel");
 
-            thisID = GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().name;
+            thisID = GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.name;
         }
 
         // Update is called once per frame
