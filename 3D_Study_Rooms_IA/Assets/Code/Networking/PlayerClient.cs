@@ -15,6 +15,7 @@ namespace Studyrooms {
         public float x;
         public float y;
         public float z;
+        public float rot;
     }
 
     struct combinedPlayer
@@ -25,6 +26,15 @@ namespace Studyrooms {
         public GameObject go;
     }
 
+    struct Anim
+    {
+        public string _id;
+        public bool forwardReceive;
+        public bool backwardReceive;
+        public bool rightReceive;
+        public bool leftReceive; 
+    }
+
     public class PlayerClient : MonoBehaviour
 	{
 
@@ -32,17 +42,49 @@ namespace Studyrooms {
         private Vec3 returnedPositions;
         private Avatar returnedAvatar;
         private Vector3 oldPos;
+        private float oldRot;
         private Vector3 VecLength;
-        public GameObject gaOb;
+        private GameObject gaOb;
+        //private Animator animator;
+        private Anim currentAnim;
+        private Anim oldAnim;
+        private Anim returnedAnim;
         public SocketIOCommunicator socCom;
         private List<combinedPlayer> goList;
         // Start is called before the first frame update
         void Start()
         {
+            currentAnim = new Anim 
+            {
+                _id = PlayerPrefs.GetString("playerID"),
+                forwardReceive = false,
+                backwardReceive = false,
+                rightReceive = false,
+                leftReceive = false
+            };
+
+            oldAnim = new Anim
+            {
+                _id = PlayerPrefs.GetString("playerID"),
+                forwardReceive = false,
+                backwardReceive = false,
+                rightReceive = false,
+                leftReceive = false
+            };
+
+            returnedAnim = new Anim
+            {
+                _id = "",
+                forwardReceive = false,
+                backwardReceive = false,
+                rightReceive = false,
+                leftReceive = false
+            };
 
             goList = new List<combinedPlayer>();
 
             oldPos = transform.position;
+            oldRot = 0;
 
             //gaOb = (GameObject)Resources.Load("Assets/own_prefabs/otherPlayers.prefab", typeof(GameObject));
 
@@ -51,7 +93,8 @@ namespace Studyrooms {
                 _id = PlayerPrefs.GetString("playerID"),
                 x = transform.position.x,
                 y = transform.position.y,
-                z = transform.position.z
+                z = transform.position.z,
+                rot = transform.rotation.y
             };
 
             Avatar tmpAvatar = new Avatar
@@ -79,7 +122,8 @@ namespace Studyrooms {
                 _id = "",
                 x = 0f,
                 y = 0f,
-                z = 0f
+                z = 0f,
+                rot = 0f
             };
 
 
@@ -95,7 +139,7 @@ namespace Studyrooms {
 
             socCom.Instance.On("disconnect", (string payload) =>
             {
-                Destroy(this.gameObject);
+                killed();
             });
 
             socCom.Instance.On("user:receiveCoordinate", (string data) =>
@@ -118,16 +162,43 @@ namespace Studyrooms {
                 }
             });
 
+            socCom.Instance.On("user:receiveAnim", (string data) =>
+            {
+                returnedAnim = JsonUtility.FromJson<Anim>(data);
+
+                if(returnedAnim._id != "")
+                {
+                    getAnim();
+                }
+            });
+
             socCom.Instance.Connect("http://35.228.121.222", false);
 
         }
         private void Update()
         {
             VecLength = (transform.position - oldPos);
-            if (VecLength.magnitude > 0.1f)
+            float rotDif = (transform.rotation.y - oldRot);
+            if (VecLength.magnitude > 0.1f || rotDif > 0.5)
             {
                 oldPos = transform.position;
+                oldRot = transform.rotation.y;
                 sendPosition();
+            }
+
+            
+            currentAnim.forwardReceive = (Input.GetKey("up") || Input.GetKey("w"));
+            currentAnim.backwardReceive = (Input.GetKey("down") || Input.GetKey("s"));
+            currentAnim.rightReceive = (Input.GetKey("right") || Input.GetKey("d"));
+            currentAnim.leftReceive = (Input.GetKey("left") || Input.GetKey("a"));
+
+            if (currentAnim.forwardReceive != oldAnim.forwardReceive || 
+                currentAnim.backwardReceive != oldAnim.backwardReceive || 
+                currentAnim.rightReceive != oldAnim.rightReceive ||
+                currentAnim.leftReceive != oldAnim.leftReceive)
+            {
+                oldAnim = currentAnim;
+                sendAnim();
             }
 
             for (int i = 0; i <= goList.Count; i++)
@@ -145,12 +216,24 @@ namespace Studyrooms {
             }
         }
 
+        private void killed()
+        {
+            Destroy(this.gameObject);
+        }
+
         private void sendPosition()
         {
             userPosition.x = (int)(transform.position.x * 1000f);
             userPosition.y = (int)(transform.position.y * 1000f);
             userPosition.z = (int)(transform.position.z * 1000f);
+            userPosition.rot = (int)(transform.rotation.y * 1000f);
             socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
+        }
+
+        private void sendAnim()
+        {
+            
+            socCom.Instance.Emit("user:sendAnim", JsonUtility.ToJson(currentAnim), false);
         }
 
         private void getPositions()
@@ -205,13 +288,26 @@ namespace Studyrooms {
             }  
         }
 
+        private void getAnim()
+        {
+            PlayerPrefs.SetInt("up" + returnedAnim._id, returnedAnim.forwardReceive ? 1 : 0);
+            PlayerPrefs.SetInt("down" + returnedAnim._id, returnedAnim.backwardReceive ? 1 : 0);
+            PlayerPrefs.SetInt("right" + returnedAnim._id, returnedAnim.rightReceive ? 1 : 0);
+            PlayerPrefs.SetInt("left" + returnedAnim._id, returnedAnim.rightReceive ? 1 : 0);
+
+            SREvents.otherPlayerAnim.Invoke(returnedAnim._id);
+            
+        }
+
         private void getAvatar()
         {
 
-            Vector3 overwriteOtherPosition = new Vector3(0f, 0f, 0f);
-            overwriteOtherPosition.x = returnedPositions.x;
-            overwriteOtherPosition.y = returnedPositions.y;
-            overwriteOtherPosition.z = returnedPositions.z;
+            Vector3 overwriteOtherPosition = new Vector3(returnedPositions.x, returnedPositions.y, returnedPositions.z);
+            //overwriteOtherPosition.x = returnedPositions.x;
+            //overwriteOtherPosition.y = returnedPositions.y;
+            //overwriteOtherPosition.z = returnedPositions.z;
+
+            Quaternion overwriteRot = Quaternion.Euler(0f, returnedPositions.rot, 0f);
 
             GameObject newGo = gaOb;
 
@@ -236,7 +332,7 @@ namespace Studyrooms {
             if(goList.Count == 0)
             {
                 goList.Add(tmpPlayer);
-                newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, Quaternion.identity);
+                newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, overwriteRot);
                 newGo.name = returnedAvatar._id;
             }
             else
@@ -253,7 +349,7 @@ namespace Studyrooms {
                         Debug.Log("vorm break");
                         if (GameObject.Find(returnedAvatar._id) == null)
                         {
-                            newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, Quaternion.identity);
+                            newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, overwriteRot);
                             newGo.name = returnedAvatar._id;
                         }
                         newUser = false;
@@ -262,7 +358,7 @@ namespace Studyrooms {
                 }
                 if (newUser)
                 {
-                    newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, Quaternion.identity);
+                    newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, overwriteRot);
                     newGo.name = returnedAvatar._id;
                     goList.Add(tmpPlayer);
                 }

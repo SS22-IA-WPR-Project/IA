@@ -28,7 +28,8 @@ namespace Studyrooms {
 				_id = gameObject.name,
 				x = transform.position.x,
 				y = transform.position.y,
-				z = transform.position.z
+				z = transform.position.z,
+				rot = transform.rotation.y
 			};
 
 			overwriteData = new Vec3
@@ -36,7 +37,8 @@ namespace Studyrooms {
 				_id = "",
 				x = 0f,
 				y = 0f,
-				z = 0f
+				z = 0f,
+				rot = 0f
 			};
 
 		}
@@ -58,6 +60,7 @@ namespace Studyrooms {
 					oldPosition.z = controller.transform.position.z;
 					controller.Move()*/
 					transform.localPosition = new Vector3(overwriteData.x, overwriteData.y, overwriteData.z);
+					transform.rotation = Quaternion.Euler(0f, overwriteData.rot, 0f);
 				}
 			}
 			
