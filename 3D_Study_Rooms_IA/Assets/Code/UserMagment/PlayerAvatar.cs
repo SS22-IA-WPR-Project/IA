@@ -48,7 +48,7 @@ namespace Studyrooms
         void Start()
         {
 
-            thisID = GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.name;
+            thisID = transform.root.name; //GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.name;
         }
         private void userAvatar()
         {
@@ -85,13 +85,13 @@ namespace Studyrooms
         public void getOtherAvatars()
         {
             nameId = SREvents.getOtherAvatars.GetId();
-            Debug.Log("nameID" + nameId);
-            //Debug.Log("thisID" + thisID);
+            thisID = transform.root.name;
+            Debug.Log("thisID" + thisID);
             if(nameId == thisID)
             {
                 
             }
-            Debug.Log(nameId);
+            Debug.Log("nameID" + nameId);
             avatar = new Avatar
             {
                 skin = PlayerPrefs.GetInt("skin" + nameId),

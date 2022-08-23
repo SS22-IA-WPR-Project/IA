@@ -31,12 +31,13 @@ namespace Studyrooms
             isWalkingLeftHash = Animator.StringToHash("isWalkingLeft");
             isIdelHash = Animator.StringToHash("isIdel");
 
-            thisID = GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.name;
+            thisID = transform.root.name; //GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.name;
         }
 
         // Update is called once per frame
         void Update()
         {
+            Debug.Log(thisID);
             if(checkID == thisID)
             {
                 bool isWalking = animator.GetBool(isWalkingHash);
@@ -98,6 +99,8 @@ namespace Studyrooms
                     animator.SetBool(nameof(isIdel), true);
                 }
             }
+
+            
 
 
         }

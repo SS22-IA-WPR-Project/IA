@@ -172,6 +172,11 @@ namespace Studyrooms {
                 }
             });
 
+            socCom.Instance.On("user has left", (string data) =>
+            {
+                Debug.Log("has left");
+            });
+
             //socCom.Instance.Connect("http://35.228.121.222", false);
             socCom.Instance.Connect("http://localhost:8080", false);
 
@@ -179,8 +184,8 @@ namespace Studyrooms {
         private void Update()
         {
             VecLength = (transform.position - oldPos);
-            float rotDif = (transform.rotation.y - oldRot);
-            if (VecLength.magnitude > 0.1f || rotDif > 0.5)
+            float rotDif = Mathf.Abs(transform.localRotation.y - oldRot);
+            if (VecLength.magnitude > 0.1f || transform.localRotation.y != oldRot)
             {
                 oldPos = transform.position;
                 oldRot = transform.rotation.y;
@@ -227,7 +232,7 @@ namespace Studyrooms {
             userPosition.x = (int)(transform.position.x * 1000f);
             userPosition.y = (int)(transform.position.y * 1000f);
             userPosition.z = (int)(transform.position.z * 1000f);
-            userPosition.rot = (int)(transform.rotation.y * 1000f);
+            userPosition.rot = (int) (transform.rotation.y * 100f);
             socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
         }
 
@@ -250,6 +255,7 @@ namespace Studyrooms {
             returnedPositions.x = (returnedPositions.x / 1000f);
             returnedPositions.y = (returnedPositions.y / 1000f);
             returnedPositions.z = (returnedPositions.z / 1000f);
+            //returnedPositions.rot = (returnedPositions.rot / 1000f);
 
             //Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
 

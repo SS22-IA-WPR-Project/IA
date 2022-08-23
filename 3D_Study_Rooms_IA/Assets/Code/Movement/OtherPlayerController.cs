@@ -52,8 +52,8 @@ namespace Studyrooms {
 				Velocity.y = 0.1f;
 			}*/
 			if (gameObject.name == overwriteData._id)
-            {
-				if (transform.position != new Vector3(overwriteData.x,overwriteData.y,overwriteData.z))
+			{
+				if (transform.position != new Vector3(overwriteData.x, overwriteData.y, overwriteData.z) || transform.rotation.y != overwriteData.rot)
 				{
 					/*oldPosition.x = controller.transform.position.x;
 					oldPosition.y = controller.transform.position.y;
