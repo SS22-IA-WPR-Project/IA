@@ -32,7 +32,7 @@ namespace Studyrooms {
         public bool forwardReceive;
         public bool backwardReceive;
         public bool rightReceive;
-        public bool leftReceive; 
+        public bool leftReceive;
     }
 
     public class PlayerClient : MonoBehaviour
@@ -54,7 +54,7 @@ namespace Studyrooms {
         // Start is called before the first frame update
         void Start()
         {
-            currentAnim = new Anim 
+            currentAnim = new Anim
             {
                 _id = PlayerPrefs.GetString("playerID"),
                 forwardReceive = false,
@@ -178,28 +178,30 @@ namespace Studyrooms {
             });
 
             //socCom.Instance.Connect("http://35.228.121.222", false);
-            socCom.Instance.Connect("http://localhost:8080", false);
+            socCom.Instance.Connect("http://25.59.255.245:8080", false);
 
         }
         private void Update()
         {
             VecLength = (transform.position - oldPos);
-            float rotDif = Mathf.Abs(transform.localRotation.y - oldRot);
-            if (VecLength.magnitude > 0.1f || transform.localRotation.y != oldRot)
+            float rotDif = Mathf.Abs(transform.rotation.y - oldRot);
+            Debug.Log("rotDif : " + rotDif);
+            if (VecLength.magnitude > 0.1f || transform.rotation.y != oldRot)//rotDif > 0.01f)
             {
                 oldPos = transform.position;
                 oldRot = transform.rotation.y;
+                Debug.Log("update: " + oldRot);
                 sendPosition();
             }
 
-            
+
             currentAnim.forwardReceive = (Input.GetKey("up") || Input.GetKey("w"));
             currentAnim.backwardReceive = (Input.GetKey("down") || Input.GetKey("s"));
             currentAnim.rightReceive = (Input.GetKey("right") || Input.GetKey("d"));
             currentAnim.leftReceive = (Input.GetKey("left") || Input.GetKey("a"));
 
-            if (currentAnim.forwardReceive != oldAnim.forwardReceive || 
-                currentAnim.backwardReceive != oldAnim.backwardReceive || 
+            if (currentAnim.forwardReceive != oldAnim.forwardReceive ||
+                currentAnim.backwardReceive != oldAnim.backwardReceive ||
                 currentAnim.rightReceive != oldAnim.rightReceive ||
                 currentAnim.leftReceive != oldAnim.leftReceive)
             {
@@ -232,13 +234,14 @@ namespace Studyrooms {
             userPosition.x = (int)(transform.position.x * 1000f);
             userPosition.y = (int)(transform.position.y * 1000f);
             userPosition.z = (int)(transform.position.z * 1000f);
-            userPosition.rot = (int) (transform.rotation.y * 100f);
+            userPosition.rot = (int)(transform.rotation.y * 100f);
+            Debug.Log("sendPosition: " + userPosition.rot);
             socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
         }
 
         private void sendAnim()
         {
-            
+
             socCom.Instance.Emit("user:sendAnim", JsonUtility.ToJson(currentAnim), false);
         }
 
@@ -288,7 +291,7 @@ namespace Studyrooms {
                 {
                     goList.Add(tmp2);
                 }
-            }  
+            }
         }
 
         private void getAnim()
@@ -299,7 +302,7 @@ namespace Studyrooms {
             PlayerPrefs.SetInt("left" + returnedAnim._id, returnedAnim.rightReceive ? 1 : 0);
 
             SREvents.otherPlayerAnim.Invoke(returnedAnim._id);
-            
+
         }
 
         private void getAvatar()

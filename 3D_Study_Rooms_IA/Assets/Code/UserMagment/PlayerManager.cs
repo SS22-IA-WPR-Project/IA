@@ -28,10 +28,10 @@ namespace Studyrooms {
 
         private void Awake()
         {
-			SpawnPositions[0] = new Vector3(-8f, 0.5f, -16f);
-			SpawnPositions[1] = new Vector3(-29f, 0.5f, -16f);
-			SpawnPositions[2] = new Vector3(-28f, 0.5f, 53f);
-			SpawnPositions[3] = new Vector3(-8f, 0.5f, 53f);
+			SpawnPositions[0] = new Vector3(-8f, 0.1f, -16f);
+			SpawnPositions[1] = new Vector3(-29f, 0.1f, -16f);
+			SpawnPositions[2] = new Vector3(-28f, 0.1f, 53f);
+			SpawnPositions[3] = new Vector3(-8f, 0.1f, 53f);
 			//controller = Instantiate(Player,Vector3.zero, Quaternion.identity );
 			//Debug.Log("has spawed");
 			SREvents.sceneLoadClass.AddListener(CreateController);

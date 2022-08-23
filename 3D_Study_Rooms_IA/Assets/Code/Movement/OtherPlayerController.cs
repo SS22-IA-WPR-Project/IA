@@ -61,9 +61,10 @@ namespace Studyrooms {
 					controller.Move()*/
 					transform.localPosition = new Vector3(overwriteData.x, overwriteData.y, overwriteData.z);
 					transform.rotation = Quaternion.Euler(0f, overwriteData.rot, 0f);
+					//transform.Rotate(new Vector3(0f,1f,0f),overwriteData.rot, Space.Self);
 				}
 			}
-			
+
 		}
 
 		void OverwritePositions()

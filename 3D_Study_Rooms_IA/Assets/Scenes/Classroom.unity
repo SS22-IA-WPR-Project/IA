@@ -25406,7 +25406,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 613803638}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999946
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -31601,6 +31601,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6180dc898e0d8854c925eb5c25def250, type: 3}
+--- !u!1 &1653275370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1730897416119579178, guid: 6180dc898e0d8854c925eb5c25def250, type: 3}
+  m_PrefabInstance: {fileID: 1653275369}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1653275371
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653275370}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 4, z: 1.5584337}
+  m_Center: {x: 1.02, y: 2, z: -0.7792167}
 --- !u!1 &1662448438
 GameObject:
   m_ObjectHideFlags: 0
