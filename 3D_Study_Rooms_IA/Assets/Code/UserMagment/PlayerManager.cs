@@ -35,7 +35,7 @@ namespace Studyrooms {
 			//controller = Instantiate(Player,Vector3.zero, Quaternion.identity );
 			//Debug.Log("has spawed");
 			SREvents.sceneLoadClass.AddListener(CreateController);
-			
+
 		}
 
         void Start()
@@ -43,7 +43,7 @@ namespace Studyrooms {
 
 		}
 
-		//references the PlayerController script and assigns new Players a controller 
+		//references the PlayerController script and assigns new Players a controller
 		void CreateController()
         {
 
@@ -66,16 +66,16 @@ namespace Studyrooms {
 			if (controller.transform.position == SpawnPositions[0] || controller.transform.position == SpawnPositions[1])
 			{
 				controller.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-
+				Debug.Log("spawnroom abfrage geht rein");
 			}
-			else 
+			else
 			{
 				controller.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
+				Debug.Log("spawnroom geht in else");
 			}
-			
 			Debug.Log("has spawed");
 			remove();
-			
+
 		}
 
         void remove()

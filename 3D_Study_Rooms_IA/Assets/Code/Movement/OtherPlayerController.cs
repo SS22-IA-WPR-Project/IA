@@ -11,7 +11,7 @@ namespace Studyrooms {
 		Vec3 overwriteData;
 		private bool isGrounded;
 		private Vector3 Velocity;
-
+		private float rotation;
 		// Start is called before the first frame update
 
 		private void Awake()
@@ -41,6 +41,7 @@ namespace Studyrooms {
 				rot = 0f
 			};
 
+			rotation = 0f;
 		}
 
 		// Update is called once per frame
@@ -60,7 +61,8 @@ namespace Studyrooms {
 					oldPosition.z = controller.transform.position.z;
 					controller.Move()*/
 					transform.localPosition = new Vector3(overwriteData.x, overwriteData.y, overwriteData.z);
-					Debug.Log("OtherPlayerController: " + overwriteData.rot);
+					Debug.Log("OtherPlayerController : " + overwriteData.rot);
+					//rotation += overwriteData.rot;
 					transform.rotation = Quaternion.Euler(0f, overwriteData.rot, 0f);
 					//transform.Rotate(new Vector3(0f,1f,0f),overwriteData.rot, Space.Self);
 				}

@@ -185,13 +185,11 @@ namespace Studyrooms {
         {
             VecLength = (transform.position - oldPos);
             float rotDif = Mathf.Abs(transform.rotation.y - oldRot);
-            //Debug.Log("rotDif : " + rotDif);
-            if (VecLength.magnitude > 0.1f || transform.rotation.y != oldRot)//rotDif > 0.01f)
+            if (VecLength.magnitude > 0.1f || transform.rotation.y != oldRot)
             {
                 oldPos = transform.position;
                 oldRot = transform.rotation.y;
-                //Debug.Log("update: " + oldRot);
-                sendPosition();
+                sendPosition(rotDif);
             }
 
 
@@ -229,12 +227,12 @@ namespace Studyrooms {
             Destroy(this.gameObject);
         }
 
-        private void sendPosition()
+        private void sendPosition(float rotDif)
         {
             userPosition.x = (int)(transform.position.x * 1000f);
             userPosition.y = (int)(transform.position.y * 1000f);
             userPosition.z = (int)(transform.position.z * 1000f);
-            userPosition.rot = (int)(transform.rotation.y * 1800f);
+            userPosition.rot = (int)(rotDif * 1800f);
             Debug.Log("sendPosition: " + userPosition.rot);
             socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
         }
