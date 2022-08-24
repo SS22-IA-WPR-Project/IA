@@ -63,7 +63,16 @@ namespace Studyrooms {
 			SREvents.getUserAvatar.Invoke();
 
 			controller.transform.position = SpawnPositions[Random.Range(0, SpawnPositions.Length)];
-			controller.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+			if (controller.transform.position == SpawnPositions[0] || controller.transform.position == SpawnPositions[1])
+			{
+				controller.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+
+			}
+			else 
+			{
+				controller.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
+			}
+			
 			Debug.Log("has spawed");
 			remove();
 			

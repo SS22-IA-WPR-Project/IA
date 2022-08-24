@@ -177,20 +177,20 @@ namespace Studyrooms {
                 Debug.Log("has left");
             });
 
-            //socCom.Instance.Connect("http://35.228.121.222", false);
-            socCom.Instance.Connect("http://25.59.255.245:8080", false);
+            socCom.Instance.Connect("http://35.228.121.222", false);
+            //socCom.Instance.Connect("http://25.59.255.245:8080", false);
 
         }
         private void Update()
         {
             VecLength = (transform.position - oldPos);
             float rotDif = Mathf.Abs(transform.rotation.y - oldRot);
-            Debug.Log("rotDif : " + rotDif);
+            //Debug.Log("rotDif : " + rotDif);
             if (VecLength.magnitude > 0.1f || transform.rotation.y != oldRot)//rotDif > 0.01f)
             {
                 oldPos = transform.position;
                 oldRot = transform.rotation.y;
-                Debug.Log("update: " + oldRot);
+                //Debug.Log("update: " + oldRot);
                 sendPosition();
             }
 
@@ -234,7 +234,7 @@ namespace Studyrooms {
             userPosition.x = (int)(transform.position.x * 1000f);
             userPosition.y = (int)(transform.position.y * 1000f);
             userPosition.z = (int)(transform.position.z * 1000f);
-            userPosition.rot = (int)(transform.rotation.y * 100f);
+            userPosition.rot = (int)(transform.rotation.y * 1800f);
             Debug.Log("sendPosition: " + userPosition.rot);
             socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
         }
@@ -258,7 +258,7 @@ namespace Studyrooms {
             returnedPositions.x = (returnedPositions.x / 1000f);
             returnedPositions.y = (returnedPositions.y / 1000f);
             returnedPositions.z = (returnedPositions.z / 1000f);
-            //returnedPositions.rot = (returnedPositions.rot / 1000f);
+            returnedPositions.rot = (returnedPositions.rot / 10f);
 
             //Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
 
