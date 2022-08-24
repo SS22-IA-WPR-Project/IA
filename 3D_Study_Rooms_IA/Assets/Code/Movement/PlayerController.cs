@@ -40,11 +40,13 @@ namespace Studyrooms
         {
             controller = gameObject.AddComponent<CharacterController>();
             controller.center = new Vector3(0f, 1f, 0f);
-            //Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Locked;
             orientation.AddComponent<Camera>();
             sensitivity = 150f;
 
             orientation.GetComponent<Camera>().gameObject.name = "Camera " + PlayerPrefs.GetString("playerID");
+
+
 
             /* socCom.Instance.On("connection", (string data) =>
              {
@@ -148,14 +150,17 @@ namespace Studyrooms
                     {
                         Debug.Log("User " + PlayerPrefs.GetString("emailID") + " wants to join Table " + hit.transform.name.Substring(24, 1));
 
-                        
+                        PlayerPrefs.SetInt("tabelCamNumber",int.Parse(hit.transform.name.Substring(24, 1)) );// camera number , hit.transform.name.Substring(24, 1) in int wandeln (test)
 
+                        Debug.Log("nach set"+PlayerPrefs.GetInt("tabelCamNumber"));
+
+                        Debug.Log(orientation.GetComponent<Camera>().gameObject.name);
+                        PlayerPrefs.SetString("playerCameraID", orientation.GetComponent<Camera>().gameObject.name);// und camera mit id übergeben in orientation zu finden (test)
+                        
                         SREvents.joinTable.Invoke(); 
 
-                        PlayerPrefs.SetInt("tabelCamNumber",int.Parse(hit.transform.name.Substring(24, 1)) );// camera number , hit.transform.name.Substring(24, 1) in int wandeln (test)
-                        PlayerPrefs.SetString("playerCameraID", orientation.GetComponent<Camera>().gameObject.name);// und camera mit id übergeben in orientation zu finden (test)
-
-
+                        
+                        
 
 
                     }

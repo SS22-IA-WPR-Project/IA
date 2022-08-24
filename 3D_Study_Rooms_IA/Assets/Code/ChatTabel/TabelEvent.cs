@@ -22,20 +22,19 @@ namespace Studyrooms
         private void Awake()
         {
             SREvents.joinTable.AddListener(toTable);
-            //SREvents.exitTable.AddListener(fromTable);
-           
-
-
         }
 
         public void toTable()
         {
 
-           int tabelNumber = PlayerPrefs.GetInt("tabelCamNumber"); // tabel number (test)
-           playerCam = GameObject.Find(PlayerPrefs.GetString("playerCameraID")).GetComponent<Camera>(); // cam of player (test)
+           int tabelNumber = PlayerPrefs.GetInt("tabelCamNumber");
 
-            movemendSkript = GameObject.FindWithTag("playerInGame");
-            movemendSkript.GetComponent<PlayerController>().enabled = false;// disable moovment of player (test)
+            Debug.Log("nach get"+tabelNumber);
+
+           playerCam = GameObject.Find(PlayerPrefs.GetString("playerCameraID")).GetComponent<Camera>(); 
+
+           movemendSkript = GameObject.Find("playerInGame");
+           movemendSkript.GetComponent<PlayerController>().enabled = false;
             
             
             Cursor.lockState = CursorLockMode.None;
@@ -45,6 +44,7 @@ namespace Studyrooms
 
                 case 1:
                     {
+                        Debug.Log("1");
                         playerCam.enabled = false;
                         cam1.enabled = true;
                         
@@ -52,6 +52,7 @@ namespace Studyrooms
                     }
                 case 2:
                     {
+                        Debug.Log("2");
                         playerCam.enabled = false;
                         cam2.enabled = true;
                         
@@ -59,6 +60,7 @@ namespace Studyrooms
                     }
                 case 3:
                     {
+                        Debug.Log("3");
                         playerCam.enabled = false;
                         cam3.enabled = true;
                         
@@ -66,6 +68,7 @@ namespace Studyrooms
                     }
                 case 4:
                     {
+                        Debug.Log("4");
                         playerCam.enabled = false;
                         cam4.enabled = true;
                         
@@ -73,6 +76,7 @@ namespace Studyrooms
                     }
                 case 5:
                     {
+                        Debug.Log("5");
                         playerCam.enabled = false;
                         cam5.enabled = true;
                         
@@ -80,6 +84,7 @@ namespace Studyrooms
                     }
                 case 6:
                     {
+                        Debug.Log("6");
                         playerCam.enabled = false;
                         cam6.enabled = true;
                         
@@ -93,7 +98,7 @@ namespace Studyrooms
 
         public void fromTable()
         {
-            playerCam.enabled = true; //back to player Cam
+            playerCam.enabled = true; 
 
             cam1.enabled = false;
             cam2.enabled = false;
@@ -102,9 +107,10 @@ namespace Studyrooms
             cam5.enabled = false;
             cam6.enabled = false;
 
-            movemendSkript = GameObject.FindWithTag("playerInGame");
-            movemendSkript.GetComponent<PlayerController>().enabled = true;// enable moovment of player (test)
-
+            movemendSkript = GameObject.Find("playerInGame");
+            movemendSkript.GetComponent<PlayerController>().enabled = true;
+            
+            Cursor.lockState = CursorLockMode.Locked;
 
 
         }

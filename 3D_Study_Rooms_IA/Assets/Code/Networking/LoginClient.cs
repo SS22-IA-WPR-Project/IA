@@ -13,7 +13,7 @@ namespace Studyrooms
     {
 
         //static string baseURL = "http://localhost:3000/api/v1";
-        static string baseURL = "http://25.59.191.68:3000/api/v1";
+        static string baseURL = "http://35.228.121.222/api/v1";
         
         
         public static string BuildUrl(string path)
