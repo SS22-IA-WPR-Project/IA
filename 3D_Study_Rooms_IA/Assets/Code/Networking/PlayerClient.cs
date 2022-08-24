@@ -189,7 +189,7 @@ namespace Studyrooms {
             {
                 oldPos = transform.position;
                 oldRot = transform.rotation.y;
-                sendPosition(rotDif);
+                sendPosition();
             }
 
 
@@ -227,12 +227,12 @@ namespace Studyrooms {
             Destroy(this.gameObject);
         }
 
-        private void sendPosition(float rotDif)
+        private void sendPosition()
         {
             userPosition.x = (int)(transform.position.x * 1000f);
             userPosition.y = (int)(transform.position.y * 1000f);
             userPosition.z = (int)(transform.position.z * 1000f);
-            userPosition.rot = (int)(rotDif * 1800f);
+            userPosition.rot = (int)(transform.rotation.y * 1799f);
             Debug.Log("sendPosition: " + userPosition.rot);
             socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
         }
@@ -294,10 +294,11 @@ namespace Studyrooms {
 
         private void getAnim()
         {
+            Debug.Log("in Client: " + returnedAnim.forwardReceive + " / " + returnedAnim.backwardReceive + " / " + returnedAnim.rightReceive + " / " + returnedAnim.leftReceive);
             PlayerPrefs.SetInt("up" + returnedAnim._id, returnedAnim.forwardReceive ? 1 : 0);
             PlayerPrefs.SetInt("down" + returnedAnim._id, returnedAnim.backwardReceive ? 1 : 0);
             PlayerPrefs.SetInt("right" + returnedAnim._id, returnedAnim.rightReceive ? 1 : 0);
-            PlayerPrefs.SetInt("left" + returnedAnim._id, returnedAnim.rightReceive ? 1 : 0);
+            PlayerPrefs.SetInt("left" + returnedAnim._id, returnedAnim.leftReceive ? 1 : 0);
 
             SREvents.otherPlayerAnim.Invoke(returnedAnim._id);
 

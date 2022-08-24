@@ -51,27 +51,27 @@ namespace Studyrooms {
 
 			//Finds spawnpoint and instantiates the Player there
 			GameObject activeplayer = GameObject.Find(PlayerPrefs.GetString("playerID"));
-
+			int spawner = Random.Range(0, SpawnPositions.Length);
 			if (activeplayer != null){
 				controller = activeplayer;
             }
             else
             {
-				controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
+                controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
 				controller.name = PlayerPrefs.GetString("playerID");
             }
 			SREvents.getUserAvatar.Invoke();
-
-			controller.transform.position = SpawnPositions[Random.Range(0, SpawnPositions.Length)];
-			if (controller.transform.position == SpawnPositions[0] || controller.transform.position == SpawnPositions[1])
+			
+			controller.transform.position = SpawnPositions[spawner];
+			if (spawner == 0 || spawner == 1)
 			{
-				controller.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-				Debug.Log("spawnroom abfrage geht rein");
+				controller.transform.Rotate(0f, 0f, 0f);
+				Debug.Log("spawnroom abfrage geht rein " + spawner);
 			}
 			else
 			{
-				controller.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
-				Debug.Log("spawnroom geht in else");
+				controller.transform.Rotate(0f, 179.9f, 0f);
+				Debug.Log("spawnroom geht in else " + spawner);
 			}
 			Debug.Log("has spawed");
 			remove();

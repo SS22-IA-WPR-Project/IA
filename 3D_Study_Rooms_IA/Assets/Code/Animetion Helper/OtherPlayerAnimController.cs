@@ -38,6 +38,7 @@ namespace Studyrooms
         void Update()
         {
             Debug.Log(thisID);
+            Debug.Log(checkID);
             if(checkID == thisID)
             {
                 bool isWalking = animator.GetBool(isWalkingHash);
@@ -51,6 +52,7 @@ namespace Studyrooms
                 bool rightReceive = PlayerPrefs.GetInt(("right" + checkID)) == 1 ? true : false; // (Input.GetKey("right") || Input.GetKey("d"));
                 bool leftReceive = PlayerPrefs.GetInt(("left" + checkID)) == 1 ? true : false; // (Input.GetKey("left") || Input.GetKey("a"));
 
+                Debug.Log("in Controller: " + forwardReceive + " / " + backwardReceive + " / " + rightReceive + " / " + leftReceive);
                 //Player animation
 
                 if (rightReceive ^ leftReceive)
