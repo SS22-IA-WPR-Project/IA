@@ -47,6 +47,25 @@ namespace Studyrooms
             camera.enabled = true;
             sensitivity = 150f;
 
+            orientation.GetComponent<Camera>().gameObject.name = "Camera " + PlayerPrefs.GetString("playerID");
+
+
+
+            /* socCom.Instance.On("connection", (string data) =>
+             {
+                 Debug.Log("Connection made!");
+
+                 socCom.Instance.Emit("Hello there");
+             });
+
+             socCom.Instance.On("user:coordinate", (string data) =>
+             {
+                 Debug.Log("get hier rein");
+                 socCom.Instance.Emit("Hello there");
+                 //socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(Pos), true);
+             });
+
+             socCom.Instance.Connect("http://25.59.191.68:8080", false);*/
         }
 
         // Update is called once per frame
@@ -133,6 +152,20 @@ namespace Studyrooms
                     if (hit.transform.name.Contains("decorative_table_glass"))
                     {
                         Debug.Log("User " + PlayerPrefs.GetString("emailID") + " wants to join Table " + hit.transform.name.Substring(24, 1));
+
+                        PlayerPrefs.SetInt("tabelCamNumber",int.Parse(hit.transform.name.Substring(24, 1)) );// camera number , hit.transform.name.Substring(24, 1) in int wandeln (test)
+
+                        Debug.Log("nach set"+PlayerPrefs.GetInt("tabelCamNumber"));
+
+                        Debug.Log(orientation.GetComponent<Camera>().gameObject.name);
+                        PlayerPrefs.SetString("playerCameraID", orientation.GetComponent<Camera>().gameObject.name);// und camera mit id �bergeben in orientation zu finden (test)
+
+                        SREvents.joinTable.Invoke();
+
+
+
+
+
                     }
 
                 }
