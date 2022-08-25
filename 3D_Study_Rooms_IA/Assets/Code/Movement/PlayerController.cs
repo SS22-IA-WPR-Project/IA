@@ -16,6 +16,7 @@ namespace Studyrooms
 
         [SerializeField] float sensitivity;
         public GameObject orientation;
+        private Camera camera;
         private CharacterController controller;
 
         public float speed = 2f;
@@ -42,23 +43,10 @@ namespace Studyrooms
             controller.center = new Vector3(0f, 1f, 0f);
             Cursor.lockState = CursorLockMode.Locked;
             orientation.AddComponent<Camera>();
+            camera = orientation.GetComponent<Camera>();
+            camera.enabled = true;
             sensitivity = 150f;
 
-           /* socCom.Instance.On("connection", (string data) =>
-            {
-                Debug.Log("Connection made!");
-
-                socCom.Instance.Emit("Hello there");
-            });
-
-            socCom.Instance.On("user:coordinate", (string data) =>
-            {
-                Debug.Log("get hier rein");
-                socCom.Instance.Emit("Hello there");
-                //socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(Pos), true);
-            });
-
-            socCom.Instance.Connect("http://25.59.191.68:8080", false);*/
         }
 
         // Update is called once per frame
@@ -67,7 +55,7 @@ namespace Studyrooms
             isGrounded = controller.isGrounded;
             if (isGrounded && Velocity.y < 1f)
             {
-                Velocity.y = 1f;
+                Velocity.y = 0.1f;
             }
 
             float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
@@ -154,45 +142,6 @@ namespace Studyrooms
             {
                 Destroy(this.gameObject);
             }
-
-
-           /* var Pos = new Vec3
-            {
-                _id = PlayerPrefs.GetString("playerID"),
-                x = transform.position.x,
-                y = transform.position.y,
-                z = transform.position.z
-            };
-
-            socCom.Instance.On("user:coordinate", (string data) =>
-            {
-                Debug.Log("get hier rein");
-                socCom.Instance.Emit("Hello there");
-                //socCom.Instance.Emit("user:coordinate", JsonUtility.ToJson(Pos), true);
-            });
-
-            socCom.Instance.Connect("http://25.59.191.68:8080", false);*/
         }
-
-       /* private IEnumerator sendPos()
-        {
-           var Pos = new Vec3
-            {
-                _id = PlayerPrefs.GetString("emailID"),
-                x = transform.position.x,
-                y = transform.position.y,
-                z = transform.position.z
-            };
-
-            var request = LoginClient.Post("25.59.191.68:8080", JsonUtility.ToJson(Pos));
-            yield return request.SendWebRequest();
-        }
-
-        /*private IEnumerator getPos()
-        {
-            //var get = LoginClient.Get("", JsonUtility.FromJson(""));
-
-           // yield return get;
-        }*/
     }
 }

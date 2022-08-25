@@ -13,10 +13,12 @@ namespace Studyrooms
         public GameObject glasses2;
         public Mesh[] bodybuilds = new Mesh[2];
         public Material[] skins = new Material[10];
+        public string nameId;
+        public string thisID;
 
         new SkinnedMeshRenderer renderer;
 
-        struct Avatar
+        /*struct Avatar
         {
             public string _id;
             public int skin;
@@ -24,7 +26,7 @@ namespace Studyrooms
             public int backpack;
             public int helmet;
             public int glasses;
-        }
+        }*/
 
         struct playerIDstruc
         {
@@ -37,16 +39,20 @@ namespace Studyrooms
         private void Awake()
         {
             
-            StartCoroutine(getAvatarData());
+            SREvents.getUserAvatar.AddListener(userAvatar);
             SREvents.loadAvatar.AddListener(setAvatar);
-
+            SREvents.getOtherAvatars.AddListener(getOtherAvatars);
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            
 
+            thisID = transform.root.name; //GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.name;
+        }
+        private void userAvatar()
+        {
+            StartCoroutine(getAvatarData());
         }
 
         IEnumerator getAvatarData()
@@ -76,25 +82,57 @@ namespace Studyrooms
             SREvents.loadAvatar.Invoke();
         }
 
+        public void getOtherAvatars()
+        {
+            nameId = SREvents.getOtherAvatars.GetId();
+            thisID = transform.root.name;
+            Debug.Log("thisID" + thisID);
+            if(nameId == thisID)
+            {
+                
+            }
+            Debug.Log("nameID" + nameId);
+            avatar = new Avatar
+            {
+                skin = PlayerPrefs.GetInt("skin" + nameId),
+                bodybuild = PlayerPrefs.GetInt("bodybuild" + nameId),
+                backpack = PlayerPrefs.GetInt("backpack" + nameId),
+                helmet = PlayerPrefs.GetInt("helmet" + nameId),
+                glasses = PlayerPrefs.GetInt("glasses" + nameId)
+            };
+            renderer.material = skins[avatar.skin];
+            Debug.Log("avatar skin:" + avatar.skin);
+            Bodybuild(avatar.bodybuild);
+            Debug.Log("avatar bodybuild:" + avatar.bodybuild);
+            backpackActive(avatar.backpack == 1 ? true : false);
+            Debug.Log("avatar backpack:" + avatar.backpack);
+            helmetActive(avatar.helmet == 1 ? true : false);
+            Debug.Log("avatar helmet:" + avatar.helmet);
+            glasses(avatar.glasses);
+            Debug.Log("avatar glasses:" + avatar.glasses);
+            SREvents.loadAvatar.Invoke();
+            
+        }
+
         public void setAvatar()
         {
             renderer = gameObject.GetComponent<SkinnedMeshRenderer>();
 
             //skin
             renderer.material = skins[avatar.skin];
-
+            Debug.Log("avatar skin:" + avatar.skin);
             //bodybuild
             Bodybuild(avatar.bodybuild);
-
+            Debug.Log("setAvatar bodybuild:" + avatar.bodybuild);
             //backpack
             backpackActive(avatar.backpack == 1 ? true : false);
-
+            Debug.Log("setAvatar backpack:" + avatar.backpack);
             //helmet
             helmetActive(avatar.helmet == 1 ? true : false);
-
+            Debug.Log("setAvatar helmet:" + avatar.helmet);
             //glasses
             glasses(avatar.glasses);
-
+            Debug.Log("setAvatar glasses:" + avatar.glasses);
             SREvents.loadAvatar.RemoveListener(setAvatar);
         }
 

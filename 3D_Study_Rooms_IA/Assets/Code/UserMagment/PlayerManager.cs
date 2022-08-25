@@ -8,6 +8,7 @@ namespace Studyrooms {
 	{
 
 		[SerializeField] GameObject Player;
+		combinedPlayer cPlayer;
 		Vector3[] SpawnPositions = new Vector3[4];
 
 		GameObject controller;
@@ -27,14 +28,14 @@ namespace Studyrooms {
 
         private void Awake()
         {
-			SpawnPositions[0] = new Vector3(-8f, 0.5f, -16f);
-			SpawnPositions[1] = new Vector3(-29f, 0.5f, -16f);
-			SpawnPositions[2] = new Vector3(-28f, 0.5f, 53f);
-			SpawnPositions[3] = new Vector3(-8f, 0.5f, 53f);
+			SpawnPositions[0] = new Vector3(-8f, 0.1f, -16f);
+			SpawnPositions[1] = new Vector3(-29f, 0.1f, -16f);
+			SpawnPositions[2] = new Vector3(-28f, 0.1f, 53f);
+			SpawnPositions[3] = new Vector3(-8f, 0.1f, 53f);
 			//controller = Instantiate(Player,Vector3.zero, Quaternion.identity );
 			//Debug.Log("has spawed");
 			SREvents.sceneLoadClass.AddListener(CreateController);
-			
+
 		}
 
         void Start()
@@ -42,7 +43,7 @@ namespace Studyrooms {
 
 		}
 
-		//references the PlayerController script and assigns new Players a controller 
+		//references the PlayerController script and assigns new Players a controller
 		void CreateController()
         {
 
@@ -50,22 +51,31 @@ namespace Studyrooms {
 
 			//Finds spawnpoint and instantiates the Player there
 			GameObject activeplayer = GameObject.Find(PlayerPrefs.GetString("playerID"));
-
+			int spawner = Random.Range(0, SpawnPositions.Length);
 			if (activeplayer != null){
 				controller = activeplayer;
             }
             else
             {
-				controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
+                controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
 				controller.name = PlayerPrefs.GetString("playerID");
             }
+			SREvents.getUserAvatar.Invoke();
 			
-			
-			controller.transform.position = SpawnPositions[Random.Range(0, SpawnPositions.Length)];
-			controller.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+			controller.transform.position = SpawnPositions[spawner];
+			if (spawner == 0 || spawner == 1)
+			{
+				controller.transform.Rotate(0f, 0f, 0f);
+				Debug.Log("spawnroom abfrage geht rein " + spawner);
+			}
+			else
+			{
+				controller.transform.Rotate(0f, 179.9f, 0f);
+				Debug.Log("spawnroom geht in else " + spawner);
+			}
 			Debug.Log("has spawed");
 			remove();
-			
+
 		}
 
         void remove()

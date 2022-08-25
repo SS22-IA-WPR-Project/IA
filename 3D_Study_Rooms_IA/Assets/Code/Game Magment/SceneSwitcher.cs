@@ -9,24 +9,24 @@ using UnityEngine.Networking;
 namespace Studyrooms
 {
 
-    
+    struct Avatar
+    {
+        public string _id;
+        public int skin;
+        public int bodybuild;
+        public int backpack;
+        public int helmet;
+        public int glasses;
+    }
+
     public class SceneSwitcher : MonoBehaviour
     {
-        
+
         bool runningClassToGUI;
         bool runningGUIToClass;
-        /*struct Avatar
-        {
-            public string _id;
-            public int skin;
-            public int bodybuild;
-            public int backpack;
-            public int helmet;
-            public int glasses;
-        }*/
 
         //public GameObject thisPlayer;
-       
+
         private void Awake()
         {
             SREvents.sceneLoadSignUpToCharUi.AddListener(signUpToCharGUI);
@@ -39,17 +39,17 @@ namespace Studyrooms
         // Start is called before the first frame update
         void Start()
         {
-           
+
         }
 
         /*public void doneAvatar()
         {
             StartCoroutine(sendAvatarData());
         }*/
-        
+
         public void classToCharGUI()
         {
-            
+
             StartCoroutine(classToGUILoad());
 
             if (!runningClassToGUI)
@@ -58,10 +58,10 @@ namespace Studyrooms
                 Debug.Log("stoped");
             }
         }
-        
+
         public void charGUIToClassroom()
         {
-            
+
             StartCoroutine(guiToClassLoad());
         }
 
@@ -75,7 +75,7 @@ namespace Studyrooms
             Debug.Log("start switch");
             StartCoroutine(signUpToCharGUILoad());
         }
-        
+
         IEnumerator classToGUILoad()
         {
             runningClassToGUI = true;
@@ -99,7 +99,7 @@ namespace Studyrooms
 
             // Unload the previous Scene
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("Classroom"));
-            Cursor.lockState = CursorLockMode.None; 
+            Cursor.lockState = CursorLockMode.None;
             runningClassToGUI = false;
             SREvents.sceneLoadClassToGUI.RemoveListener(classToCharGUI);
         }
@@ -142,7 +142,7 @@ namespace Studyrooms
             {
                 yield return null;
             }
-            
+
             if (SceneManager.GetSceneByName("Classroom").isLoaded)
             {
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName("Classroom"));
@@ -151,7 +151,7 @@ namespace Studyrooms
             {
                 Debug.Log("scene not loaded");
             }
-            
+
             // Unload the previous Scene
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("LogInGUI"));
 
@@ -175,7 +175,7 @@ namespace Studyrooms
             if (SceneManager.GetSceneByName("CharacterGUItest").isLoaded)
             {
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName("CharacterGUItest"));
-                
+
             }
             else
             {
@@ -189,7 +189,7 @@ namespace Studyrooms
         }
 
         /*IEnumerator sendAvatarData()
-        { 
+        {
             var avatar = new Avatar
             {
                 _id = PlayerPrefs.GetString("playerID"),

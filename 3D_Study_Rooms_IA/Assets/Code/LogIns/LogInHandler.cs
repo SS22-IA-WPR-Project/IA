@@ -161,6 +161,7 @@ namespace Studyrooms
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.LogError(request.error);
+                callbackMessage.text = "Server Connection error";
 
             }
 
@@ -235,6 +236,7 @@ namespace Studyrooms
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.LogError(request.error);
+                callbackMessage.text = "Server Connection error";
 
             }
 
@@ -273,9 +275,13 @@ namespace Studyrooms
                     callbackMessage.text += "Please choose a TH-Email adress.";
                 }
 
-                if (callback.Contains("\"messages\": [ \"user already exits\"]"))
+                if (callback.Contains("\"messages\":[\"user already exits\"]"))
                 {
                     callbackMessage.text = "Account with this E-Mail allready exists.";
+                }
+                else
+                {
+                    callbackMessage.text = "Server Connection error";
                 }
 
 
@@ -305,7 +311,7 @@ namespace Studyrooms
                     previous.Select();
                 }*/
             }
-            else if (Input.GetKey(KeyCode.Return))
+           /* else if (Input.GetKey(KeyCode.Return))
             {
                 if (loginMode)
                 {   
@@ -319,7 +325,7 @@ namespace Studyrooms
                     signup.onClick.Invoke();
                     doneSignUp();
                 }
-            }
+            }*/
         }
     }
 }
