@@ -15,7 +15,7 @@ namespace Studyrooms
         
         bool runningClassToGUI;
         bool runningGUIToClass;
-        struct Avatar
+        /*struct Avatar
         {
             public string _id;
             public int skin;
@@ -23,7 +23,7 @@ namespace Studyrooms
             public int backpack;
             public int helmet;
             public int glasses;
-        }
+        }*/
 
         //public GameObject thisPlayer;
        
@@ -42,10 +42,10 @@ namespace Studyrooms
            
         }
 
-        public void doneAvatar()
+        /*public void doneAvatar()
         {
             StartCoroutine(sendAvatarData());
-        }
+        }*/
         
         public void classToCharGUI()
         {
@@ -188,7 +188,7 @@ namespace Studyrooms
 
         }
 
-        IEnumerator sendAvatarData()
+        /*IEnumerator sendAvatarData()
         { 
             var avatar = new Avatar
             {
@@ -212,7 +212,7 @@ namespace Studyrooms
                 Debug.LogError(request.error);
 
             }
-        }
+        }*/
 
         private void OnDestroy()
         {
