@@ -178,7 +178,7 @@ namespace Studyrooms {
             });
 
             socCom.Instance.Connect("http://35.228.121.222", false);
-            //socCom.Instance.Connect("http://25.59.255.245:8080", false);
+           
 
         }
         private void Update()
@@ -233,7 +233,7 @@ namespace Studyrooms {
             userPosition.y = (int)(transform.position.y * 1000f);
             userPosition.z = (int)(transform.position.z * 1000f);
             userPosition.rot = (int)(transform.rotation.y * 1799f);
-            Debug.Log("sendPosition: " + userPosition.rot);
+            //Debug.Log("sendPosition: " + userPosition.rot);
             socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
         }
 

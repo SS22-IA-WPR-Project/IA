@@ -33,7 +33,7 @@ namespace Studyrooms
 
            playerCam = GameObject.Find(PlayerPrefs.GetString("playerCameraID")).GetComponent<Camera>(); 
 
-           movemendSkript = GameObject.Find("playerInGame");
+           movemendSkript = GameObject.Find(PlayerPrefs.GetString("playerID"));
            movemendSkript.GetComponent<PlayerController>().enabled = false;
             
             
@@ -107,7 +107,7 @@ namespace Studyrooms
             cam5.enabled = false;
             cam6.enabled = false;
 
-            movemendSkript = GameObject.Find("playerInGame");
+            //movemendSkript = GameObject.Find("playerInGame");
             movemendSkript.GetComponent<PlayerController>().enabled = true;
             
             Cursor.lockState = CursorLockMode.Locked;
