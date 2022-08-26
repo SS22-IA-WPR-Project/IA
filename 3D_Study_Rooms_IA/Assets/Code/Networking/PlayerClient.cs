@@ -139,7 +139,8 @@ namespace Studyrooms {
 
             socCom.Instance.On("disconnect", (string payload) =>
             {
-                killed();
+                Debug.Log("disconnected");
+                //killed();
             });
 
             socCom.Instance.On("user:receiveCoordinate", (string data) =>
@@ -206,20 +207,23 @@ namespace Studyrooms {
                 oldAnim = currentAnim;
                 sendAnim();
             }
-
-            for (int i = 0; i <= goList.Count; i++)
+            if(goList.Count > 0)
             {
-                Vector3 tester = new Vector3(goList[i].position.x, goList[i].position.y, goList[i].position.z);
-
-                if (tester != goList[i].go.transform.position)
+                for (int i = 0; i <= goList.Count; i++)
                 {
+                    Vector3 tester = new Vector3(goList[i].position.x, goList[i].position.y, goList[i].position.z);
+
+                    if (tester != goList[i].go.transform.position)
+                    {
                    /* Debug.Log("new x tester Pos: " + tester.x);
                     goList[i].go.transform.position = tester;
                     Debug.Log("new x Pos: " + goList[i].go.transform.position.x);*/
-                    SREvents.otherPlayerPos.Invoke(returnedPositions);
+                        SREvents.otherPlayerPos.Invoke(returnedPositions);
 
+                    }
                 }
             }
+            
         }
 
         private void killed()

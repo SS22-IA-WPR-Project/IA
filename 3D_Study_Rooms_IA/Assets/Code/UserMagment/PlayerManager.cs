@@ -51,28 +51,42 @@ namespace Studyrooms {
 
 			//Finds spawnpoint and instantiates the Player there
 			GameObject activeplayer = GameObject.Find(PlayerPrefs.GetString("playerID"));
-			int spawner = Random.Range(0, SpawnPositions.Length);
+			
 			if (activeplayer != null){
 				controller = activeplayer;
-            }
+				Debug.Log(activeplayer.name);
+				activeplayer.GetComponent<PlayerController>().enabled = true;
+				activeplayer.GetComponentInChildren<Camera>().enabled = true;
+				Cursor.lockState = CursorLockMode.Locked;
+			}
             else
             {
+				int spawner = Random.Range(0, SpawnPositions.Length);
                 controller = Instantiate(Player, Vector3.zero, Quaternion.identity);
 				controller.name = PlayerPrefs.GetString("playerID");
+				controller.transform.position = SpawnPositions[spawner];
+				if (spawner == 0 || spawner == 1)
+				{
+					controller.transform.Rotate(0f, 0f, 0f);
+					Debug.Log("spawnroom abfrage geht rein " + spawner);
+				}
+				else
+				{
+					controller.transform.Rotate(0f, 179.9f, 0f);
+					Debug.Log("spawnroom geht in else " + spawner);
+				}
+				
             }
+            if (!controller.GetComponentInChildren<PlayerAvatar>().enabled)
+            {
+				
+				controller.GetComponentInChildren<PlayerAvatar>().enabled = true;
+
+			}
+			
 			SREvents.getUserAvatar.Invoke();
 			
-			controller.transform.position = SpawnPositions[spawner];
-			if (spawner == 0 || spawner == 1)
-			{
-				controller.transform.Rotate(0f, 0f, 0f);
-				Debug.Log("spawnroom abfrage geht rein " + spawner);
-			}
-			else
-			{
-				controller.transform.Rotate(0f, 179.9f, 0f);
-				Debug.Log("spawnroom geht in else " + spawner);
-			}
+			
 			Debug.Log("has spawed");
 			remove();
 

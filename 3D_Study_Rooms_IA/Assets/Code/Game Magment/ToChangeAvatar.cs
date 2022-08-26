@@ -21,7 +21,9 @@ namespace Studyrooms {
         {
             
             StartCoroutine(classToGUILoad());
-
+            GameObject player = GameObject.Find(PlayerPrefs.GetString("playerID"));
+            player.GetComponent<PlayerController>().enabled = false;
+            player.GetComponentInChildren<Camera>().enabled = false;
             if (!running)
             {
                 StopCoroutine(classToGUILoad());

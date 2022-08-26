@@ -138,7 +138,7 @@ namespace Studyrooms
             }
 
             if (Input.GetMouseButtonDown(0))
-            { // if left button pressed...
+            { 
                 Ray ray = orientation.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 50.0f))
@@ -147,6 +147,7 @@ namespace Studyrooms
                     if (hit.transform.name == "console (2)")
                     {
                         Debug.Log("hit console");
+                        
                         SREvents.sceneLoadClassToGUI.Invoke();
                     }
                     if (hit.transform.name.Contains("decorative_table_glass"))

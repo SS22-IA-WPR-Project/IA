@@ -157,6 +157,7 @@ namespace Studyrooms
 
             yield return request.SendWebRequest();
 
+            
 
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
@@ -164,6 +165,7 @@ namespace Studyrooms
                 callbackMessage.text = "Server Connection error";
 
             }
+            
 
             string testWorngAcc = "{\"messages\":[\"Invalid Username/Password\"]}";
             string testNoAcc = "{\"messages\":[\"Not found user\"]}";
@@ -244,7 +246,7 @@ namespace Studyrooms
 
             string test = "\"succes\":true";
             string callback = Encoding.Default.GetString(request.downloadHandler.data);
-            callbackMessage.text = "";
+            //
 
             if (callback.Contains(test))
             {
@@ -261,6 +263,7 @@ namespace Studyrooms
             else
             {
 
+                callbackMessage.text = "";
 
                 if (callback.Contains("\"msg\":\"Min. 6 Character-Length\""))
                 {
@@ -274,15 +277,11 @@ namespace Studyrooms
                 {
                     callbackMessage.text += "Please choose a TH-Email adress.";
                 }
-
-                if (callback.Contains("\"messages\":[\"user already exits\"]"))
+                if(callback.Contains("\"messages\":[\"user already exits\"]"))
                 {
                     callbackMessage.text = "Account with this E-Mail allready exists.";
                 }
-                else
-                {
-                    callbackMessage.text = "Server Connection error";
-                }
+                
 
 
                 callbackMessage.color = Color.red;

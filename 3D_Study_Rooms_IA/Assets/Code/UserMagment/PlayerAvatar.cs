@@ -47,8 +47,10 @@ namespace Studyrooms
         // Start is called before the first frame update
         void Start()
         {
-
-            thisID = transform.root.name; //GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.name;
+            
+            thisID = transform.root.name;
+            DontDestroyOnLoad(gameObject.transform.root.gameObject);
+            
         }
         private void userAvatar()
         {
@@ -133,7 +135,7 @@ namespace Studyrooms
             //glasses
             glasses(avatar.glasses);
             Debug.Log("setAvatar glasses:" + avatar.glasses);
-            SREvents.loadAvatar.RemoveListener(setAvatar);
+            //SREvents.loadAvatar.RemoveListener(setAvatar);
         }
 
         public void backpackActive(bool state)
@@ -177,6 +179,13 @@ namespace Studyrooms
             }
 
         }
+
+        public void OnDestroy()
+        {
+            //DontDestroyOnLoad(gameObject.transform.root.gameObject);
+            Debug.Log("is destroyed");
+        }
+
 
 
     }
