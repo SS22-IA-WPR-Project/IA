@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 namespace Studyrooms
 {
@@ -17,7 +18,16 @@ namespace Studyrooms
 
         private Camera playerCam;
         private GameObject movemendSkript;
-        
+
+        public Canvas canvas01;
+        public Canvas canvas02;
+        public Canvas canvas03;
+        public Canvas canvas04;
+        public Canvas canvas05;
+        public Canvas canvas06;
+
+
+
 
         private void Awake()
         {
@@ -31,10 +41,10 @@ namespace Studyrooms
 
             Debug.Log("nach get"+tabelNumber);
 
-           playerCam = GameObject.Find(PlayerPrefs.GetString("playerCameraID")).GetComponent<Camera>(); 
+            playerCam = GameObject.Find(PlayerPrefs.GetString("playerCameraID")).GetComponent<Camera>(); 
 
-           movemendSkript = GameObject.Find(PlayerPrefs.GetString("playerID"));
-           movemendSkript.GetComponent<PlayerController>().enabled = false;
+            movemendSkript = GameObject.Find(PlayerPrefs.GetString("playerID"));
+            movemendSkript.GetComponent<PlayerController>().enabled = false;
             
             
             Cursor.lockState = CursorLockMode.None;
@@ -44,6 +54,13 @@ namespace Studyrooms
 
                 case 1:
                     {
+                        canvas01.enabled = true;
+                        canvas02.enabled = false;
+                        canvas03.enabled = false;
+                        canvas04.enabled = false;
+                        canvas05.enabled = false;
+                        canvas06.enabled = false;
+
                         Debug.Log("1");
                         playerCam.enabled = false;
                         cam1.enabled = true;
@@ -52,6 +69,14 @@ namespace Studyrooms
                     }
                 case 2:
                     {
+                        canvas01.enabled = false;
+                        canvas02.enabled = true;
+                        canvas03.enabled = false;
+                        canvas04.enabled = false;
+                        canvas05.enabled = false;
+                        canvas06.enabled = false;
+
+
                         Debug.Log("2");
                         playerCam.enabled = false;
                         cam2.enabled = true;
@@ -60,6 +85,13 @@ namespace Studyrooms
                     }
                 case 3:
                     {
+                        canvas01.enabled = false;
+                        canvas02.enabled = false;
+                        canvas03.enabled = true;
+                        canvas04.enabled = false;
+                        canvas05.enabled = false;
+                        canvas06.enabled = false;
+
                         Debug.Log("3");
                         playerCam.enabled = false;
                         cam3.enabled = true;
@@ -68,6 +100,13 @@ namespace Studyrooms
                     }
                 case 4:
                     {
+                        canvas01.enabled = false;
+                        canvas02.enabled = false;
+                        canvas03.enabled = false;
+                        canvas04.enabled = true;
+                        canvas05.enabled = false;
+                        canvas06.enabled = false;
+
                         Debug.Log("4");
                         playerCam.enabled = false;
                         cam4.enabled = true;
@@ -76,6 +115,13 @@ namespace Studyrooms
                     }
                 case 5:
                     {
+                        canvas01.enabled = false;
+                        canvas02.enabled = false;
+                        canvas03.enabled = false;
+                        canvas04.enabled = false;
+                        canvas05.enabled = true;
+                        canvas06.enabled = false;
+
                         Debug.Log("5");
                         playerCam.enabled = false;
                         cam5.enabled = true;
@@ -84,6 +130,13 @@ namespace Studyrooms
                     }
                 case 6:
                     {
+                        canvas01.enabled = false;
+                        canvas02.enabled = false;
+                        canvas03.enabled = false;
+                        canvas04.enabled = false;
+                        canvas05.enabled = false;
+                        canvas06.enabled = true;
+
                         Debug.Log("6");
                         playerCam.enabled = false;
                         cam6.enabled = true;
@@ -93,6 +146,7 @@ namespace Studyrooms
 
 
             }
+            
 
         }
 
@@ -106,6 +160,13 @@ namespace Studyrooms
             cam4.enabled = false;
             cam5.enabled = false;
             cam6.enabled = false;
+
+            canvas01.enabled = false;
+            canvas02.enabled = false;
+            canvas03.enabled = false;
+            canvas04.enabled = false;
+            canvas05.enabled = false;
+            canvas06.enabled = false;
 
             //movemendSkript = GameObject.Find("playerInGame");
             movemendSkript.GetComponent<PlayerController>().enabled = true;

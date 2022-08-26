@@ -49,7 +49,7 @@ namespace Studyrooms
         {
             
             thisID = transform.root.name;
-            DontDestroyOnLoad(gameObject.transform.root.gameObject);
+            //DontDestroyOnLoad(gameObject.transform.root.gameObject);
             
         }
         private void userAvatar()

@@ -88,7 +88,7 @@ namespace Studyrooms {
 			
 			
 			Debug.Log("has spawed");
-			remove();
+			//remove();
 
 		}
 
