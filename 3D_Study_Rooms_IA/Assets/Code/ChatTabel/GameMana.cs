@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+//neu
+using Firesplash.UnityAssets.SocketIO;
 
 namespace Studyrooms
 {
@@ -14,8 +16,37 @@ namespace Studyrooms
         public GameObject textObject;
         public InputField chatBox;
 
+        //neu
+        private bool listenNewMessage;
+
         [SerializeField]
         private List<Message> messageList = new List<Message>();
+
+        //neu
+        public SocketIOCommunicator socCom;
+
+        //neu wegen sokets
+        private void Start()
+        {
+            listenNewMessage = false;
+            string messageFromServer;
+
+            socCom.Instance.On("User: hier bitte Name einfügen", (string data) =>
+            {
+                messageFromServer = JsonUtility.FromJson<string>(data);
+            });
+           
+
+            socCom.Instance.Connect("http://35.228.121.222", false);
+
+
+        }
+
+        //neu
+        //private void Update()
+        //{
+        //   if (listenNewMessage)
+        //}
 
         private void SendMassageToChat(string text)
         {
@@ -43,12 +74,15 @@ namespace Studyrooms
         {
             if (chatBox.text != "")
             {
+                //neu
+                socCom.Instance.Emit("User: hier bitte Name einfügen", JsonUtility.ToJson(chatBox.text), false);
+
                 SendMassageToChat(chatBox.text);
             }
-            else if (!chatBox.isFocused)
-            {
-                chatBox.ActivateInputField();
-            }
+            //else if (!chatBox.isFocused)
+            //{
+            //    chatBox.ActivateInputField();
+            //}
 
         }
 
