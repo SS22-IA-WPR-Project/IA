@@ -86,7 +86,7 @@ namespace Studyrooms
 
         public void getOtherAvatars()
         {
-            nameId = SREvents.getOtherAvatars.GetId();
+            nameId = SREvents.getOtherAvatars.getId();
             thisID = transform.root.name;
             Debug.Log("thisID" + thisID);
             if(nameId == thisID)

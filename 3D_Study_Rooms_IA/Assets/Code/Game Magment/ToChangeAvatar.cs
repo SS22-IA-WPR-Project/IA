@@ -120,6 +120,7 @@ namespace Studyrooms {
             bodybuild.GetComponentInChildren<Image>().raycastTarget = false;
 
             SREvents.sceneLoadClass.Invoke();
+            SREvents.reloadAvatar.Invoke();
             //activeplayer.GetComponentInChildren<Camera>().enabled = true;
             //switch (changingRoom)
             //{

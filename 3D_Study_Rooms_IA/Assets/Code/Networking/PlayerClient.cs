@@ -126,6 +126,8 @@ namespace Studyrooms {
                 rot = 0f
             };
 
+            SREvents.reloadAvatar.AddListener(reloadAvatar);
+
 
             socCom.Instance.On("connection", (string data) =>
             {
@@ -173,9 +175,22 @@ namespace Studyrooms {
                 }
             });
 
+            //hier
             socCom.Instance.On("user has left", (string data) =>
             {
+                string _id = JsonUtility.FromJson<string>(data);
+                combinedPlayer left = new combinedPlayer { };
+                for (int i = 0; i <= goList.Count; i++)
+                {
+                    if (goList[i]._id == _id)
+                    {
+                        left = goList[i];
+                        goList.RemoveAt(i);
+                        Destroy(left.go);
+                    }
+                }
                 Debug.Log("has left");
+
             });
 
             socCom.Instance.Connect("http://35.228.121.222", false);
@@ -375,6 +390,22 @@ namespace Studyrooms {
 
             Debug.Log("geht vors Event");
             SREvents.getOtherAvatars.Invoke(returnedAvatar._id);
+
+        }
+
+        private void reloadAvatar()
+        {
+            Avatar tmpAvatar = new Avatar
+            {
+                _id = PlayerPrefs.GetString("playerID"),
+                skin = PlayerPrefs.GetInt("skin"),
+                bodybuild = PlayerPrefs.GetInt("bodyValue"),
+                backpack = PlayerPrefs.GetInt("backpack"),
+                helmet = PlayerPrefs.GetInt("helmet"),
+                glasses = PlayerPrefs.GetInt("glasses")
+            };
+
+            socCom.Instance.Emit("user:sendAvatar", JsonUtility.ToJson(tmpAvatar), false);
 
         }
 	}

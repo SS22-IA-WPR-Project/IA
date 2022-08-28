@@ -108,7 +108,7 @@ namespace Studyrooms
         }
         public void setID()
         {
-            checkID = SREvents.otherPlayerAnim.GetId();
+            checkID = SREvents.otherPlayerAnim.getId();
         }
     }
 

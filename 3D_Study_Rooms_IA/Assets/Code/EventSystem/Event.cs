@@ -32,7 +32,7 @@ namespace Studyrooms
             return v;
         }
 
-        public string GetId()
+        public string getId()
         {
             return i;
         }

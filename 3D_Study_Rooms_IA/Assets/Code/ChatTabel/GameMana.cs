@@ -31,13 +31,26 @@ namespace Studyrooms
             listenNewMessage = false;
             string messageFromServer;
 
-            socCom.Instance.On("User: hier bitte Name einfügen", (string data) =>
+            socCom.Instance.On("connection", (string data) =>
             {
                 messageFromServer = JsonUtility.FromJson<string>(data);
-            });
-           
+                SendMassageToChat(messageFromServer);
 
-            socCom.Instance.Connect("http://35.228.121.222", false);
+            });
+
+            socCom.Instance.On("sendMessage", (string data) =>
+            {
+                messageFromServer = JsonUtility.FromJson<string>(data);
+                SendMassageToChat(messageFromServer);
+            });
+
+            socCom.Instance.On("message", (string data) =>
+            {
+                messageFromServer = JsonUtility.FromJson<string>(data);
+                SendMassageToChat(messageFromServer);
+            });
+
+            socCom.Instance.Connect("http://35.228.121.222/chat", false);
 
 
         }
@@ -75,7 +88,7 @@ namespace Studyrooms
             if (chatBox.text != "")
             {
                 //neu
-                socCom.Instance.Emit("User: hier bitte Name einfügen", JsonUtility.ToJson(chatBox.text), false);
+                socCom.Instance.Emit("sendMessage", JsonUtility.ToJson(chatBox.text), false);
 
                 SendMassageToChat(chatBox.text);
             }
