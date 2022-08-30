@@ -50,7 +50,7 @@ namespace Studyrooms
                 SendMassageToChat(messageFromServer);
             });
 
-            socCom.Instance.Connect("http://35.228.121.222/chat", false);
+            socCom.Instance.Connect("http://3dstudyrooms.social/chat-services", false);
 
 
         }

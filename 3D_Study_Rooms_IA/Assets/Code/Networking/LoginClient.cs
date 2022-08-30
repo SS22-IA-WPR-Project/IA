@@ -13,9 +13,11 @@ namespace Studyrooms
     {
 
         //static string baseURL = "http://localhost:3000/api/v1";
-        static string baseURL = "http://35.228.121.222/api/v1";
-        
-        
+        //static string baseURL = "http://35.228.121.222/api/v1";
+        static string baseURL = "https://3dstudyrooms.social/api/v1";
+
+
+
         public static string BuildUrl(string path)
         {
 
@@ -39,12 +41,22 @@ namespace Studyrooms
             byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(jsonString);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-            
+            request.certificateHandler = new BypassCertificate();
             
             request.SetRequestHeader("Content-Type", "application/json");
         
             return request;
    
+        }
+
+    }
+
+    public class BypassCertificate : CertificateHandler
+    {
+        protected override bool ValidateCertificate(byte[] certificateData)
+        {
+            //allways just returns true 
+            return true;
         }
 
     }

@@ -47,7 +47,7 @@ namespace Studyrooms
             StartCoroutine(sendAvatarData());
         }*/
 
-        public void classToCharGUI()
+        /*public void classToCharGUI()
         {
 
             StartCoroutine(classToGUILoad());
@@ -58,7 +58,7 @@ namespace Studyrooms
                 Debug.Log("stoped");
             }
         }
-
+        */
         public void charGUIToClassroom()
         {
 
@@ -69,13 +69,13 @@ namespace Studyrooms
         {
             StartCoroutine(logInToClassLoad());
         }
-
+        
         public void signUpToCharGUI()
         {
             Debug.Log("start switch");
             StartCoroutine(signUpToCharGUILoad());
         }
-
+        /*
         IEnumerator classToGUILoad()
         {
             runningClassToGUI = true;
@@ -102,7 +102,7 @@ namespace Studyrooms
             Cursor.lockState = CursorLockMode.None;
             runningClassToGUI = false;
             SREvents.sceneLoadClassToGUI.RemoveListener(classToCharGUI);
-        }
+        }*/
 
         IEnumerator guiToClassLoad()
         {

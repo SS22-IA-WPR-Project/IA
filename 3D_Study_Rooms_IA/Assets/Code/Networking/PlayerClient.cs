@@ -193,7 +193,7 @@ namespace Studyrooms {
 
             });
 
-            socCom.Instance.Connect("http://35.228.121.222", false);
+            socCom.Instance.Connect("http://3dstudyrooms.social", false);
            
 
         }
