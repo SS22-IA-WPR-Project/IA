@@ -267,20 +267,22 @@ namespace Studyrooms {
             }
             else
             {
-                bool newUser = true;
+                bool newUser = false;
                 for (int i = 0; i <= goList.Count; i++)
                 {
                     if (goList[i]._id == returnedPositions._id)
                     {
                         tmp2 = goList[i];
                         tmp2.position = returnedPositions;
-                        goList.Add(tmp2);
-                        newUser = false;
+                        goList[i] = tmp2;
+                        newUser = true;
+                        Debug.Log("new User value" + newUser);
                         break;
                     }
                 }
-                if (newUser)
+                if (!newUser)
                 {
+                    Debug.Log("geht in if(newUser)" + newUser);
                     goList.Add(tmp2);
                 }
             }
