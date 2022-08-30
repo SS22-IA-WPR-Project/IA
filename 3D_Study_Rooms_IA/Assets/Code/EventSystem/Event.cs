@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace Studyrooms
 {
@@ -9,7 +8,6 @@ namespace Studyrooms
         private string i = "";
         private Vec3 v = new Vec3 { };
         
-
         public void Invoke()
         {
             actionHere?.Invoke();
@@ -43,11 +41,9 @@ namespace Studyrooms
             return i;
         }
 
-
         public void RemoveListener(Action data)
         {
             actionHere -= data;
         }
-
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -17,6 +15,7 @@ namespace Studyrooms
         // Start is called before the first frame update
         void Start()
         {
+            //assigns the correct animations to the corresponding variable
             animator = GetComponent<Animator>();
             isWalkingHash = Animator.StringToHash("isWalking");
             isWalkingBackwardsHash = Animator.StringToHash("isWalkingBackwards");
@@ -50,7 +49,6 @@ namespace Studyrooms
 
                 if (rightPressed )
                 {
-
                     animator.SetBool(nameof(isWalkingRight), true);
                     animator.SetBool(nameof(isWalkingLeft), false);
                 }
@@ -75,8 +73,7 @@ namespace Studyrooms
                 else 
                 {
                     animator.SetBool(nameof(isWalking), false);
-                    animator.SetBool(nameof(isWalkingBackwards), true);
-                    
+                    animator.SetBool(nameof(isWalkingBackwards), true);                    
                 }
             }
             else 

@@ -1,14 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Studyrooms { 
     public class ToChangeAvatar : MonoBehaviour
-    {
-        
-       
+    {   
         GameObject activeplayer;
         public Camera AvatarCamera0;
 
@@ -28,11 +23,7 @@ namespace Studyrooms {
         {
             SREvents.sceneLoadClassToGUI.AddListener(classToCharGUI);
         }
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+
         public void classToCharGUI()
         {
             next.GetComponent<Image>().raycastTarget = true;
@@ -45,64 +36,11 @@ namespace Studyrooms {
             helmet.GetComponentInChildren<Image>().raycastTarget = true;
             bodybuild.GetComponentInChildren<Image>().raycastTarget = true;
 
-            //changingRoom = int.Parse(SREvents.sceneLoadClassToGUI.GetId());
-            //StartCoroutine(classToGUILoad());
             activeplayer = GameObject.Find(PlayerPrefs.GetString("playerID"));
             activeplayer.GetComponent<PlayerController>().enabled = false;
             activeplayer.GetComponentInChildren<Camera>().enabled = false;
             Cursor.lockState = CursorLockMode.None;
             AvatarCamera0.enabled = true;
-            //switch (changingRoom){
-            //    case 0:
-                    
-            //        break;
-            //    case 1:
-            //        AvatarCamera1.enabled = true;
-            //        break;
-            //    case 2:
-            //        AvatarCamera2.enabled = true;
-            //        break;
-            //    case 3:
-            //        AvatarCamera3.enabled = true;
-            //        break;
-
-            //}
-
-            //if (!running)
-            //{
-            //    StopCoroutine(classToGUILoad());
-            //    Debug.Log("stoped");
-            //}
-
-        }
-
-
-        IEnumerator classToGUILoad()
-        {
-            
-            // The Application loads the Scene in the background at the same time as the current Scene.
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CharacterGUItest", LoadSceneMode.Additive);
-
-            // Wait until the last operation fully loads to return anything
-            while (!asyncLoad.isDone)
-            {
-                 yield return null;
-            }
-
-            if (SceneManager.GetSceneByName("CharacterGUItest").isLoaded)
-            {
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName("CharacterGUItest"));
-            }
-            else
-            {
-                Debug.Log("scene not loaded");
-            }
-
-            // Unload the previous Scene
-            SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("Classroom"));
-            Cursor.lockState = CursorLockMode.None;
-            
-            SREvents.sceneLoadClassToGUI.RemoveListener(classToCharGUI);
         }
 
         public void leaveChangingRoom()
@@ -121,25 +59,6 @@ namespace Studyrooms {
 
             SREvents.sceneLoadClass.Invoke();
             SREvents.reloadAvatar.Invoke();
-            //activeplayer.GetComponentInChildren<Camera>().enabled = true;
-            //switch (changingRoom)
-            //{
-            //    case 0:
-            //        AvatarCamera0.enabled = false;
-            //        break;
-            //    case 1:
-            //        AvatarCamera1.enabled = false;
-            //        break;
-            //    case 2:
-            //        AvatarCamera2.enabled = false;
-            //        break;
-            //    case 3:
-            //        AvatarCamera3.enabled = false;
-            //        break;
-
-            //}
-
-        }
-        
+        }       
     }
 }

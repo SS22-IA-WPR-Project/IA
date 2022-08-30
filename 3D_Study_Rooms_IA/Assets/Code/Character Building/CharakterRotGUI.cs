@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Studyrooms
@@ -10,10 +8,7 @@ namespace Studyrooms
         // Start is called before the first frame update
         void Start()
         {
-            
-            //charaRot = GameObject.Find("Player");
             charaRot = this.gameObject;
-
         }
 
         // Update is called once per frame
@@ -27,9 +22,6 @@ namespace Studyrooms
             {
                 charaRot.transform.Rotate(-charaRot.transform.up * 0.5f);
             }
-
         }
-
-
     }
 }

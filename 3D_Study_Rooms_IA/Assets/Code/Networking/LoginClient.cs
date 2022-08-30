@@ -1,9 +1,4 @@
-using Firesplash.UnityAssets.SocketIO;
-using System.Collections;
-using System.Collections.Generic;
-
 using System.IO;
-using UnityEngine;
 using UnityEngine.Networking;
 
 
@@ -11,16 +6,10 @@ namespace Studyrooms
 {
     public class LoginClient 
     {
-
-        //static string baseURL = "http://localhost:3000/api/v1";
-        //static string baseURL = "http://35.228.121.222/api/v1";
-        static string baseURL = "https://3dstudyrooms.social/api/v1";
-
-
+        static string baseURL = "http://3dstudyrooms.social/api/v1";
 
         public static string BuildUrl(string path)
         {
-
             return Path.Combine(baseURL, path).Replace(Path.DirectorySeparatorChar, '/');
         }
 
@@ -35,20 +24,17 @@ namespace Studyrooms
 
 
         public static UnityWebRequest Post(string path, string jsonString)
-        {
-            
+        {          
             var request = new UnityWebRequest(BuildUrl(path), "POST");
             byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(jsonString);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-            request.certificateHandler = new BypassCertificate();
+           request.certificateHandler = new BypassCertificate();
             
             request.SetRequestHeader("Content-Type", "application/json");
         
-            return request;
-   
+            return request;   
         }
-
     }
 
     public class BypassCertificate : CertificateHandler
@@ -58,7 +44,5 @@ namespace Studyrooms
             //allways just returns true 
             return true;
         }
-
     }
-
 }

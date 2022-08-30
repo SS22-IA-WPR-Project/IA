@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Firesplash.UnityAssets.SocketIO;
@@ -37,23 +36,26 @@ namespace Studyrooms {
 
     public class PlayerClient : MonoBehaviour
 	{
-
         private Vec3 userPosition;
         private Vec3 returnedPositions;
         private Avatar returnedAvatar;
-        private Vector3 oldPos;
-        private float oldRot;
-        private Vector3 VecLength;
-        public GameObject gaOb;
-        //private Animator animator;
         private Anim currentAnim;
         private Anim oldAnim;
         private Anim returnedAnim;
-        public SocketIOCommunicator socCom;
+
         private List<combinedPlayer> goList;
+
+        private Vector3 oldPos;
+        private float oldRot;
+        private Vector3 VecLength;
+
+        public GameObject gaOb;
+        public SocketIOCommunicator socCom;
+
         // Start is called before the first frame update
         void Start()
         {
+            //start configuration for structs
             currentAnim = new Anim
             {
                 _id = PlayerPrefs.GetString("playerID"),
@@ -85,8 +87,6 @@ namespace Studyrooms {
 
             oldPos = transform.position;
             oldRot = 0;
-
-            //gaOb = (GameObject)Resources.Load("Assets/own_prefabs/otherPlayers.prefab", typeof(GameObject));
 
             userPosition = new Vec3
             {
@@ -128,13 +128,13 @@ namespace Studyrooms {
 
             SREvents.reloadAvatar.AddListener(reloadAvatar);
 
+            //create connections to the backend via their respective waypoints.
 
             socCom.Instance.On("connection", (string data) =>
             {
                 Debug.Log("Connection made!");
 
                 socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
-
                 socCom.Instance.Emit("user:sendAvatar", JsonUtility.ToJson(tmpAvatar), false);
 
             });
@@ -142,7 +142,6 @@ namespace Studyrooms {
             socCom.Instance.On("disconnect", (string payload) =>
             {
                 Debug.Log("disconnected");
-                //killed();
             });
 
             socCom.Instance.On("user:receiveCoordinate", (string data) =>
@@ -175,7 +174,6 @@ namespace Studyrooms {
                 }
             });
 
-            //hier
             socCom.Instance.On("user has left", (string data) =>
             {
                 string _id = JsonUtility.FromJson<string>(data);
@@ -190,13 +188,11 @@ namespace Studyrooms {
                     }
                 }
                 Debug.Log("has left");
-
             });
 
             socCom.Instance.Connect("http://3dstudyrooms.social", false);
-           
-
         }
+
         private void Update()
         {
             VecLength = (transform.position - oldPos);
@@ -207,7 +203,6 @@ namespace Studyrooms {
                 oldRot = transform.rotation.y;
                 sendPosition();
             }
-
 
             currentAnim.forwardReceive = (Input.GetKey("up") || Input.GetKey("w"));
             currentAnim.backwardReceive = (Input.GetKey("down") || Input.GetKey("s"));
@@ -222,28 +217,19 @@ namespace Studyrooms {
                 oldAnim = currentAnim;
                 sendAnim();
             }
-            if(goList.Count > 0)
+           // if(goList.Count > 0)
+           // {
+                
+           // }
+            for (int i = 0; i < goList.Count; i++)
             {
-                for (int i = 0; i <= goList.Count; i++)
+                Vector3 tester = new Vector3(goList[i].position.x, goList[i].position.y, goList[i].position.z);
+
+                if (tester != goList[i].go.transform.position)
                 {
-                    Vector3 tester = new Vector3(goList[i].position.x, goList[i].position.y, goList[i].position.z);
-
-                    if (tester != goList[i].go.transform.position)
-                    {
-                   /* Debug.Log("new x tester Pos: " + tester.x);
-                    goList[i].go.transform.position = tester;
-                    Debug.Log("new x Pos: " + goList[i].go.transform.position.x);*/
-                        SREvents.otherPlayerPos.Invoke(returnedPositions);
-
-                    }
+                    SREvents.otherPlayerPos.Invoke(returnedPositions);
                 }
             }
-            
-        }
-
-        private void killed()
-        {
-            Destroy(this.gameObject);
         }
 
         private void sendPosition()
@@ -252,13 +238,11 @@ namespace Studyrooms {
             userPosition.y = (int)(transform.position.y * 1000f);
             userPosition.z = (int)(transform.position.z * 1000f);
             userPosition.rot = (int)(transform.rotation.y * 1799f);
-            //Debug.Log("sendPosition: " + userPosition.rot);
             socCom.Instance.Emit("user:sendCoordinate", JsonUtility.ToJson(userPosition), false);
         }
 
         private void sendAnim()
         {
-
             socCom.Instance.Emit("user:sendAnim", JsonUtility.ToJson(currentAnim), false);
         }
 
@@ -277,8 +261,6 @@ namespace Studyrooms {
             returnedPositions.z = (returnedPositions.z / 1000f);
             returnedPositions.rot = (returnedPositions.rot / 10f);
 
-            //Vector3 overwritePosition = new Vector3 ( 0f, 0f, 0f );
-
             if(goList.Count == 0)
             {
                 goList.Add(tmp2);
@@ -290,15 +272,8 @@ namespace Studyrooms {
                 {
                     if (goList[i]._id == returnedPositions._id)
                     {
-
                         tmp2 = goList[i];
-                        //goList.RemoveAt(i);
                         tmp2.position = returnedPositions;
-                        /*overwritePosition.x = returnedPositions.x;
-                        Debug.Log("zwischen Overwrite positions + x : " + overwritePosition.x);
-                        overwritePosition.y = returnedPositions.y;
-                        overwritePosition.z = returnedPositions.z;
-                        tmp2.go.transform.position = overwritePosition;*/
                         goList.Add(tmp2);
                         newUser = false;
                         break;
@@ -313,29 +288,21 @@ namespace Studyrooms {
 
         private void getAnim()
         {
-            Debug.Log("in Client: " + returnedAnim.forwardReceive + " / " + returnedAnim.backwardReceive + " / " + returnedAnim.rightReceive + " / " + returnedAnim.leftReceive);
             PlayerPrefs.SetInt("up" + returnedAnim._id, returnedAnim.forwardReceive ? 1 : 0);
             PlayerPrefs.SetInt("down" + returnedAnim._id, returnedAnim.backwardReceive ? 1 : 0);
             PlayerPrefs.SetInt("right" + returnedAnim._id, returnedAnim.rightReceive ? 1 : 0);
             PlayerPrefs.SetInt("left" + returnedAnim._id, returnedAnim.leftReceive ? 1 : 0);
 
             SREvents.otherPlayerAnim.Invoke(returnedAnim._id);
-
         }
 
         private void getAvatar()
         {
 
             Vector3 overwriteOtherPosition = new Vector3(returnedPositions.x, returnedPositions.y, returnedPositions.z);
-            //overwriteOtherPosition.x = returnedPositions.x;
-            //overwriteOtherPosition.y = returnedPositions.y;
-            //overwriteOtherPosition.z = returnedPositions.z;
-
             Quaternion overwriteRot = Quaternion.Euler(0f, returnedPositions.rot, 0f);
 
             GameObject newGo = gaOb;
-
-            Debug.Log("vor dem struct");
 
             combinedPlayer tmpPlayer = new combinedPlayer
             {
@@ -350,8 +317,6 @@ namespace Studyrooms {
             PlayerPrefs.SetInt("backpack" + returnedAvatar._id, returnedAvatar.backpack);
             PlayerPrefs.SetInt("helmet" + returnedAvatar._id, returnedAvatar.helmet);
             PlayerPrefs.SetInt("glasses" + returnedAvatar._id, returnedAvatar.glasses);
-
-            Debug.Log("vor der for" + goList.Count);
 
             if(goList.Count == 0)
             {
@@ -370,7 +335,6 @@ namespace Studyrooms {
                         goList.RemoveAt(i);
                         tmpPlayer.avatar = returnedAvatar;
                         goList.Add(tmpPlayer);
-                        Debug.Log("vorm break");
                         if (GameObject.Find(returnedAvatar._id) == null)
                         {
                             newGo = Instantiate(tmpPlayer.go, overwriteOtherPosition, overwriteRot);
@@ -387,10 +351,7 @@ namespace Studyrooms {
                     goList.Add(tmpPlayer);
                 }
             }
-
-            Debug.Log("geht vors Event");
             SREvents.getOtherAvatars.Invoke(returnedAvatar._id);
-
         }
 
         private void reloadAvatar()
@@ -406,7 +367,6 @@ namespace Studyrooms {
             };
 
             socCom.Instance.Emit("user:sendAvatar", JsonUtility.ToJson(tmpAvatar), false);
-
         }
 	}
 }

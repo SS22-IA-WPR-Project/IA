@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,34 +10,24 @@ namespace Studyrooms
         public GameObject helmet;
         public GameObject glasses1;
         public GameObject glasses2;
+
         public Mesh[] bodybuilds = new Mesh[2];
         public Material[] skins = new Material[10];
+
         public string nameId;
         public string thisID;
 
         new SkinnedMeshRenderer renderer;
-
-        /*struct Avatar
-        {
-            public string _id;
-            public int skin;
-            public int bodybuild;
-            public int backpack;
-            public int helmet;
-            public int glasses;
-        }*/
 
         struct playerIDstruc
         {
             public string _id;
         }
 
-
         Avatar avatar;
 
         private void Awake()
-        {
-            
+        {          
             SREvents.getUserAvatar.AddListener(userAvatar);
             SREvents.loadAvatar.AddListener(setAvatar);
             SREvents.getOtherAvatars.AddListener(getOtherAvatars);
@@ -46,12 +35,10 @@ namespace Studyrooms
 
         // Start is called before the first frame update
         void Start()
-        {
-            
+        {          
             thisID = transform.root.name;
-            //DontDestroyOnLoad(gameObject.transform.root.gameObject);
-            
         }
+
         private void userAvatar()
         {
             StartCoroutine(getAvatarData());
@@ -59,9 +46,6 @@ namespace Studyrooms
 
         IEnumerator getAvatarData()
         {
-
-            Debug.Log(PlayerPrefs.GetString("playerID"));
-
             playerIDstruc id = new playerIDstruc
             {
                 _id = PlayerPrefs.GetString("playerID")
@@ -71,15 +55,12 @@ namespace Studyrooms
 
             yield return request.SendWebRequest();
 
-
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.LogError(request.error);
-
             }
 
             avatar = JsonUtility.FromJson<Avatar>(request.downloadHandler.text);
-
 
             SREvents.loadAvatar.Invoke();
         }
@@ -88,12 +69,10 @@ namespace Studyrooms
         {
             nameId = SREvents.getOtherAvatars.getId();
             thisID = transform.root.name;
-            Debug.Log("thisID" + thisID);
             if(nameId == thisID)
             {
                 
             }
-            Debug.Log("nameID" + nameId);
             avatar = new Avatar
             {
                 skin = PlayerPrefs.GetInt("skin" + nameId),
@@ -103,17 +82,12 @@ namespace Studyrooms
                 glasses = PlayerPrefs.GetInt("glasses" + nameId)
             };
             renderer.material = skins[avatar.skin];
-            Debug.Log("avatar skin:" + avatar.skin);
             Bodybuild(avatar.bodybuild);
-            Debug.Log("avatar bodybuild:" + avatar.bodybuild);
             backpackActive(avatar.backpack == 1 ? true : false);
-            Debug.Log("avatar backpack:" + avatar.backpack);
             helmetActive(avatar.helmet == 1 ? true : false);
-            Debug.Log("avatar helmet:" + avatar.helmet);
             glasses(avatar.glasses);
-            Debug.Log("avatar glasses:" + avatar.glasses);
+
             SREvents.loadAvatar.Invoke();
-            
         }
 
         public void setAvatar()
@@ -122,20 +96,14 @@ namespace Studyrooms
 
             //skin
             renderer.material = skins[avatar.skin];
-            Debug.Log("avatar skin:" + avatar.skin);
             //bodybuild
             Bodybuild(avatar.bodybuild);
-            Debug.Log("setAvatar bodybuild:" + avatar.bodybuild);
             //backpack
             backpackActive(avatar.backpack == 1 ? true : false);
-            Debug.Log("setAvatar backpack:" + avatar.backpack);
             //helmet
             helmetActive(avatar.helmet == 1 ? true : false);
-            Debug.Log("setAvatar helmet:" + avatar.helmet);
             //glasses
             glasses(avatar.glasses);
-            Debug.Log("setAvatar glasses:" + avatar.glasses);
-            //SREvents.loadAvatar.RemoveListener(setAvatar);
         }
 
         public void backpackActive(bool state)
@@ -164,9 +132,9 @@ namespace Studyrooms
                     glasses1.SetActive(false);
                     glasses2.SetActive(true);
                     break;
-
             }
         }
+
         public void Bodybuild(float value)
         {
             if (value == 0)
@@ -177,16 +145,6 @@ namespace Studyrooms
             {
                 renderer.sharedMesh = bodybuilds[(int)value];
             }
-
         }
-
-        public void OnDestroy()
-        {
-            //DontDestroyOnLoad(gameObject.transform.root.gameObject);
-            Debug.Log("is destroyed");
-        }
-
-
-
     }
 }

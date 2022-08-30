@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,14 +20,13 @@ namespace Studyrooms {
         // Start is called before the first frame update
         void Start()
         {
-            goToClass.gameObject.SetActive(false);
-             
+            goToClass.gameObject.SetActive(false);           
         }
         public void doneAvatar()
         {
             StartCoroutine(sendAvatarData());
         }
-
+        // using httpRequest to send AvatarData to server
         IEnumerator sendAvatarData()
         {
             var avatar = new Avatar
@@ -39,19 +37,15 @@ namespace Studyrooms {
                 backpack = PlayerPrefs.GetInt("backpack"),
                 helmet = PlayerPrefs.GetInt("helmet"),
                 glasses = PlayerPrefs.GetInt("glasses")
-
             };
 
             var request = LoginClient.Post("user/create", JsonUtility.ToJson(avatar));
 
             yield return request.SendWebRequest();
 
-            Debug.Log("callback-data: " + Encoding.Default.GetString(request.downloadHandler.data));
-
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.LogError(request.error);
-
             }
             else
             {

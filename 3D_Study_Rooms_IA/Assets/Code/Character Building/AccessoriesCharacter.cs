@@ -27,6 +27,7 @@ namespace Studyrooms
 
         private void Awake()
         {
+            //using the Playerprefs to set up the player from last session
             classroom.gameObject.SetActive(false);
             backpackOn = PlayerPrefs.GetInt("backpack", 0);
             helmetOn = PlayerPrefs.GetInt("helmet", 0);
@@ -37,22 +38,11 @@ namespace Studyrooms
         // Start is called before the first frame update
         void Start()
         {
-            //load to the right var and deactivate the accessories for the start 
-
-            //helmet = gameObject.transform.GetChild(2).gameObject;
-            //backpack = gameObject.transform.GetChild(3).gameObject;
-            //glasses1 = gameObject.transform.GetChild(4).gameObject;
-            //glasses2 = gameObject.transform.GetChild(5).gameObject;
-
             //proper setup for the glasses dropdown. 
-            //first line of the might need to be changed latter if more Dropdowns are in project
-            //drop = GameObject.FindObjectOfType<Dropdown>();
             drop.onValueChanged.AddListener(delegate
             {
                 DropdownValueChanged(drop);
             });
-
-            //using the Playerprefs to set up the player from last session
 
             //glasses
             glasses(glassesOn);
@@ -77,23 +67,16 @@ namespace Studyrooms
         {
             backpack.SetActive(state);
             PlayerPrefs.SetInt("backpack", state ? 1 : 0);
-
-            
-
         }
 
         public void helmetActive(bool state)
         {
             helmet.SetActive(state);
-            PlayerPrefs.SetInt("helmet", state ? 1 : 0);
-
-            
+            PlayerPrefs.SetInt("helmet", state ? 1 : 0); 
         }
 
         public void glasses(int value)
         {
-
-            //Debug.Log(PlayerPrefs.GetInt("glasses", value));
             switch (value)
             {
                 case 0:
@@ -111,7 +94,6 @@ namespace Studyrooms
                     glasses2.SetActive(true);
                     PlayerPrefs.SetInt("glasses", value);
                     break;
-
             }
         }
 

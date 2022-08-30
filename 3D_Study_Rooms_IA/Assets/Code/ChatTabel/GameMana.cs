@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//neu
 using Firesplash.UnityAssets.SocketIO;
 
 namespace Studyrooms
@@ -15,27 +13,19 @@ namespace Studyrooms
         public GameObject chatPanal;
         public GameObject textObject;
         public InputField chatBox;
-
-        //neu
-        private bool listenNewMessage;
+        public SocketIOCommunicator socCom;
 
         [SerializeField]
         private List<Message> messageList = new List<Message>();
 
-        //neu
-        public SocketIOCommunicator socCom;
-
-        //neu wegen sokets
         private void Start()
         {
-            listenNewMessage = false;
             string messageFromServer;
 
             socCom.Instance.On("connection", (string data) =>
             {
                 messageFromServer = JsonUtility.FromJson<string>(data);
                 SendMassageToChat(messageFromServer);
-
             });
 
             socCom.Instance.On("sendMessage", (string data) =>
@@ -51,15 +41,7 @@ namespace Studyrooms
             });
 
             socCom.Instance.Connect("http://3dstudyrooms.social/chat-services", false);
-
-
         }
-
-        //neu
-        //private void Update()
-        //{
-        //   if (listenNewMessage)
-        //}
 
         private void SendMassageToChat(string text)
         {
@@ -70,16 +52,13 @@ namespace Studyrooms
             }
 
             Message newMassage = new Message();
-
             newMassage.text = text;
 
             GameObject newText = Instantiate(textObject, chatPanal.transform);
-
             newMassage.textObject = newText.GetComponent<Text>();
             newMassage.textObject.text = newMassage.text;
 
             messageList.Add(newMassage);
-
             chatBox.text = "";
         }
 
@@ -87,18 +66,10 @@ namespace Studyrooms
         {
             if (chatBox.text != "")
             {
-                //neu
                 socCom.Instance.Emit("sendMessage", JsonUtility.ToJson(chatBox.text), false);
-
                 SendMassageToChat(chatBox.text);
             }
-            //else if (!chatBox.isFocused)
-            //{
-            //    chatBox.ActivateInputField();
-            //}
-
         }
-
     }
 
     [System.Serializable]
@@ -106,6 +77,5 @@ namespace Studyrooms
     {
         public string text;
         public Text textObject;
-
     }
 }

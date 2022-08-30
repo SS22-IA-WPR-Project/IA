@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Studyrooms
@@ -24,6 +22,7 @@ namespace Studyrooms
         // Start is called before the first frame update
         void Start()
         {
+            //assigns the correct animations to the corresponding variable
             animator = GetComponent<Animator>();
             isWalkingHash = Animator.StringToHash("isWalking");
             isWalkingBackwardsHash = Animator.StringToHash("isWalkingBackwards");
@@ -31,14 +30,12 @@ namespace Studyrooms
             isWalkingLeftHash = Animator.StringToHash("isWalkingLeft");
             isIdelHash = Animator.StringToHash("isIdel");
 
-            thisID = transform.root.name; //GetComponentInParent<Transform>().gameObject.GetComponentInParent<Transform>().gameObject.name;
+            thisID = transform.root.name;
         }
 
         // Update is called once per frame
         void Update()
         {
-            Debug.Log(thisID);
-            Debug.Log(checkID);
             if(checkID == thisID)
             {
                 bool isWalking = animator.GetBool(isWalkingHash);
@@ -47,13 +44,12 @@ namespace Studyrooms
                 bool isWalkingLeft = animator.GetBool(isWalkingLeftHash);
                 bool isIdel = animator.GetBool(isIdelHash);
 
-                bool forwardReceive = PlayerPrefs.GetInt(("up" + checkID)) == 1 ? true : false; // (Input.GetKey("up") || Input.GetKey("w"));
-                bool backwardReceive = PlayerPrefs.GetInt(("down" + checkID)) == 1 ? true : false; //(Input.GetKey("down") || Input.GetKey("s"));
-                bool rightReceive = PlayerPrefs.GetInt(("right" + checkID)) == 1 ? true : false; // (Input.GetKey("right") || Input.GetKey("d"));
-                bool leftReceive = PlayerPrefs.GetInt(("left" + checkID)) == 1 ? true : false; // (Input.GetKey("left") || Input.GetKey("a"));
+                bool forwardReceive = PlayerPrefs.GetInt(("up" + checkID)) == 1 ? true : false;
+                bool backwardReceive = PlayerPrefs.GetInt(("down" + checkID)) == 1 ? true : false;
+                bool rightReceive = PlayerPrefs.GetInt(("right" + checkID)) == 1 ? true : false;
+                bool leftReceive = PlayerPrefs.GetInt(("left" + checkID)) == 1 ? true : false;
 
-                Debug.Log("in Controller: " + forwardReceive + " / " + backwardReceive + " / " + rightReceive + " / " + leftReceive);
-                //Player animation
+                //OtherPlayer animation
 
                 if (rightReceive ^ leftReceive)
                 {
@@ -63,7 +59,6 @@ namespace Studyrooms
 
                     if (rightReceive)
                     {
-
                         animator.SetBool(nameof(isWalkingRight), true);
                         animator.SetBool(nameof(isWalkingLeft), false);
                     }
@@ -72,7 +67,6 @@ namespace Studyrooms
                         animator.SetBool(nameof(isWalkingRight), false);
                         animator.SetBool(nameof(isWalkingLeft), true);
                     }
-
                 }
                 else if (forwardReceive ^ backwardReceive)
                 {
@@ -89,7 +83,6 @@ namespace Studyrooms
                     {
                         animator.SetBool(nameof(isWalking), false);
                         animator.SetBool(nameof(isWalkingBackwards), true);
-
                     }
                 }
                 else
@@ -101,16 +94,11 @@ namespace Studyrooms
                     animator.SetBool(nameof(isIdel), true);
                 }
             }
-
-            
-
-
         }
         public void setID()
         {
             checkID = SREvents.otherPlayerAnim.getId();
         }
     }
-
 }
 

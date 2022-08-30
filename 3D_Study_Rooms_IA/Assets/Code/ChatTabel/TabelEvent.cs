@@ -1,14 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
 
 namespace Studyrooms
 {
     public class TabelEvent : MonoBehaviour
     {
-
         public Camera cam1;
         public Camera cam2;
         public Camera cam3;
@@ -26,9 +21,6 @@ namespace Studyrooms
         public Canvas canvas05;
         public Canvas canvas06;
 
-
-
-
         private void Awake()
         {
             SREvents.joinTable.AddListener(toTable);
@@ -36,22 +28,17 @@ namespace Studyrooms
 
         public void toTable()
         {
-
            int tabelNumber = PlayerPrefs.GetInt("tabelCamNumber");
 
-            Debug.Log("nach get"+tabelNumber);
+           playerCam = GameObject.Find(PlayerPrefs.GetString("playerCameraID")).GetComponent<Camera>(); 
 
-            playerCam = GameObject.Find(PlayerPrefs.GetString("playerCameraID")).GetComponent<Camera>(); 
-
-            movemendSkript = GameObject.Find(PlayerPrefs.GetString("playerID"));
-            movemendSkript.GetComponent<PlayerController>().enabled = false;
-            
-            
-            Cursor.lockState = CursorLockMode.None;
+           movemendSkript = GameObject.Find(PlayerPrefs.GetString("playerID"));
+           movemendSkript.GetComponent<PlayerController>().enabled = false;
+                
+           Cursor.lockState = CursorLockMode.None;
 
             switch (tabelNumber)
             {
-
                 case 1:
                     {
                         canvas01.enabled = true;
@@ -60,11 +47,8 @@ namespace Studyrooms
                         canvas04.enabled = false;
                         canvas05.enabled = false;
                         canvas06.enabled = false;
-
-                        Debug.Log("1");
                         playerCam.enabled = false;
                         cam1.enabled = true;
-                        
                         break;
                     }
                 case 2:
@@ -75,12 +59,8 @@ namespace Studyrooms
                         canvas04.enabled = false;
                         canvas05.enabled = false;
                         canvas06.enabled = false;
-
-
-                        Debug.Log("2");
                         playerCam.enabled = false;
                         cam2.enabled = true;
-                        
                         break;
                     }
                 case 3:
@@ -91,11 +71,8 @@ namespace Studyrooms
                         canvas04.enabled = false;
                         canvas05.enabled = false;
                         canvas06.enabled = false;
-
-                        Debug.Log("3");
                         playerCam.enabled = false;
                         cam3.enabled = true;
-                        
                         break;
                     }
                 case 4:
@@ -106,11 +83,8 @@ namespace Studyrooms
                         canvas04.enabled = true;
                         canvas05.enabled = false;
                         canvas06.enabled = false;
-
-                        Debug.Log("4");
                         playerCam.enabled = false;
                         cam4.enabled = true;
-                        
                         break;
                     }
                 case 5:
@@ -121,11 +95,8 @@ namespace Studyrooms
                         canvas04.enabled = false;
                         canvas05.enabled = true;
                         canvas06.enabled = false;
-
-                        Debug.Log("5");
                         playerCam.enabled = false;
-                        cam5.enabled = true;
-                        
+                        cam5.enabled = true;                   
                         break;
                     }
                 case 6:
@@ -136,18 +107,11 @@ namespace Studyrooms
                         canvas04.enabled = false;
                         canvas05.enabled = false;
                         canvas06.enabled = true;
-
-                        Debug.Log("6");
                         playerCam.enabled = false;
                         cam6.enabled = true;
-                        
                         break;
                     }
-
-
             }
-            
-
         }
 
         public void fromTable()
@@ -168,13 +132,9 @@ namespace Studyrooms
             canvas05.enabled = false;
             canvas06.enabled = false;
 
-            //movemendSkript = GameObject.Find("playerInGame");
             movemendSkript.GetComponent<PlayerController>().enabled = true;
             
             Cursor.lockState = CursorLockMode.Locked;
-
-
         }
-
     }
 }
