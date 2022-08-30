@@ -329,7 +329,7 @@ namespace Studyrooms {
             else
             {
                 bool newUser = true;
-                for(int i = 0; i <= goList.Count; i++)
+                for(int i = 0; i < goList.Count; i++)
                 {
                     if(goList[i]._id == returnedAvatar._id)
                     {
@@ -353,6 +353,7 @@ namespace Studyrooms {
                     goList.Add(tmpPlayer);
                 }
             }
+            Debug.Log("before Event");
             SREvents.getOtherAvatars.Invoke(returnedAvatar._id);
         }
 

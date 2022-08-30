@@ -14,8 +14,8 @@ namespace Studyrooms
         public Mesh[] bodybuilds = new Mesh[2];
         public Material[] skins = new Material[10];
 
-        public string nameId;
-        public string thisID;
+        string nameId;
+        string thisID;
 
         new SkinnedMeshRenderer renderer;
 
@@ -67,27 +67,28 @@ namespace Studyrooms
 
         public void getOtherAvatars()
         {
+            renderer = gameObject.GetComponent<SkinnedMeshRenderer>();
             nameId = SREvents.getOtherAvatars.getId();
             thisID = transform.root.name;
             if(nameId == thisID)
             {
-                
-            }
-            avatar = new Avatar
-            {
-                skin = PlayerPrefs.GetInt("skin" + nameId),
-                bodybuild = PlayerPrefs.GetInt("bodybuild" + nameId),
-                backpack = PlayerPrefs.GetInt("backpack" + nameId),
-                helmet = PlayerPrefs.GetInt("helmet" + nameId),
-                glasses = PlayerPrefs.GetInt("glasses" + nameId)
-            };
-            renderer.material = skins[avatar.skin];
-            Bodybuild(avatar.bodybuild);
-            backpackActive(avatar.backpack == 1 ? true : false);
-            helmetActive(avatar.helmet == 1 ? true : false);
-            glasses(avatar.glasses);
+                avatar = new Avatar
+                {
+                    skin = PlayerPrefs.GetInt("skin" + nameId),
+                    bodybuild = PlayerPrefs.GetInt("bodybuild" + nameId),
+                    backpack = PlayerPrefs.GetInt("backpack" + nameId),
+                    helmet = PlayerPrefs.GetInt("helmet" + nameId),
+                    glasses = PlayerPrefs.GetInt("glasses" + nameId)
+                };
+                renderer.material = skins[avatar.skin];
+                Bodybuild(avatar.bodybuild);
+                backpackActive(avatar.backpack == 1 ? true : false);
+                helmetActive(avatar.helmet == 1 ? true : false);
+                glasses(avatar.glasses);
 
-            SREvents.loadAvatar.Invoke();
+
+            }
+            
         }
 
         public void setAvatar()

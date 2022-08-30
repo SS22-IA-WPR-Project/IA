@@ -14,6 +14,7 @@ namespace Studyrooms
         public GameObject textObject;
         public InputField chatBox;
         public SocketIOCommunicator socCom;
+        private bool connected;
 
         [SerializeField]
         private List<Message> messageList = new List<Message>();
@@ -21,9 +22,10 @@ namespace Studyrooms
         private void Start()
         {
             string messageFromServer;
-
+            connected = false;
             socCom.Instance.On("connection", (string data) =>
             {
+                connected = true;
                 messageFromServer = JsonUtility.FromJson<string>(data);
                 SendMassageToChat(messageFromServer);
             });
@@ -66,7 +68,12 @@ namespace Studyrooms
         {
             if (chatBox.text != "")
             {
-                socCom.Instance.Emit("sendMessage", JsonUtility.ToJson(chatBox.text), false);
+                if (connected)
+                {
+                    socCom.Instance.Emit("sendMessage", JsonUtility.ToJson(chatBox.text), false);
+
+                }
+                
                 SendMassageToChat(chatBox.text);
             }
         }
