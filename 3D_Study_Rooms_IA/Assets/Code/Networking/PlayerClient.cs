@@ -267,7 +267,7 @@ namespace Studyrooms {
             }
             else
             {
-                bool newUser = false;
+                bool newUser = true;
                 for (int i = 0; i <= goList.Count; i++)
                 {
                     if (goList[i]._id == returnedPositions._id)
@@ -275,12 +275,12 @@ namespace Studyrooms {
                         tmp2 = goList[i];
                         tmp2.position = returnedPositions;
                         goList[i] = tmp2;
-                        newUser = true;
+                        newUser = false;
                         Debug.Log("new User value" + newUser);
                         break;
                     }
                 }
-                if (!newUser)
+                if (newUser)
                 {
                     Debug.Log("geht in if(newUser)" + newUser);
                     goList.Add(tmp2);
