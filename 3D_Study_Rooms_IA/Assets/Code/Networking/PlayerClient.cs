@@ -268,7 +268,7 @@ namespace Studyrooms {
             else
             {
                 bool newUser = true;
-                for (int i = 0; i <= goList.Count; i++)
+                for (int i = 0; i < goList.Count; i++)
                 {
                     if (goList[i]._id == returnedPositions._id)
                     {

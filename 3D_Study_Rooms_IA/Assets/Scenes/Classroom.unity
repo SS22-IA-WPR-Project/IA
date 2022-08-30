@@ -4742,30 +4742,6 @@ MonoBehaviour:
   cam4: {fileID: 789429761}
   cam5: {fileID: 740387382}
   cam6: {fileID: 2062120644}
-  send01: {fileID: 1103904169}
-  exit01: {fileID: 109471761}
-  input01: {fileID: 1154301179}
-  scroll01: {fileID: 495341707}
-  send02: {fileID: 1345048167}
-  exit02: {fileID: 394867045}
-  input02: {fileID: 1148985917}
-  scroll02: {fileID: 2040648189}
-  send03: {fileID: 1208805120}
-  exit03: {fileID: 6740210}
-  input03: {fileID: 111679755}
-  scroll03: {fileID: 1742575899}
-  send04: {fileID: 1478709808}
-  exit04: {fileID: 1991705680}
-  input04: {fileID: 547820491}
-  scroll04: {fileID: 1089494976}
-  send05: {fileID: 940983744}
-  exit05: {fileID: 121697373}
-  input05: {fileID: 1414946732}
-  scroll05: {fileID: 1223344462}
-  send06: {fileID: 809151891}
-  exit06: {fileID: 1858579783}
-  input06: {fileID: 2078608830}
-  scroll06: {fileID: 823260137}
   canvas01: {fileID: 832771376}
   canvas02: {fileID: 907861798}
   canvas03: {fileID: 1409303843}
@@ -11766,6 +11742,7 @@ MonoBehaviour:
   chatPanal: {fileID: 2077642962}
   textObject: {fileID: 2569683572230852649, guid: 1c6a8d5c794322d46aec9bc56ed1155c, type: 3}
   chatBox: {fileID: 547820491}
+  socCom: {fileID: 0}
   messageList: []
 --- !u!1 &497188079
 GameObject:
@@ -18078,8 +18055,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.000001, y: 0.1817455, z: 4}
-  m_Center: {x: -0.00000047683716, y: 0.0908726, z: 0.00000047683716}
+  m_Size: {x: 45, y: 0.1817455, z: 42.46}
+  m_Center: {x: 2.14, y: 0.0908726, z: 1.98}
 --- !u!23 &789688570
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19694,6 +19671,7 @@ MonoBehaviour:
   chatPanal: {fileID: 1632709110}
   textObject: {fileID: 2569683572230852649, guid: 1c6a8d5c794322d46aec9bc56ed1155c, type: 3}
   chatBox: {fileID: 1154301179}
+  socCom: {fileID: 0}
   messageList: []
 --- !u!1 &836695137
 GameObject:
@@ -21997,6 +21975,7 @@ MonoBehaviour:
   chatPanal: {fileID: 1194197168}
   textObject: {fileID: 2569683572230852649, guid: 1c6a8d5c794322d46aec9bc56ed1155c, type: 3}
   chatBox: {fileID: 1148985917}
+  socCom: {fileID: 0}
   messageList: []
 --- !u!1 &908167144
 GameObject:
@@ -24612,6 +24591,7 @@ MonoBehaviour:
   chatPanal: {fileID: 646781992}
   textObject: {fileID: 2569683572230852649, guid: 1c6a8d5c794322d46aec9bc56ed1155c, type: 3}
   chatBox: {fileID: 2078608830}
+  socCom: {fileID: 0}
   messageList: []
 --- !u!114 &1022452037
 MonoBehaviour:
@@ -33475,6 +33455,7 @@ MonoBehaviour:
   chatPanal: {fileID: 1413110831}
   textObject: {fileID: 2569683572230852649, guid: 1c6a8d5c794322d46aec9bc56ed1155c, type: 3}
   chatBox: {fileID: 111679755}
+  socCom: {fileID: 0}
   messageList: []
 --- !u!1001 &1410084973
 PrefabInstance:
@@ -39538,6 +39519,7 @@ MonoBehaviour:
   chatPanal: {fileID: 927579829}
   textObject: {fileID: 2569683572230852649, guid: 1c6a8d5c794322d46aec9bc56ed1155c, type: 3}
   chatBox: {fileID: 1414946732}
+  socCom: {fileID: 0}
   messageList: []
 --- !u!114 &1717978637
 MonoBehaviour:
